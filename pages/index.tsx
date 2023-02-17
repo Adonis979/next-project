@@ -1,10 +1,10 @@
 import Head from "next/head";
-import { Inter } from "@next/font/google";
-import styles from "@/styles/Home.module.css";
 import { Box } from "@mui/material";
 import Typography from "@mui/material/Typography";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Home() {
+  const { user } = useAuth();
   return (
     <>
       <Head>
@@ -14,7 +14,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Box sx={{ padding: "50px", height: "70vh" }}>
-        <Typography variant="h5">Adonis</Typography>
+        <Typography variant="h5">{user?.name}</Typography>
+        <Typography variant="h5">{user?.email}</Typography>
+        <img src={user?.photo || "/images/no-user-image.png"}></img>
       </Box>
     </>
   );

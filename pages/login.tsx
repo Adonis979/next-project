@@ -13,9 +13,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 
-function SignUp() {
-  const [user, setUser] = useState({ name: "", email: "", password: "" });
-  const [loader, setLoader] = useState(false);
+function login() {
+  const [user, setUser] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
   const [emailError, setEmailError] = useState({
     error: false,
@@ -25,8 +24,9 @@ function SignUp() {
     error: false,
     helperText: "",
   });
-  const { signup } = useAuth();
+  const [loader, setLoader] = useState(false);
   const Router = useRouter();
+  const { login, loginWithGoogle } = useAuth();
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -40,12 +40,15 @@ function SignUp() {
     setLoader(true);
     event.preventDefault();
     try {
-      await signup(user.email, user.password, user.name);
+      await login(user.email, user.password);
       Router.push("/");
       setLoader(false);
     } catch (error: any) {
-      if (error.code === "auth/email-already-in-use") {
-        setEmailError({ error: true, helperText: "Email already in use" });
+      if (error.code === "auth/wrong-password") {
+        setPasswordError({ error: true, helperText: "Wrong password" });
+      }
+      if (error.code === "auth/user-not-found") {
+        setEmailError({ error: true, helperText: "This email does not exist" });
       }
     }
     setLoader(false);
@@ -72,24 +75,7 @@ function SignUp() {
             boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
           }}
         >
-          <Typography variant="h4">Sign Up</Typography>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "10px",
-            }}
-          >
-            <Typography variant="h6">Your name</Typography>
-            <TextField
-              required
-              name="name"
-              value={user.name}
-              onChange={handleChange}
-              label="Type your name"
-              variant="outlined"
-            />
-          </Box>
+          <Typography variant="h4">Log In</Typography>
           <Box
             sx={{
               display: "flex",
@@ -119,6 +105,8 @@ function SignUp() {
           >
             <Typography variant="h6">Password</Typography>
             <TextField
+              error={passwordError.error}
+              helperText={passwordError.helperText}
               required
               name="password"
               type={showPassword ? "text" : "password"}
@@ -141,12 +129,25 @@ function SignUp() {
             />
           </Box>
           <Button type="submit" sx={{ marginTop: "50px" }} variant="contained">
-            Sign up
+            Log in
+          </Button>
+          <Button
+            onClick={() => {
+              loginWithGoogle();
+              Router.push("/");
+            }}
+            sx={{
+              backgroundColor: "red",
+              ":hover": { backgroundColor: "red", opacity: "0.8" },
+              color: "white",
+            }}
+          >
+            Login with Google
           </Button>
           <Typography variant="subtitle1">
-            Already have an account?{" "}
-            <Link style={{ fontStyle: "italic" }} href="/login">
-              Log in
+            Dont have an account?{" "}
+            <Link style={{ fontStyle: "italic" }} href="/sign-up">
+              Sign up
             </Link>
           </Typography>
         </Box>
@@ -162,4 +163,4 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+export default login;

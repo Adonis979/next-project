@@ -3,12 +3,14 @@ import Link from "next/link";
 import React from "react";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import { useRouter } from "next/router";
+import { useAuth } from "@/context/AuthContext";
 
 function Header() {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
   );
   const Router = useRouter();
+  const { user, logout } = useAuth();
 
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -20,11 +22,10 @@ function Header() {
 
   const open = Boolean(anchorEl);
   const id = open ? undefined : "simple-popover";
-  const user = false;
   return (
     <Box
       sx={{
-        backgroundColor: "lightgray",
+        backgroundColor: "#f2f2f2",
         padding: "20px",
         display: "flex",
         alignItems: "center",
@@ -71,7 +72,12 @@ function Header() {
           <>
             <Chip
               onClick={handleClick}
-              avatar={<Avatar alt="Natacha" src="/images/no-user-image.png" />}
+              avatar={
+                <Avatar
+                  alt="Natacha"
+                  src={user.photo || "/images/no-user-image.png"}
+                />
+              }
               label="Avatar"
               variant="outlined"
             />
@@ -102,10 +108,17 @@ function Header() {
                   <Avatar
                     sx={{ height: "30px", width: "30px" }}
                     alt="Remy Sharp"
-                    src="/images/no-user-image.png"
+                    src={user.photo || "/images/no-user-image.png"}
                   />
                 </Button>
-                <Button size="large">Sign Out</Button>
+                <Button
+                  onClick={() => {
+                    logout();
+                  }}
+                  size="large"
+                >
+                  Sign Out
+                </Button>
               </Box>
             </Popover>{" "}
           </>
