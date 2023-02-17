@@ -1,11 +1,14 @@
 import { Avatar, Box, Button, Chip, Popover, Typography } from "@mui/material";
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import { useRouter } from "next/router";
 
 function Header() {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
   );
+  const Router = useRouter();
 
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -17,6 +20,7 @@ function Header() {
 
   const open = Boolean(anchorEl);
   const id = open ? undefined : "simple-popover";
+  const user = false;
   return (
     <Box
       sx={{
@@ -63,46 +67,54 @@ function Header() {
         </Link>
       </Box>
       <Box>
-        <Chip
-          onClick={handleClick}
-          avatar={<Avatar alt="Natacha" src="/images/no-user-image.png" />}
-          label="Avatar"
-          variant="outlined"
-        />
-
-        <Popover
-          onClose={handleClose}
-          id={id}
-          anchorEl={anchorEl}
-          open={open}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "left",
-          }}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "right",
-          }}
-        >
-          <Box
-            sx={{
-              padding: "20px",
-              gap: "20px",
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <Button size="large" sx={{ gap: "10px" }}>
-              Profile
-              <Avatar
-                sx={{ height: "30px", width: "30px" }}
-                alt="Remy Sharp"
-                src="/images/no-user-image.png"
-              />
-            </Button>
-            <Button size="large">Sign Out</Button>
-          </Box>
-        </Popover>
+        {user ? (
+          <>
+            <Chip
+              onClick={handleClick}
+              avatar={<Avatar alt="Natacha" src="/images/no-user-image.png" />}
+              label="Avatar"
+              variant="outlined"
+            />
+            <Popover
+              onClose={handleClose}
+              id={id}
+              anchorEl={anchorEl}
+              open={open}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+            >
+              <Box
+                sx={{
+                  padding: "20px",
+                  gap: "20px",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <Button size="large" sx={{ gap: "10px" }}>
+                  Profile
+                  <Avatar
+                    sx={{ height: "30px", width: "30px" }}
+                    alt="Remy Sharp"
+                    src="/images/no-user-image.png"
+                  />
+                </Button>
+                <Button size="large">Sign Out</Button>
+              </Box>
+            </Popover>{" "}
+          </>
+        ) : (
+          <PersonAddIcon
+            onClick={() => Router.push("/login")}
+            sx={{ cursor: "pointer", height: "30px", width: "30px" }}
+          />
+        )}
       </Box>
     </Box>
   );
