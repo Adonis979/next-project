@@ -53,6 +53,14 @@ function login() {
     }
     setLoader(false);
   };
+  const handleLoginGoogle = async () => {
+    try {
+      await loginWithGoogle();
+      Router.push("/");
+    } catch (error: any) {
+      alert(error.code);
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -132,10 +140,7 @@ function login() {
             Log in
           </Button>
           <Button
-            onClick={() => {
-              loginWithGoogle();
-              Router.push("/");
-            }}
+            onClick={handleLoginGoogle}
             sx={{
               backgroundColor: "red",
               ":hover": { backgroundColor: "red", opacity: "0.8" },
