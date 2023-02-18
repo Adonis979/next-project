@@ -13,10 +13,21 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Box sx={{ padding: "50px", height: "70vh" }}>
-        <Typography variant="h5">{user?.name}</Typography>
-        <Typography variant="h5">{user?.email}</Typography>
-        <img src={user?.photo || "/images/no-user-image.png"}></img>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          padding: "50px",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "20px",
+        }}
+      >
+        <Typography variant="h3">Welcome to grerezat</Typography>
+        <img
+          style={{ width: "500px", height: "500px", objectFit: "contain" }}
+          src={user?.photo || "/images/no-user-image.png"}
+        ></img>
       </Box>
     </>
   );
