@@ -41,6 +41,8 @@ function login() {
     event.preventDefault();
     try {
       await login(user.email, user.password);
+      setEmailError({ error: false, helperText: "" });
+      setPasswordError({ error: false, helperText: "" });
       Router.push("/");
       setLoader(false);
     } catch (error: any) {
