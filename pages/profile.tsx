@@ -12,8 +12,14 @@ import {
 import React, { useRef, useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import { auth, storage } from "@/firebase";
-import { updateEmail, updateProfile } from "firebase/auth";
+import {
+  sendEmailVerification,
+  updateEmail,
+  updateProfile,
+} from "firebase/auth";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import EmailVerifyModal from "@/components/EmailVerifyModal";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
 function profile() {
   const { user } = useAuth();
@@ -119,6 +125,23 @@ function profile() {
       alert("You should sign in");
     }
   };
+
+  const [modalText, setModalText] = useState("");
+  const [openEmailVerifyModal, setOpenEmailVerifyModal] = useState(false);
+
+  const handleVerifyEmail = async () => {
+    const user = auth.currentUser;
+    if (user) {
+      try {
+        await sendEmailVerification(user);
+        setOpenEmailVerifyModal(true);
+        setModalText("Email verification send. Check your email");
+      } catch (error: any) {
+        setOpenEmailVerifyModal(false);
+        setModalText(`${error.code}`);
+      }
+    }
+  };
   return (
     <form onSubmit={(event) => handleSubmit(event)}>
       <Box
@@ -205,34 +228,71 @@ function profile() {
             )}
           </Box>
           <Box>
-            <Typography sx={{ marginLeft: "10px" }} variant="h6">
+            <Typography
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                marginLeft: "10px",
+              }}
+              variant="h6"
+            >
               Email
             </Typography>
             {edit ? (
-              <TextField
-                required
-                type="email"
-                name="email"
-                onChange={handleChange}
-                fullWidth
-                value={editUser.email}
-                sx={{ marginTop: "10px", backgroundColor: "#ffcccc" }}
-                label="Change Email"
-                variant="outlined"
-              />
+              <>
+                <TextField
+                  required
+                  type="email"
+                  name="email"
+                  onChange={handleChange}
+                  fullWidth
+                  value={editUser.email}
+                  sx={{ marginTop: "10px", backgroundColor: "#ffcccc" }}
+                  label="Change Email"
+                  variant="outlined"
+                />
+              </>
             ) : (
-              <Typography
+              <Box
                 sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
                   padding: "10px",
                   backgroundColor: "#ffcccc",
                   whiteSpace: "nowrap",
                   overflow: "hidden",
                   textOverflow: "ellipsis",
                 }}
-                variant="subtitle1"
               >
-                {editUser.email}
-              </Typography>
+                <Typography variant="subtitle1">{editUser.email}</Typography>
+                {user?.emailVerified && (
+                  <CheckCircleOutlineIcon color="success" />
+                )}
+              </Box>
+            )}
+            {!user?.emailVerified && (
+              <Box
+                sx={{
+                  display: "flex",
+                  flex: 1,
+                  gap: "20px",
+                  marginTop: "5px",
+                }}
+              >
+                <Alert sx={{ width: "100%" }} severity="error">
+                  Email is not verified
+                </Alert>
+                <Button
+                  onClick={handleVerifyEmail}
+                  sx={{ width: "50%" }}
+                  variant="outlined"
+                  color="success"
+                >
+                  Verify
+                </Button>
+              </Box>
             )}
           </Box>
           <Box
@@ -298,6 +358,11 @@ function profile() {
           )}
         </Box>
       </Box>
+      <EmailVerifyModal
+        open={openEmailVerifyModal}
+        handleClose={() => setOpenEmailVerifyModal(false)}
+        text={modalText}
+      />
     </form>
   );
 }

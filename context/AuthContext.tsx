@@ -30,6 +30,7 @@ export const AuthContextProvider = ({
           email: user?.email,
           photo: user?.photoURL,
           name: user?.displayName,
+          emailVerified: user?.emailVerified,
         });
       } else {
         setUser(null);

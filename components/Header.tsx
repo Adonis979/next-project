@@ -213,6 +213,7 @@ function Header() {
                 <Button
                   onClick={() => {
                     Router.push("/profile");
+                    handleClose();
                   }}
                   size="large"
                   sx={{ gap: "10px" }}
@@ -227,6 +228,7 @@ function Header() {
                 <Button
                   onClick={() => {
                     logout();
+                    handleClose();
                   }}
                   size="large"
                 >
