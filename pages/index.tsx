@@ -23,9 +23,13 @@ export default function Home() {
           gap: "20px",
         }}
       >
-        <Typography variant="h3">Welcome to grerezat</Typography>
+        <Typography variant="h6">Welcome to grerezat</Typography>
         <img
-          style={{ width: "100%", height: "700px", objectFit: "contain" }}
+          style={{ height: "200px", width: "200px", borderRadius: "50%" }}
+          src="/images/grerzat.png"
+        ></img>
+        <img
+          style={{ width: "100%", height: "400px", objectFit: "contain" }}
           src={user?.photo || "/images/no-user-image.png"}
         ></img>
       </Box>

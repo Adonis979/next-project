@@ -1,4 +1,6 @@
+import VerifyModal from "@/components/VerifyModal";
 import { useAuth } from "@/context/AuthContext";
+import { auth } from "@/firebase";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   Backdrop,
@@ -9,6 +11,7 @@ import {
   TextField,
 } from "@mui/material";
 import Typography from "@mui/material/Typography";
+import { sendPasswordResetEmail } from "firebase/auth";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
@@ -61,6 +64,27 @@ function login() {
       Router.push("/");
     } catch (error: any) {
       alert(error.code);
+    }
+  };
+
+  const [modalText, setModalText] = useState("");
+  const [openVerifyModal, setOpenVerifyModal] = useState(false);
+
+  const handleResetPassword = async () => {
+    if (user.email) {
+      try {
+        await sendPasswordResetEmail(auth, user.email);
+        setOpenVerifyModal(true);
+        setModalText(
+          `Verification password reset send to email:${user?.email}`
+        );
+      } catch (error: any) {
+        console.log(error.message);
+        setOpenVerifyModal(true);
+        setModalText(
+          "Verification password reset cannot be send. Please try again"
+        );
+      }
     }
   };
 
@@ -137,6 +161,16 @@ function login() {
                 ),
               }}
             />
+            <Box sx={{ display: "flex", gap: "5px", alignItems: "center" }}>
+              <Typography variant="subtitle1">Forgot password?</Typography>
+              <Typography
+                onClick={handleResetPassword}
+                sx={{ color: "#4d4dff", cursor: "pointer" }}
+                variant="subtitle1"
+              >
+                Reset
+              </Typography>
+            </Box>
           </Box>
           <Button type="submit" sx={{ marginTop: "50px" }} variant="contained">
             Log in
@@ -166,6 +200,11 @@ function login() {
           <CircularProgress color="inherit" />
         </Backdrop>
       </Box>
+      <VerifyModal
+        open={openVerifyModal}
+        handleClose={() => setOpenVerifyModal(false)}
+        text={modalText}
+      />
     </form>
   );
 }

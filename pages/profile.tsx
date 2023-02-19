@@ -4,7 +4,6 @@ import {
   Box,
   Button,
   CircularProgress,
-  LinearProgress,
   Snackbar,
   TextField,
   Typography,
@@ -13,15 +12,19 @@ import React, { useRef, useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import { auth, storage } from "@/firebase";
 import {
+  deleteUser,
   sendEmailVerification,
+  sendPasswordResetEmail,
   updateEmail,
   updateProfile,
 } from "firebase/auth";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import EmailVerifyModal from "@/components/EmailVerifyModal";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import VerifyModal from "@/components/VerifyModal";
+import { useRouter } from "next/router";
 
 function profile() {
+  const Router = useRouter();
   const { user } = useAuth();
   const [edit, setEdit] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -127,18 +130,52 @@ function profile() {
   };
 
   const [modalText, setModalText] = useState("");
-  const [openEmailVerifyModal, setOpenEmailVerifyModal] = useState(false);
+  const [openVerifyModal, setOpenVerifyModal] = useState(false);
 
   const handleVerifyEmail = async () => {
     const user = auth.currentUser;
     if (user) {
       try {
         await sendEmailVerification(user);
-        setOpenEmailVerifyModal(true);
+        setOpenVerifyModal(true);
         setModalText("Email verification send. Check your email");
       } catch (error: any) {
-        setOpenEmailVerifyModal(false);
+        setOpenVerifyModal(true);
         setModalText(`${error.code}`);
+      }
+    }
+  };
+
+  const handleResetPassword = async () => {
+    const user = auth.currentUser;
+    if (user?.email) {
+      try {
+        await sendPasswordResetEmail(auth, user?.email);
+        setOpenVerifyModal(true);
+        setModalText(
+          `Verification password reset send to email:${user?.email}`
+        );
+      } catch (error: any) {
+        setModalText(
+          "Verification password reset cannot be send. Please try again"
+        );
+      }
+    }
+  };
+
+  const deleteAccount = async () => {
+    const user = auth.currentUser;
+    if (user) {
+      try {
+        await deleteUser(user);
+        setOpenVerifyModal(true);
+        setModalText("Account has been deleted. We hope we will see you back");
+        Router.push("/login");
+      } catch (error) {
+        setOpenVerifyModal(true);
+        setModalText(
+          "There was a problem while deleting the account. Please try again"
+        );
       }
     }
   };
@@ -295,6 +332,15 @@ function profile() {
               </Box>
             )}
           </Box>
+          {edit && (
+            <Button
+              onClick={handleResetPassword}
+              variant="contained"
+              color="error"
+            >
+              Reset Password
+            </Button>
+          )}
           <Box
             sx={{
               display: "flex",
@@ -356,11 +402,22 @@ function profile() {
               </Button>
             </Box>
           )}
+          {edit && (
+            <Button
+              onClick={deleteAccount}
+              sx={{ marginTop: "50px" }}
+              fullWidth
+              variant="contained"
+              color="error"
+            >
+              Delete account
+            </Button>
+          )}
         </Box>
       </Box>
-      <EmailVerifyModal
-        open={openEmailVerifyModal}
-        handleClose={() => setOpenEmailVerifyModal(false)}
+      <VerifyModal
+        open={openVerifyModal}
+        handleClose={() => setOpenVerifyModal(false)}
         text={modalText}
       />
     </form>

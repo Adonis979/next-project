@@ -1,4 +1,5 @@
 import { Box, Modal, Typography } from "@mui/material";
+import { borderRadius } from "@mui/system";
 import React from "react";
 
 interface Props {
@@ -8,17 +9,21 @@ interface Props {
 }
 
 const style = {
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
   position: "absolute" as "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: { xs: "100%", md: "50%" },
+  width: { xs: "80%", md: "600px" },
   bgcolor: "background.paper",
   boxShadow: 24,
-  p: 4,
+  padding: "20px",
 };
 
-function EmailVerifyModal({ open, handleClose, text }: Props) {
+function VerifyModal({ open, handleClose, text }: Props) {
   return (
     <Modal
       open={open}
@@ -27,10 +32,16 @@ function EmailVerifyModal({ open, handleClose, text }: Props) {
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-        <Typography variant="h5">{text}</Typography>
+        <img
+          style={{ width: "100px", height: "100px", borderRadius: "50%" }}
+          src="/images/grerzat.png"
+        ></img>
+        <Typography sx={{ textAlign: "center" }} variant="h6">
+          {text}
+        </Typography>
       </Box>
     </Modal>
   );
 }
 
-export default EmailVerifyModal;
+export default VerifyModal;
