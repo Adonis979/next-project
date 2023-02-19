@@ -1,6 +1,6 @@
 import { Box, Modal, Typography } from "@mui/material";
-import { borderRadius } from "@mui/system";
 import React from "react";
+import Image from "next/image";
 
 interface Props {
   open: boolean;
@@ -32,10 +32,14 @@ function VerifyModal({ open, handleClose, text }: Props) {
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-        <img
+        <Image
           style={{ width: "100px", height: "100px", borderRadius: "50%" }}
+          width={100}
+          height={100}
+          loader={() => "/images/grerzat.png"}
           src="/images/grerzat.png"
-        ></img>
+          alt="grerza"
+        ></Image>
         <Typography sx={{ textAlign: "center" }} variant="h6">
           {text}
         </Typography>

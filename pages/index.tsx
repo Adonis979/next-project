@@ -2,6 +2,7 @@ import Head from "next/head";
 import { Box } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { useAuth } from "@/context/AuthContext";
+import Image from "next/image";
 
 export default function Home() {
   const { user } = useAuth();
@@ -24,14 +25,22 @@ export default function Home() {
         }}
       >
         <Typography variant="h6">Welcome to grerezat</Typography>
-        <img
-          style={{ height: "200px", width: "200px", borderRadius: "50%" }}
+        <Image
+          style={{ borderRadius: "50%" }}
+          height={200}
+          width={200}
+          loader={() => "/images/grerzat.png"}
           src="/images/grerzat.png"
-        ></img>
-        <img
-          style={{ width: "100%", height: "400px", objectFit: "contain" }}
+          alt="grerzat"
+        ></Image>
+        <Image
+          width={350}
+          height={350}
+          style={{ objectFit: "contain" }}
+          loader={() => user?.photo || "/images/no-user-image.png"}
           src={user?.photo || "/images/no-user-image.png"}
-        ></img>
+          alt="user-photo"
+        ></Image>
       </Box>
     </>
   );

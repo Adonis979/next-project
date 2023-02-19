@@ -195,7 +195,7 @@ function Header() {
               open={open}
               anchorOrigin={{
                 vertical: "bottom",
-                horizontal: "left",
+                horizontal: "center",
               }}
               transformOrigin={{
                 vertical: "top",

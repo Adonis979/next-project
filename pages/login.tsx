@@ -17,7 +17,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 
-function login() {
+function Login() {
   const [user, setUser] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
   const [emailError, setEmailError] = useState({
@@ -221,4 +221,4 @@ function login() {
   );
 }
 
-export default login;
+export default Login;

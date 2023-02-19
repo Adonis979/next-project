@@ -23,8 +23,9 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import VerifyModal from "@/components/VerifyModal";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import Image from "next/image";
 
-function profile() {
+function Profile() {
   const Router = useRouter();
   const { user } = useAuth();
   const [edit, setEdit] = useState(false);
@@ -361,14 +362,16 @@ function profile() {
               {progress > 0 ? (
                 <CircularProgress color="success" />
               ) : (
-                <img
+                <Image
                   style={{
-                    width: "300px",
-                    height: "300px",
                     objectFit: "contain",
                   }}
+                  loader={() => photoUrl || "/images/no-user-image.png"}
                   src={photoUrl || "/images/no-user-image.png"}
-                ></img>
+                  alt="user-photo"
+                  width={300}
+                  height={300}
+                ></Image>
               )}
               {edit && (
                 <>
@@ -432,4 +435,4 @@ function profile() {
   );
 }
 
-export default profile;
+export default Profile;
