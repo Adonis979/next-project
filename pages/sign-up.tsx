@@ -38,18 +38,26 @@ function SignUp() {
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    setLoader(true);
     event.preventDefault();
-    try {
-      await signup(user.email, user.password, user.name);
-      Router.push("/");
-      setLoader(false);
-    } catch (error: any) {
-      if (error.code === "auth/email-already-in-use") {
-        setEmailError({ error: true, helperText: "Email already in use" });
+    const passwordReg = /^(?=.*\d).{8,}$/;
+    if (!passwordReg.test(user.password)) {
+      setPasswordError({
+        error: true,
+        helperText: "Password must contain 8 characters and at least a number",
+      });
+    } else {
+      setLoader(true);
+      try {
+        await signup(user.email, user.password, user.name);
+        Router.push("/");
+        setLoader(false);
+      } catch (error: any) {
+        if (error.code === "auth/email-already-in-use") {
+          setEmailError({ error: true, helperText: "Email already in use" });
+        }
       }
+      setLoader(false);
     }
-    setLoader(false);
   };
 
   return (
@@ -126,6 +134,8 @@ function SignUp() {
             >
               <Typography variant="h6">Password</Typography>
               <TextField
+                error={passwordError.error}
+                helperText={passwordError.helperText}
                 required
                 name="password"
                 type={showPassword ? "text" : "password"}
