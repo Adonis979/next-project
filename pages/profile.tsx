@@ -22,6 +22,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import VerifyModal from "@/components/VerifyModal";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 function profile() {
   const Router = useRouter();
@@ -180,247 +181,254 @@ function profile() {
     }
   };
   return (
-    <form onSubmit={(event) => handleSubmit(event)}>
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "50px",
-          flexDirection: "column",
-        }}
-      >
+    <>
+      <Head>
+        <title>Grerëzat - Profile</title>
+        <meta name="description" content="Profile of grerëza" />
+        <link rel="icon" href="/images/grerzat.png" />
+      </Head>
+      <form onSubmit={(event) => handleSubmit(event)}>
         <Box
           sx={{
             display: "flex",
-            flexDirection: "column",
-            width: { xs: "100%", lg: "30%" },
-            gap: "30px",
+            alignItems: "center",
+            justifyContent: "center",
             padding: "50px",
-            boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+            flexDirection: "column",
           }}
         >
-          <Snackbar
-            open={snackBar.show}
-            autoHideDuration={6000}
-            onClose={() =>
-              setSnackBar({
-                show: false,
-                type: snackBar.type,
-                text: snackBar.text,
-              })
-            }
-            anchorOrigin={{ vertical, horizontal }}
-          >
-            {snackBar.type === "success" ? (
-              <Alert severity="success" sx={{ width: "100%" }}>
-                {snackBar.text}
-              </Alert>
-            ) : (
-              <Alert severity="error" sx={{ width: "100%" }}>
-                {snackBar.text}
-              </Alert>
-            )}
-          </Snackbar>
           <Box
             sx={{
               display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
+              flexDirection: "column",
+              width: { xs: "100%", lg: "30%" },
+              gap: "30px",
+              padding: "50px",
+              boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
             }}
           >
-            <Typography variant="h4">Profile</Typography>
-            <Button onClick={() => setEdit(!edit)}>
-              <EditIcon />
-            </Button>
-          </Box>
-          <Box>
-            <Typography sx={{ marginLeft: "10px" }} variant="h6">
-              Name
-            </Typography>
-            {edit ? (
-              <TextField
-                required
-                name="name"
-                onChange={handleChange}
-                fullWidth
-                value={editUser.name}
-                sx={{ marginTop: "10px", backgroundColor: "#ffcccc" }}
-                label="Change Name"
-                variant="outlined"
-              />
-            ) : (
-              <Typography
-                sx={{
-                  padding: "10px",
-                  backgroundColor: "#ffcccc",
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                }}
-                variant="subtitle1"
-              >
-                {editUser.name}
-              </Typography>
-            )}
-          </Box>
-          <Box>
-            <Typography
+            <Snackbar
+              open={snackBar.show}
+              autoHideDuration={6000}
+              onClose={() =>
+                setSnackBar({
+                  show: false,
+                  type: snackBar.type,
+                  text: snackBar.text,
+                })
+              }
+              anchorOrigin={{ vertical, horizontal }}
+            >
+              {snackBar.type === "success" ? (
+                <Alert severity="success" sx={{ width: "100%" }}>
+                  {snackBar.text}
+                </Alert>
+              ) : (
+                <Alert severity="error" sx={{ width: "100%" }}>
+                  {snackBar.text}
+                </Alert>
+              )}
+            </Snackbar>
+            <Box
               sx={{
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
-                marginLeft: "10px",
               }}
-              variant="h6"
             >
-              Email
-            </Typography>
-            {edit ? (
-              <>
+              <Typography variant="h4">Profile</Typography>
+              <Button onClick={() => setEdit(!edit)}>
+                <EditIcon />
+              </Button>
+            </Box>
+            <Box>
+              <Typography sx={{ marginLeft: "10px" }} variant="h6">
+                Name
+              </Typography>
+              {edit ? (
                 <TextField
                   required
-                  type="email"
-                  name="email"
+                  name="name"
                   onChange={handleChange}
                   fullWidth
-                  value={editUser.email}
+                  value={editUser.name}
                   sx={{ marginTop: "10px", backgroundColor: "#ffcccc" }}
-                  label="Change Email"
+                  label="Change Name"
                   variant="outlined"
                 />
-              </>
-            ) : (
-              <Box
+              ) : (
+                <Typography
+                  sx={{
+                    padding: "10px",
+                    backgroundColor: "#ffcccc",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                  }}
+                  variant="subtitle1"
+                >
+                  {editUser.name}
+                </Typography>
+              )}
+            </Box>
+            <Box>
+              <Typography
                 sx={{
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
-                  padding: "10px",
-                  backgroundColor: "#ffcccc",
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
+                  marginLeft: "10px",
                 }}
+                variant="h6"
               >
-                <Typography variant="subtitle1">{editUser.email}</Typography>
-                {user?.emailVerified && (
-                  <CheckCircleOutlineIcon color="success" />
-                )}
-              </Box>
-            )}
-            {!user?.emailVerified && (
-              <Box
-                sx={{
-                  display: "flex",
-                  flex: 1,
-                  gap: "20px",
-                  marginTop: "5px",
-                }}
-              >
-                <Alert sx={{ width: "100%" }} severity="error">
-                  Email is not verified
-                </Alert>
-                <Button
-                  onClick={handleVerifyEmail}
-                  sx={{ width: "50%" }}
-                  variant="outlined"
-                  color="success"
+                Email
+              </Typography>
+              {edit ? (
+                <>
+                  <TextField
+                    required
+                    type="email"
+                    name="email"
+                    onChange={handleChange}
+                    fullWidth
+                    value={editUser.email}
+                    sx={{ marginTop: "10px", backgroundColor: "#ffcccc" }}
+                    label="Change Email"
+                    variant="outlined"
+                  />
+                </>
+              ) : (
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    padding: "10px",
+                    backgroundColor: "#ffcccc",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                  }}
                 >
-                  Verify
-                </Button>
-              </Box>
-            )}
-          </Box>
-          {edit && (
-            <Button
-              onClick={handleResetPassword}
-              variant="contained"
-              color="error"
-            >
-              Reset Password
-            </Button>
-          )}
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              flexDirection: "column",
-              justifyContent: "center",
-              gap: "20px",
-            }}
-          >
-            <Typography variant="h6">Photo</Typography>
-            {progress > 0 ? (
-              <CircularProgress color="success" />
-            ) : (
-              <img
-                style={{
-                  width: "300px",
-                  height: "300px",
-                  objectFit: "contain",
-                }}
-                src={photoUrl || "/images/no-user-image.png"}
-              ></img>
-            )}
+                  <Typography variant="subtitle1">{editUser.email}</Typography>
+                  {user?.emailVerified && (
+                    <CheckCircleOutlineIcon color="success" />
+                  )}
+                </Box>
+              )}
+              {!user?.emailVerified && (
+                <Box
+                  sx={{
+                    display: "flex",
+                    flex: 1,
+                    gap: "20px",
+                    marginTop: "5px",
+                  }}
+                >
+                  <Alert sx={{ width: "100%" }} severity="error">
+                    Email is not verified
+                  </Alert>
+                  <Button
+                    onClick={handleVerifyEmail}
+                    sx={{ width: "50%" }}
+                    variant="outlined"
+                    color="success"
+                  >
+                    Verify
+                  </Button>
+                </Box>
+              )}
+            </Box>
             {edit && (
-              <>
-                <input
-                  type="file"
-                  onChange={(files) => handleUploadFile(files.target.files)}
-                  ref={fileInputRef}
-                  style={{ display: "none" }}
-                />
-                <Button
-                  variant="contained"
-                  color="warning"
-                  onClick={handleUploadClick}
-                >
-                  Upload
-                </Button>
-              </>
-            )}
-          </Box>
-          {edit && (
-            <Box
-              sx={{
-                marginTop: "50px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
               <Button
-                onClick={() => setEdit(false)}
-                variant="outlined"
+                onClick={handleResetPassword}
+                variant="contained"
                 color="error"
               >
-                Cancel
+                Reset Password
               </Button>
-              <Button type="submit" variant="contained" color="success">
-                Save
-              </Button>
-            </Box>
-          )}
-          {edit && (
-            <Button
-              onClick={deleteAccount}
-              sx={{ marginTop: "50px" }}
-              fullWidth
-              variant="contained"
-              color="error"
+            )}
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                flexDirection: "column",
+                justifyContent: "center",
+                gap: "20px",
+              }}
             >
-              Delete account
-            </Button>
-          )}
+              <Typography variant="h6">Photo</Typography>
+              {progress > 0 ? (
+                <CircularProgress color="success" />
+              ) : (
+                <img
+                  style={{
+                    width: "300px",
+                    height: "300px",
+                    objectFit: "contain",
+                  }}
+                  src={photoUrl || "/images/no-user-image.png"}
+                ></img>
+              )}
+              {edit && (
+                <>
+                  <input
+                    type="file"
+                    onChange={(files) => handleUploadFile(files.target.files)}
+                    ref={fileInputRef}
+                    style={{ display: "none" }}
+                  />
+                  <Button
+                    variant="contained"
+                    color="warning"
+                    onClick={handleUploadClick}
+                  >
+                    Upload
+                  </Button>
+                </>
+              )}
+            </Box>
+            {edit && (
+              <Box
+                sx={{
+                  marginTop: "50px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Button
+                  onClick={() => setEdit(false)}
+                  variant="outlined"
+                  color="error"
+                >
+                  Cancel
+                </Button>
+                <Button type="submit" variant="contained" color="success">
+                  Save
+                </Button>
+              </Box>
+            )}
+            {edit && (
+              <Button
+                onClick={deleteAccount}
+                sx={{ marginTop: "50px" }}
+                fullWidth
+                variant="contained"
+                color="error"
+              >
+                Delete account
+              </Button>
+            )}
+          </Box>
         </Box>
-      </Box>
-      <VerifyModal
-        open={openVerifyModal}
-        handleClose={() => setOpenVerifyModal(false)}
-        text={modalText}
-      />
-    </form>
+        <VerifyModal
+          open={openVerifyModal}
+          handleClose={() => setOpenVerifyModal(false)}
+          text={modalText}
+        />
+      </form>
+    </>
   );
 }
 

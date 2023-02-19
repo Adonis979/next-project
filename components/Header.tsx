@@ -220,7 +220,7 @@ function Header() {
                 >
                   Profile
                   <Avatar
-                    sx={{ height: "30px", width: "30px" }}
+                    sx={{ height: "25px", width: "25px" }}
                     alt="Remy Sharp"
                     src={user.photo || "/images/no-user-image.png"}
                   />

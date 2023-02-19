@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { sendPasswordResetEmail } from "firebase/auth";
+import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
@@ -89,123 +90,134 @@ function login() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "50px",
-          flexDirection: "column",
-        }}
-      >
+    <>
+      <Head>
+        <title>Grerëzat - Login</title>
+        <meta name="description" content="Login to grerëzat" />
+        <link rel="icon" href="/images/grerzat.png" />
+      </Head>
+      <form onSubmit={handleSubmit}>
         <Box
           sx={{
             display: "flex",
-            flexDirection: "column",
-            width: { xs: "100%", sm: "30%" },
-            gap: "30px",
+            alignItems: "center",
+            justifyContent: "center",
             padding: "50px",
-            boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+            flexDirection: "column",
           }}
         >
-          <Typography variant="h4">Log In</Typography>
           <Box
             sx={{
               display: "flex",
               flexDirection: "column",
-              gap: "10px",
+              width: { xs: "100%", sm: "30%" },
+              gap: "30px",
+              padding: "50px",
+              boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
             }}
           >
-            <Typography variant="h6">Email</Typography>
-            <TextField
-              error={emailError.error}
-              helperText={emailError.helperText}
-              required
-              type="email"
-              name="email"
-              value={user.email}
-              onChange={handleChange}
-              label="Type your email"
-              variant="outlined"
-            />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "10px",
-            }}
-          >
-            <Typography variant="h6">Password</Typography>
-            <TextField
-              error={passwordError.error}
-              helperText={passwordError.helperText}
-              required
-              name="password"
-              type={showPassword ? "text" : "password"}
-              value={user.password}
-              onChange={handleChange}
-              label="Type your password"
-              variant="outlined"
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment
-                    sx={{ cursor: "pointer" }}
-                    onClick={() => setShowPassword(!showPassword)}
-                    position="end"
-                  >
-                    {" "}
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </InputAdornment>
-                ),
+            <Typography variant="h4">Log In</Typography>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "10px",
               }}
-            />
-            <Box sx={{ display: "flex", gap: "5px", alignItems: "center" }}>
-              <Typography variant="subtitle1">Forgot password?</Typography>
-              <Typography
-                onClick={handleResetPassword}
-                sx={{ color: "#4d4dff", cursor: "pointer" }}
-                variant="subtitle1"
-              >
-                Reset
-              </Typography>
+            >
+              <Typography variant="h6">Email</Typography>
+              <TextField
+                error={emailError.error}
+                helperText={emailError.helperText}
+                required
+                type="email"
+                name="email"
+                value={user.email}
+                onChange={handleChange}
+                label="Type your email"
+                variant="outlined"
+              />
             </Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "10px",
+              }}
+            >
+              <Typography variant="h6">Password</Typography>
+              <TextField
+                error={passwordError.error}
+                helperText={passwordError.helperText}
+                required
+                name="password"
+                type={showPassword ? "text" : "password"}
+                value={user.password}
+                onChange={handleChange}
+                label="Type your password"
+                variant="outlined"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment
+                      sx={{ cursor: "pointer" }}
+                      onClick={() => setShowPassword(!showPassword)}
+                      position="end"
+                    >
+                      {" "}
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <Box sx={{ display: "flex", gap: "5px", alignItems: "center" }}>
+                <Typography variant="subtitle1">Forgot password?</Typography>
+                <Typography
+                  onClick={handleResetPassword}
+                  sx={{ color: "#4d4dff", cursor: "pointer" }}
+                  variant="subtitle1"
+                >
+                  Reset
+                </Typography>
+              </Box>
+            </Box>
+            <Button
+              type="submit"
+              sx={{ marginTop: "50px" }}
+              variant="contained"
+            >
+              Log in
+            </Button>
+            <Button
+              onClick={handleLoginGoogle}
+              sx={{
+                backgroundColor: "red",
+                ":hover": { backgroundColor: "red", opacity: "0.8" },
+                color: "white",
+              }}
+            >
+              Login with Google
+            </Button>
+            <Typography variant="subtitle1">
+              Dont have an account?{" "}
+              <Link style={{ fontStyle: "italic" }} href="/sign-up">
+                Sign up
+              </Link>
+            </Typography>
           </Box>
-          <Button type="submit" sx={{ marginTop: "50px" }} variant="contained">
-            Log in
-          </Button>
-          <Button
-            onClick={handleLoginGoogle}
-            sx={{
-              backgroundColor: "red",
-              ":hover": { backgroundColor: "red", opacity: "0.8" },
-              color: "white",
-            }}
+          <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={loader}
+            onClick={() => setLoader(false)}
           >
-            Login with Google
-          </Button>
-          <Typography variant="subtitle1">
-            Dont have an account?{" "}
-            <Link style={{ fontStyle: "italic" }} href="/sign-up">
-              Sign up
-            </Link>
-          </Typography>
+            <CircularProgress color="inherit" />
+          </Backdrop>
         </Box>
-        <Backdrop
-          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={loader}
-          onClick={() => setLoader(false)}
-        >
-          <CircularProgress color="inherit" />
-        </Backdrop>
-      </Box>
-      <VerifyModal
-        open={openVerifyModal}
-        handleClose={() => setOpenVerifyModal(false)}
-        text={modalText}
-      />
-    </form>
+        <VerifyModal
+          open={openVerifyModal}
+          handleClose={() => setOpenVerifyModal(false)}
+          text={modalText}
+        />
+      </form>
+    </>
   );
 }
 
