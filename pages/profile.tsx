@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import React, { useRef, useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
-import { auth, storage } from "@/firebase";
+import { auth } from "@/firebase";
 import {
   deleteUser,
   sendEmailVerification,
@@ -18,12 +18,12 @@ import {
   updateEmail,
   updateProfile,
 } from "firebase/auth";
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import VerifyModal from "@/components/VerifyModal";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import Image from "next/image";
+import { uploadFile } from "@/utils/UploadImage";
 
 function Profile() {
   const Router = useRouter();
@@ -51,37 +51,7 @@ function Profile() {
     }
   };
   const handleUploadFile = (files: any) => {
-    const image = files[0];
-    if (image) {
-      const name = image?.name;
-      const storageRef = ref(storage, `images/${name}`);
-      const uploadTask = uploadBytesResumable(storageRef, image);
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          setProgress(progress);
-          switch (snapshot.state) {
-            case "paused":
-              console.log("Upload is paused");
-              break;
-            case "running":
-              console.log("Upload is running");
-              break;
-          }
-        },
-        (error) => {
-          alert(error);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            setPhotoUrl(downloadURL);
-            setProgress(0);
-          });
-        }
-      );
-    }
+    uploadFile(files, "images", { setProgress, setPhotoUrl });
   };
   const handleChange = (
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
