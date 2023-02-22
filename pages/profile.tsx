@@ -142,7 +142,9 @@ function Profile() {
         await deleteUser(user);
         setOpenVerifyModal(true);
         setModalText("Account has been deleted. We hope we will see you back");
-        Router.push("/login");
+        setTimeout(() => {
+          Router.push("/login");
+        }, 3000);
       } catch (error) {
         setOpenVerifyModal(true);
         setModalText(

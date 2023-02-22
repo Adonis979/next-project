@@ -3,6 +3,8 @@ import { db } from "@/firebase";
 import { Box, Button, Typography } from "@mui/material";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
+import Router from "next/router";
+import { useAuth } from "@/context/AuthContext";
 
 interface FirestoreData {
   name: string;
@@ -14,6 +16,7 @@ interface FirestoreData {
 }
 
 function Shop() {
+  const { user } = useAuth();
   const [openAddListingModal, setOpenAddListingModal] = useState(false);
   const [items, setItems] = useState<FirestoreData[]>([
     {
@@ -25,6 +28,11 @@ function Shop() {
       size: "",
     },
   ]);
+  const handleOpen = () => {
+    if (!user) {
+      Router.push("/login");
+    } else setOpenAddListingModal(true);
+  };
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
@@ -50,7 +58,7 @@ function Shop() {
         alignItems: "center",
       }}
     >
-      <Button onClick={() => setOpenAddListingModal(true)} variant="contained">
+      <Button onClick={handleOpen} variant="contained">
         Add listing
       </Button>
       <AddListingModal
