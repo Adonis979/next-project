@@ -58,7 +58,6 @@ function AddListingModal({ open, handleClose }: Props) {
     category: "",
   });
   const { user } = useAuth();
-  const uid = user?.uid;
   const [snackBar, setSnackBar] = useState<State>({
     show: false,
     text: "",
@@ -92,7 +91,7 @@ function AddListingModal({ open, handleClose }: Props) {
       setSnackBar({
         show: true,
         severity: "success",
-        text: "Thanks for adding this listing, our team is gonna review your listing and than add it on the listing shop. All the best Grerzat",
+        text: "Thanks for adding this listing, our team is gonna review your listing and than add it on the listing shop. All the best Grerëzat",
       });
       handleClose();
       setTimeout(async () => {
