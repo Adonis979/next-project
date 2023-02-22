@@ -1,9 +1,8 @@
 import AddListingModal from "@/components/AddListingModal";
 import { db } from "@/firebase";
 import { Box, Button, Typography } from "@mui/material";
-import { collection, Firestore, getDocs } from "firebase/firestore";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 
 interface FirestoreData {
   name: string;
@@ -28,19 +27,23 @@ function Shop() {
   ]);
 
   useEffect(() => {
-    const getData = async () => {
-      const querySnapshot = await getDocs(collection(db, "items"));
-      const data: FirestoreData[] = querySnapshot.docs.map(
-        (doc) => doc.data() as FirestoreData
-      );
-      setItems(data);
-    };
-    getData();
+    const unsubscribe = onSnapshot(
+      query(collection(db, "items"), orderBy("date", "desc")), // add orderBy query
+      (querySnapshot) => {
+        const data: FirestoreData[] = querySnapshot.docs.map(
+          (doc) => doc.data() as FirestoreData
+        );
+        setItems(data);
+        console.log(data);
+      }
+    );
+
+    return () => unsubscribe();
   }, []);
   return (
     <Box
       sx={{
-        height: "100vh",
+        height: "100%",
         padding: "20px",
         display: "flex",
         flexDirection: "column",
@@ -64,17 +67,22 @@ function Shop() {
             marginTop: "50px",
             backgroundColor: "lightcoral",
             padding: "20px",
+            width: { xs: "100%", sm: "50%" },
           }}
         >
-          <Image
-            src={item.photoUrl}
-            loader={() => item.photoUrl || "/images/no-user-image.png"}
-            alt=""
-            width={110}
-            height={110}
-          ></Image>
+          <Box
+            sx={{ width: { xs: 120, sm: 300 }, height: { xs: 300, sm: 300 } }}
+          >
+            <img
+              src={item.photoUrl || "/images/no-user-image.png"}
+              alt=""
+              width="100%"
+              height="100%"
+              style={{ objectFit: "contain" }}
+            ></img>
+          </Box>
           <Box>
-            <Typography variant="h3">{item.name}</Typography>
+            <Typography variant="h5">{item.name}</Typography>
             <Box sx={{ display: "flex", alignItems: "center", gap: "5px" }}>
               <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
                 User: {item.user},
@@ -84,6 +92,7 @@ function Shop() {
             <Typography variant="subtitle1">
               Category: {item.category}
             </Typography>
+            <Typography variant="subtitle1">Date: </Typography>
           </Box>
         </Box>
       ))}
