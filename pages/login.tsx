@@ -121,7 +121,7 @@ function Login() {
                 name="email"
                 value={user.email}
                 handleChange={handleChange}
-                isPasswordInput={undefined}
+                isPasswordInput={false}
               />
               <Box
                 sx={{

@@ -18,12 +18,7 @@ interface Props {
   setShowPassword?: any;
   title: string;
   type?: string;
-  isPasswordInput?:
-    | Partial<InputProps>
-    | Partial<FilledInputProps>
-    | Partial<OutlinedInputProps>
-    | undefined
-    | boolean;
+  isPasswordInput?: boolean;
 }
 
 function InputTextField({
