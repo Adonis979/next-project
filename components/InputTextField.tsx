@@ -51,18 +51,20 @@ function InputTextField({
         label="Type your password"
         variant="outlined"
         InputProps={
-          isPasswordInput && {
-            endAdornment: (
-              <InputAdornment
-                sx={{ cursor: "pointer" }}
-                onClick={() => setShowPassword(!showPassword)}
-                position="end"
-              >
-                {" "}
-                {showPassword ? <VisibilityOff /> : <Visibility />}
-              </InputAdornment>
-            ),
-          }
+          isPasswordInput
+            ? {
+                endAdornment: (
+                  <InputAdornment
+                    sx={{ cursor: "pointer" }}
+                    onClick={() => setShowPassword(!showPassword)}
+                    position="end"
+                  >
+                    {" "}
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </InputAdornment>
+                ),
+              }
+            : undefined
         }
       />
     </>
