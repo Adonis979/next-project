@@ -1,6 +1,8 @@
+import InputTextField from "@/components/InputTextField";
 import VerifyModal from "@/components/VerifyModal";
 import { useAuth } from "@/context/AuthContext";
 import { auth } from "@/firebase";
+import { ResetPassword } from "@/utils/Profile";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   Backdrop,
@@ -73,19 +75,7 @@ function Login() {
 
   const handleResetPassword = async () => {
     if (user.email) {
-      try {
-        await sendPasswordResetEmail(auth, user.email);
-        setOpenVerifyModal(true);
-        setModalText(
-          `Verification password reset send to email:${user?.email}`
-        );
-      } catch (error: any) {
-        console.log(error.message);
-        setOpenVerifyModal(true);
-        setModalText(
-          "Verification password reset cannot be send. Please try again"
-        );
-      }
+      ResetPassword(user, { setOpenVerifyModal, setModalText });
     }
   };
 
@@ -124,98 +114,83 @@ function Login() {
                 gap: "10px",
               }}
             >
-              <Typography variant="h6">Email</Typography>
-              <TextField
-                error={emailError.error}
-                helperText={emailError.helperText}
-                required
+              <InputTextField
+                title="Email"
+                fieldError={emailError}
                 type="email"
                 name="email"
                 value={user.email}
-                onChange={handleChange}
-                label="Type your email"
-                variant="outlined"
+                handleChange={handleChange}
+                isPasswordInput={undefined}
               />
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "10px",
-              }}
-            >
-              <Typography variant="h6">Password</Typography>
-              <TextField
-                error={passwordError.error}
-                helperText={passwordError.helperText}
-                required
-                name="password"
-                type={showPassword ? "text" : "password"}
-                value={user.password}
-                onChange={handleChange}
-                label="Type your password"
-                variant="outlined"
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment
-                      sx={{ cursor: "pointer" }}
-                      onClick={() => setShowPassword(!showPassword)}
-                      position="end"
-                    >
-                      {" "}
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </InputAdornment>
-                  ),
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "10px",
                 }}
-              />
-              <Box sx={{ display: "flex", gap: "5px", alignItems: "center" }}>
-                <Typography variant="subtitle1">Forgot password?</Typography>
-                <Typography
-                  onClick={handleResetPassword}
-                  sx={{ color: "#4d4dff", cursor: "pointer" }}
-                  variant="subtitle1"
-                >
-                  Reset
-                </Typography>
+              >
+                <InputTextField
+                  isPasswordInput={true}
+                  title="Password"
+                  fieldError={passwordError}
+                  handleChange={handleChange}
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  value={user.password}
+                  setShowPassword={setShowPassword}
+                  showPassword={showPassword}
+                />
+
+                <Box sx={{ display: "flex", gap: "5px", alignItems: "center" }}>
+                  <Typography variant="subtitle1">Forgot password?</Typography>
+                  <Typography
+                    onClick={handleResetPassword}
+                    sx={{ color: "#4d4dff", cursor: "pointer" }}
+                    variant="subtitle1"
+                  >
+                    Reset
+                  </Typography>
+                </Box>
               </Box>
+              <Button
+                type="submit"
+                sx={{ marginTop: "50px" }}
+                variant="contained"
+              >
+                Log in
+              </Button>
+              <Button
+                onClick={handleLoginGoogle}
+                sx={{
+                  backgroundColor: "red",
+                  ":hover": { backgroundColor: "red", opacity: "0.8" },
+                  color: "white",
+                }}
+              >
+                Login with Google
+              </Button>
+              <Typography variant="subtitle1">
+                Dont have an account?{" "}
+                <Link style={{ fontStyle: "italic" }} href="/sign-up">
+                  Sign up
+                </Link>
+              </Typography>
             </Box>
-            <Button
-              type="submit"
-              sx={{ marginTop: "50px" }}
-              variant="contained"
+            <Backdrop
+              sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+              open={loader}
+              onClick={() => setLoader(false)}
             >
-              Log in
-            </Button>
-            <Button
-              onClick={handleLoginGoogle}
-              sx={{
-                backgroundColor: "red",
-                ":hover": { backgroundColor: "red", opacity: "0.8" },
-                color: "white",
-              }}
-            >
-              Login with Google
-            </Button>
-            <Typography variant="subtitle1">
-              Dont have an account?{" "}
-              <Link style={{ fontStyle: "italic" }} href="/sign-up">
-                Sign up
-              </Link>
-            </Typography>
+              <CircularProgress color="inherit" />
+            </Backdrop>
           </Box>
-          <Backdrop
-            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-            open={loader}
-            onClick={() => setLoader(false)}
-          >
-            <CircularProgress color="inherit" />
-          </Backdrop>
+          <VerifyModal
+            open={openVerifyModal}
+            handleClose={() => setOpenVerifyModal(false)}
+            text={modalText}
+          />
         </Box>
-        <VerifyModal
-          open={openVerifyModal}
-          handleClose={() => setOpenVerifyModal(false)}
-          text={modalText}
-        />
       </form>
     </>
   );

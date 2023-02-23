@@ -2,7 +2,6 @@ import {
   AlertColor,
   Box,
   Button,
-  CircularProgress,
   FormControl,
   InputLabel,
   MenuItem,
@@ -17,6 +16,7 @@ import { useAuth } from "@/context/AuthContext";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "@/firebase";
 import SnackBarModal from "./SnackBarModal";
+import UploadImage from "./UploadImage";
 
 interface Props {
   open: boolean;
@@ -104,6 +104,7 @@ function AddListingModal({ open, handleClose }: Props) {
             photoUrl: photoUrl,
             user: user.name,
             date: new Date(),
+            userId: user?.uid,
           });
         } catch (e) {
           setSnackBar({
@@ -215,18 +216,7 @@ function AddListingModal({ open, handleClose }: Props) {
                 justifyContent: "center",
               }}
             >
-              {progress > 0 ? (
-                <CircularProgress color="success" />
-              ) : (
-                <Image
-                  width={300}
-                  height={300}
-                  loader={() => photoUrl || "/images/no-user-image.png"}
-                  src={photoUrl || "/images/no-user-image.png"}
-                  alt="item"
-                  style={{ objectFit: "contain" }}
-                ></Image>
-              )}
+              <UploadImage photoUrl={photoUrl} progress={progress} />
             </Box>
             <Box
               sx={{

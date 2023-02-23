@@ -1,32 +1,22 @@
 import { useAuth } from "@/context/AuthContext";
-import {
-  Alert,
-  Box,
-  Button,
-  CircularProgress,
-  Snackbar,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import React, { useRef, useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import { auth } from "@/firebase";
-import {
-  deleteUser,
-  sendEmailVerification,
-  sendPasswordResetEmail,
-  updateEmail,
-  updateProfile,
-} from "firebase/auth";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import VerifyModal from "@/components/VerifyModal";
-import { useRouter } from "next/router";
 import Head from "next/head";
-import Image from "next/image";
 import { uploadFile } from "@/utils/UploadImage";
+import {
+  DeleteAccount,
+  ResetPassword,
+  UpdateProfile,
+  VerifyEmail,
+} from "@/utils/Profile";
+import ProfileSnackBar from "@/components/ProfileSnackBar";
+import EditableField from "@/components/EditableField";
+import UploadImage from "@/components/UploadImage";
 
 function Profile() {
-  const Router = useRouter();
   const { user } = useAuth();
   const [edit, setEdit] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -35,8 +25,6 @@ function Profile() {
     type: "",
     text: "",
   });
-  const vertical = "top";
-  const horizontal = "center";
   const [editUser, setEditUser] = useState({
     name: user?.name,
     email: user?.email,
@@ -65,37 +53,7 @@ function Profile() {
     event.preventDefault();
     const user = auth.currentUser;
     if (user) {
-      try {
-        if (
-          user?.displayName !== editUser.name ||
-          user?.photoURL !== photoUrl
-        ) {
-          await updateProfile(user, {
-            displayName: editUser.name,
-            photoURL: photoUrl,
-          });
-          setSnackBar({
-            show: true,
-            type: "success",
-            text: "Profile updated successfully",
-          });
-        }
-        if (user?.email !== editUser.email) {
-          await updateEmail(user, editUser.email);
-          setSnackBar({
-            show: true,
-            type: "success",
-            text: "Profile updated successfully",
-          });
-        }
-        setEdit(false);
-      } catch (error: any) {
-        setSnackBar({
-          show: true,
-          type: "error",
-          text: "Failed to update profile",
-        });
-      }
+      UpdateProfile(user, editUser, photoUrl, { setEdit, setSnackBar });
     } else {
       alert("You should sign in");
     }
@@ -107,50 +65,21 @@ function Profile() {
   const handleVerifyEmail = async () => {
     const user = auth.currentUser;
     if (user) {
-      try {
-        await sendEmailVerification(user);
-        setOpenVerifyModal(true);
-        setModalText("Email verification send. Check your email");
-      } catch (error: any) {
-        setOpenVerifyModal(true);
-        setModalText(`${error.code}`);
-      }
+      VerifyEmail(user, { setOpenVerifyModal, setModalText });
     }
   };
 
   const handleResetPassword = async () => {
     const user = auth.currentUser;
     if (user?.email) {
-      try {
-        await sendPasswordResetEmail(auth, user?.email);
-        setOpenVerifyModal(true);
-        setModalText(
-          `Verification password reset send to email:${user?.email}`
-        );
-      } catch (error: any) {
-        setModalText(
-          "Verification password reset cannot be send. Please try again"
-        );
-      }
+      ResetPassword(user, { setOpenVerifyModal, setModalText });
     }
   };
 
   const deleteAccount = async () => {
     const user = auth.currentUser;
     if (user) {
-      try {
-        await deleteUser(user);
-        setOpenVerifyModal(true);
-        setModalText("Account has been deleted. We hope we will see you back");
-        setTimeout(() => {
-          Router.push("/login");
-        }, 3000);
-      } catch (error) {
-        setOpenVerifyModal(true);
-        setModalText(
-          "There was a problem while deleting the account. Please try again"
-        );
-      }
+      DeleteAccount(user, { setOpenVerifyModal, setModalText });
     }
   };
   return (
@@ -180,28 +109,7 @@ function Profile() {
               boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
             }}
           >
-            <Snackbar
-              open={snackBar.show}
-              autoHideDuration={6000}
-              onClose={() =>
-                setSnackBar({
-                  show: false,
-                  type: snackBar.type,
-                  text: snackBar.text,
-                })
-              }
-              anchorOrigin={{ vertical, horizontal }}
-            >
-              {snackBar.type === "success" ? (
-                <Alert severity="success" sx={{ width: "100%" }}>
-                  {snackBar.text}
-                </Alert>
-              ) : (
-                <Alert severity="error" sx={{ width: "100%" }}>
-                  {snackBar.text}
-                </Alert>
-              )}
-            </Snackbar>
+            <ProfileSnackBar setSnackBar={setSnackBar} snackBar={snackBar} />
             <Box
               sx={{
                 display: "flex",
@@ -214,104 +122,23 @@ function Profile() {
                 <EditIcon />
               </Button>
             </Box>
-            <Box>
-              <Typography sx={{ marginLeft: "10px" }} variant="h6">
-                Name
-              </Typography>
-              {edit ? (
-                <TextField
-                  required
-                  name="name"
-                  onChange={handleChange}
-                  fullWidth
-                  value={editUser.name}
-                  sx={{ marginTop: "10px", backgroundColor: "#ffcccc" }}
-                  label="Change Name"
-                  variant="outlined"
-                />
-              ) : (
-                <Typography
-                  sx={{
-                    padding: "10px",
-                    backgroundColor: "#ffcccc",
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                  }}
-                  variant="subtitle1"
-                >
-                  {editUser.name}
-                </Typography>
-              )}
-            </Box>
-            <Box>
-              <Typography
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  marginLeft: "10px",
-                }}
-                variant="h6"
-              >
-                Email
-              </Typography>
-              {edit ? (
-                <>
-                  <TextField
-                    required
-                    type="email"
-                    name="email"
-                    onChange={handleChange}
-                    fullWidth
-                    value={editUser.email}
-                    sx={{ marginTop: "10px", backgroundColor: "#ffcccc" }}
-                    label="Change Email"
-                    variant="outlined"
-                  />
-                </>
-              ) : (
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    padding: "10px",
-                    backgroundColor: "#ffcccc",
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                  }}
-                >
-                  <Typography variant="subtitle1">{editUser.email}</Typography>
-                  {user?.emailVerified && (
-                    <CheckCircleOutlineIcon color="success" />
-                  )}
-                </Box>
-              )}
-              {!user?.emailVerified && (
-                <Box
-                  sx={{
-                    display: "flex",
-                    flex: 1,
-                    gap: "20px",
-                    marginTop: "5px",
-                  }}
-                >
-                  <Alert sx={{ width: "100%" }} severity="error">
-                    Email is not verified
-                  </Alert>
-                  <Button
-                    onClick={handleVerifyEmail}
-                    sx={{ width: "50%" }}
-                    variant="outlined"
-                    color="success"
-                  >
-                    Verify
-                  </Button>
-                </Box>
-              )}
-            </Box>
+            <EditableField
+              user={true}
+              name="name"
+              edit={edit}
+              value={editUser.name}
+              title="Name"
+              handleChange={handleChange}
+            />
+            <EditableField
+              user={user?.emailVerified}
+              edit={edit}
+              handleChange={handleChange}
+              name="email"
+              title="Email"
+              value={editUser.email}
+              handleVerifyEmail={handleVerifyEmail}
+            />
             {edit && (
               <Button
                 onClick={handleResetPassword}
@@ -331,20 +158,7 @@ function Profile() {
               }}
             >
               <Typography variant="h6">Photo</Typography>
-              {progress > 0 ? (
-                <CircularProgress color="success" />
-              ) : (
-                <Image
-                  style={{
-                    objectFit: "contain",
-                  }}
-                  loader={() => photoUrl || "/images/no-user-image.png"}
-                  src={photoUrl || "/images/no-user-image.png"}
-                  alt="user-photo"
-                  width={300}
-                  height={300}
-                ></Image>
-              )}
+              <UploadImage photoUrl={photoUrl} progress={progress} />
               {edit && (
                 <>
                   <input

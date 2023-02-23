@@ -1,3 +1,4 @@
+import InputTextField from "@/components/InputTextField";
 import { useAuth } from "@/context/AuthContext";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
@@ -95,14 +96,11 @@ function SignUp() {
                 gap: "10px",
               }}
             >
-              <Typography variant="h6">Your name</Typography>
-              <TextField
-                required
+              <InputTextField
+                handleChange={handleChange}
+                title="Your name"
                 name="name"
                 value={user.name}
-                onChange={handleChange}
-                label="Type your name"
-                variant="outlined"
               />
             </Box>
             <Box
@@ -112,17 +110,12 @@ function SignUp() {
                 gap: "10px",
               }}
             >
-              <Typography variant="h6">Email</Typography>
-              <TextField
-                error={emailError.error}
-                helperText={emailError.helperText}
-                required
-                type="email"
-                name="email"
+              <InputTextField
+                title="Email"
+                handleChange={handleChange}
                 value={user.email}
-                onChange={handleChange}
-                label="Type your email"
-                variant="outlined"
+                fieldError={emailError}
+                name="email"
               />
             </Box>
             <Box
@@ -132,29 +125,16 @@ function SignUp() {
                 gap: "10px",
               }}
             >
-              <Typography variant="h6">Password</Typography>
-              <TextField
-                error={passwordError.error}
-                helperText={passwordError.helperText}
-                required
+              <InputTextField
+                isPasswordInput={true}
+                title="Password"
+                fieldError={passwordError}
+                handleChange={handleChange}
                 name="password"
                 type={showPassword ? "text" : "password"}
                 value={user.password}
-                onChange={handleChange}
-                label="Type your password"
-                variant="outlined"
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment
-                      sx={{ cursor: "pointer" }}
-                      onClick={() => setShowPassword(!showPassword)}
-                      position="end"
-                    >
-                      {" "}
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </InputAdornment>
-                  ),
-                }}
+                setShowPassword={setShowPassword}
+                showPassword={showPassword}
               />
             </Box>
             <Button
