@@ -1,5 +1,6 @@
 import { db } from "@/firebase";
 import {
+  addDoc,
   collection,
   deleteDoc,
   doc,
@@ -45,10 +46,43 @@ export const GetListings = (setItems: any) => {
   );
 };
 
-export const DeleteListings = async (id: string) => {
+export const DeleteListings = async (id: string | undefined) => {
+  if (id) {
+    try {
+      await deleteDoc(doc(db, "items", `${id}`));
+    } catch (error) {
+      console.log(error);
+    }
+  }
+};
+
+export const AddListing = async (
+  item: {
+    name: string;
+    description: string;
+    size: string;
+    category: string;
+  },
+  photoUrl: string | null,
+  user: { uid: string; name: string },
+  setSnackBar: any
+) => {
   try {
-    await deleteDoc(doc(db, "items", `${id}`));
-  } catch (error) {
-    console.log(error);
+    await addDoc(collection(db, "items"), {
+      name: item.name,
+      description: item.description,
+      size: item.size,
+      category: item.category,
+      photoUrl: photoUrl,
+      user: user.name,
+      date: new Date(),
+      userId: user?.uid,
+    });
+  } catch (e) {
+    setSnackBar({
+      show: true,
+      severity: "error",
+      text: "Something went wrong try again",
+    });
   }
 };

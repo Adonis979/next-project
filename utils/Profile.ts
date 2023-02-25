@@ -8,14 +8,6 @@ import {
 } from "firebase/auth";
 import Router from "next/router";
 
-interface Props {
-  user: { email: string };
-  editUser: {};
-  photoUrl: string;
-  setSnackBar: any;
-  setEdit: any;
-}
-
 export const UpdateProfile = async (
   user: any,
   editUser: { name: string; email: string },

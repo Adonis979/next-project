@@ -17,6 +17,7 @@ import { addDoc, collection } from "firebase/firestore";
 import { db } from "@/firebase";
 import SnackBarModal from "./SnackBarModal";
 import UploadImage from "./UploadImage";
+import { AddListing } from "@/utils/Listings";
 
 interface Props {
   open: boolean;
@@ -94,24 +95,10 @@ function AddListingModal({ open, handleClose }: Props) {
         text: "Thanks for adding this listing, our team is gonna review your listing and than add it on the listing shop. All the best Grerëzat",
       });
       handleClose();
-      try {
-        await addDoc(collection(db, "items"), {
-          name: item.name,
-          description: item.description,
-          size: item.size,
-          category: item.category,
-          photoUrl: photoUrl,
-          user: user.name,
-          date: new Date(),
-          userId: user?.uid,
-        });
-      } catch (e) {
-        setSnackBar({
-          show: true,
-          severity: "error",
-          text: "Something went wrong try again",
-        });
-      }
+      setTimeout(() => {
+        AddListing(item, photoUrl, user, setSnackBar);
+      }, 30000);
+      setItem(initialItem);
     } else {
       alert("You must input a photo");
     }

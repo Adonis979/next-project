@@ -1,5 +1,7 @@
+import { useShop } from "@/context/ShopContext";
 import { Box, Button, Typography } from "@mui/material";
 import React from "react";
+import AreYouSure from "./AreYouSure";
 
 interface Props {
   item: {
@@ -13,10 +15,10 @@ interface Props {
     date: Date;
   };
   user: { uid: string };
-  handleDeleteListing: any;
 }
 
-function Product({ item, user, handleDeleteListing }: Props) {
+function Product({ item, user }: Props) {
+  const { setOpenDeleteModal } = useShop();
   return (
     <>
       <Box
@@ -50,7 +52,7 @@ function Product({ item, user, handleDeleteListing }: Props) {
           <Typography variant="subtitle1">Category: {item.category}</Typography>
           {item.userId === user?.uid ? (
             <Button
-              onClick={() => handleDeleteListing(item.docId)}
+              onClick={() => setOpenDeleteModal(true)}
               sx={{ marginTop: "20px" }}
               variant="contained"
               color="error"
@@ -61,6 +63,7 @@ function Product({ item, user, handleDeleteListing }: Props) {
         </Box>
       </Box>
       <Typography variant="h6">{item?.date.toLocaleString()}</Typography>
+      <AreYouSure docId={item.docId} text="Listing" />
     </>
   );
 }

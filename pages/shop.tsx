@@ -1,10 +1,11 @@
 import AddListingModal from "@/components/AddListingModal";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Router from "next/router";
 import { useAuth } from "@/context/AuthContext";
-import { DeleteListings, GetListings } from "@/utils/Listings";
+import { GetListings } from "@/utils/Listings";
 import Product from "@/components/Product";
+import { ShopContextProvider } from "@/context/ShopContext";
 
 interface FirestoreData {
   name: string;
@@ -44,35 +45,29 @@ function Shop() {
     GetListings(setItems);
   }, []);
 
-  const handleDeleteListing = async (id: string) => {
-    DeleteListings(id);
-  };
   return (
-    <Box
-      sx={{
-        height: "100%",
-        padding: "20px",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
-    >
-      <Button onClick={handleOpen} variant="contained">
-        Add listing
-      </Button>
-      <AddListingModal
-        open={openAddListingModal}
-        handleClose={() => setOpenAddListingModal(false)}
-      />
-      {items.map((item, index) => (
-        <Product
-          handleDeleteListing={() => handleDeleteListing(item.docId)}
-          item={item}
-          user={user}
-          key={index}
+    <ShopContextProvider>
+      <Box
+        sx={{
+          height: "100%",
+          padding: "20px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Button onClick={handleOpen} variant="contained">
+          Add listing
+        </Button>
+        <AddListingModal
+          open={openAddListingModal}
+          handleClose={() => setOpenAddListingModal(false)}
         />
-      ))}
-    </Box>
+        {items.map((item, index) => (
+          <Product item={item} user={user} key={index} />
+        ))}
+      </Box>
+    </ShopContextProvider>
   );
 }
 
