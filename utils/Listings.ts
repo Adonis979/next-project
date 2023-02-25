@@ -7,6 +7,7 @@ import {
   onSnapshot,
   orderBy,
   query,
+  where,
 } from "firebase/firestore";
 
 interface FirestoreData {
@@ -85,4 +86,27 @@ export const AddListing = async (
       text: "Something went wrong try again",
     });
   }
+};
+
+export const GetProfileListing = (setItems: any, id: string | null) => {
+  const queryRef = query(collection(db, "items"), where("userId", "==", id));
+  onSnapshot(queryRef, (querySnapshot) => {
+    const data: FirestoreData[] = querySnapshot.docs.map((doc) => {
+      const firestoreTimestamp = doc.data().date;
+      const date = firestoreTimestamp.toDate();
+      const docId = doc.id;
+      return {
+        name: doc.data().name,
+        category: doc.data().category,
+        description: doc.data().description,
+        photoUrl: doc.data().photoUrl,
+        user: doc.data().user,
+        size: doc.data().size,
+        userId: doc.data().userId,
+        date: date,
+        docId: docId,
+      };
+    });
+    setItems(data);
+  });
 };

@@ -1,6 +1,13 @@
 import { useAuth } from "@/context/AuthContext";
-import { Box, Button, Typography } from "@mui/material";
-import React, { useRef, useState } from "react";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Button,
+  Typography,
+} from "@mui/material";
+import React, { useEffect, useRef, useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import { auth } from "@/firebase";
 import VerifyModal from "@/components/VerifyModal";
@@ -15,6 +22,9 @@ import {
 import ProfileSnackBar from "@/components/ProfileSnackBar";
 import EditableField from "@/components/EditableField";
 import UploadImage from "@/components/UploadImage";
+import { GetProfileListing } from "@/utils/Listings";
+import Product from "@/components/Product";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 function Profile() {
   const { user } = useAuth();
@@ -82,6 +92,25 @@ function Profile() {
       DeleteAccount(user, { setOpenVerifyModal, setModalText });
     }
   };
+
+  const [items, setItems] = useState<FirestoreData[]>([
+    {
+      name: "",
+      category: "",
+      description: "",
+      photoUrl: "",
+      user: "",
+      size: "",
+      userId: "",
+      date: new Date(0),
+      docId: "",
+    },
+  ]);
+
+  useEffect(() => {
+    GetProfileListing(setItems, user?.uid);
+  }, []);
+
   return (
     <>
       <Head>
@@ -209,6 +238,36 @@ function Profile() {
                 Delete account
               </Button>
             )}
+            <Box
+              sx={{
+                width: "100%",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Accordion>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+                  <Typography>Your listings</Typography>
+                </AccordionSummary>
+                <AccordionDetails
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    flexDirection: "column",
+                  }}
+                >
+                  {items.map((item, index) => (
+                    <Product key={index} item={item} user={user} />
+                  ))}
+                </AccordionDetails>
+              </Accordion>
+            </Box>
           </Box>
         </Box>
         <VerifyModal

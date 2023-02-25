@@ -28,9 +28,10 @@ function Product({ item, user }: Props) {
           alignItems: "center",
           gap: "20px",
           marginTop: "50px",
-          backgroundColor: "lightcoral",
+
+          boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
           padding: "20px",
-          width: { xs: "100%", sm: "50%" },
+          width: "90%",
         }}
       >
         <Box sx={{ width: { xs: 120, sm: 300 }, height: { xs: 300, sm: 300 } }}>
@@ -51,6 +52,7 @@ function Product({ item, user }: Props) {
             <Typography variant="subtitle1">Size: {item.size}</Typography>
           </Box>
           <Typography variant="subtitle1">Category: {item.category}</Typography>
+          <Typography variant="h6">{item?.date.toLocaleString()}</Typography>
           {item.userId === user?.uid ? (
             <Button
               onClick={() => handleDelete(item.docId)}
@@ -63,7 +65,6 @@ function Product({ item, user }: Props) {
           ) : null}
         </Box>
       </Box>
-      <Typography variant="h6">{item?.date.toLocaleString()}</Typography>
     </>
   );
 }

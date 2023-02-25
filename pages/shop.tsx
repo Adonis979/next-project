@@ -61,9 +61,19 @@ function Shop() {
         open={openAddListingModal}
         handleClose={() => setOpenAddListingModal(false)}
       />
-      {items.map((item, index) => (
-        <Product item={item} user={user} key={index} />
-      ))}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          width: { xs: "100%", sm: "60%" },
+        }}
+      >
+        {items.map((item, index) => (
+          <Product item={item} user={user} key={index} />
+        ))}
+      </Box>
     </Box>
   );
 }
