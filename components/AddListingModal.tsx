@@ -13,8 +13,6 @@ import React, { useRef, useState } from "react";
 import Image from "next/image";
 import { uploadFile } from "@/utils/UploadImage";
 import { useAuth } from "@/context/AuthContext";
-import { addDoc, collection } from "firebase/firestore";
-import { db } from "@/firebase";
 import SnackBarModal from "./SnackBarModal";
 import UploadImage from "./UploadImage";
 import { AddListing } from "@/utils/Listings";
@@ -97,6 +95,7 @@ function AddListingModal({ open, handleClose }: Props) {
       handleClose();
       AddListing(item, photoUrl, user, setSnackBar);
       setItem(initialItem);
+      setPhotoUrl("");
     } else {
       alert("You must input a photo");
     }
