@@ -98,7 +98,7 @@ function SignUp() {
             >
               <InputTextField
                 handleChange={handleChange}
-                title="Your name"
+                label="Your name"
                 name="name"
                 value={user.name}
               />
@@ -111,7 +111,7 @@ function SignUp() {
               }}
             >
               <InputTextField
-                title="Email"
+                label="Email"
                 handleChange={handleChange}
                 value={user.email}
                 fieldError={emailError}
@@ -127,7 +127,7 @@ function SignUp() {
             >
               <InputTextField
                 isPasswordInput={true}
-                title="Password"
+                label="Password"
                 fieldError={passwordError}
                 handleChange={handleChange}
                 name="password"

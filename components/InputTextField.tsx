@@ -16,7 +16,7 @@ interface Props {
   name: string;
   value: any;
   setShowPassword?: any;
-  title: string;
+  label: string;
   type?: string;
   isPasswordInput?: boolean;
 }
@@ -28,14 +28,14 @@ function InputTextField({
   name,
   value,
   setShowPassword,
-  title,
+  label,
   type,
   isPasswordInput,
 }: Props) {
   return (
     <>
-      <Typography variant="h6">{title}</Typography>
       <TextField
+        fullWidth
         error={fieldError?.error}
         helperText={fieldError?.helperText}
         required
@@ -43,7 +43,7 @@ function InputTextField({
         type={type}
         value={value}
         onChange={handleChange}
-        label="Type your password"
+        label={label}
         variant="outlined"
         InputProps={
           isPasswordInput

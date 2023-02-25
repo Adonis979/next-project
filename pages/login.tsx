@@ -1,19 +1,9 @@
 import InputTextField from "@/components/InputTextField";
 import VerifyModal from "@/components/VerifyModal";
 import { useAuth } from "@/context/AuthContext";
-import { auth } from "@/firebase";
 import { ResetPassword } from "@/utils/Profile";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import {
-  Backdrop,
-  Box,
-  Button,
-  CircularProgress,
-  InputAdornment,
-  TextField,
-} from "@mui/material";
+import { Backdrop, Box, Button, CircularProgress, Grid } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import { sendPasswordResetEmail } from "firebase/auth";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -87,110 +77,243 @@ function Login() {
         <link rel="icon" href="/images/grerzat.png" />
       </Head>
       <form onSubmit={handleSubmit}>
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "50px",
-            flexDirection: "column",
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              width: { xs: "100%", sm: "30%" },
-              gap: "30px",
-              padding: "50px",
-              boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
-            }}
-          >
-            <Typography variant="h4">Log In</Typography>
-            <Box
+        <Box sx={{ height: "100vh" }}>
+          <Grid container sx={{ position: "relative" }}>
+            <Grid
+              item
+              xs={12}
+              md={6}
+              sx={{ height: { xs: "400px", md: "758px" } }}
+            >
+              <img
+                style={{
+                  width: "100%",
+                  height: "100%",
+                }}
+                src="/images/layout-2.png"
+              ></img>
+              <img
+                onClick={() => Router.push("/")}
+                style={{
+                  position: "absolute",
+                  top: "66px",
+                  left: "38px",
+                  width: "200px",
+                  height: "35px",
+                  cursor: "pointer",
+                }}
+                src="/images/grerza-white.png"
+              ></img>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              md={6}
               sx={{
                 display: "flex",
-                flexDirection: "column",
-                gap: "10px",
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: "#FFF6F6",
               }}
             >
-              <InputTextField
-                title="Email"
-                fieldError={emailError}
-                type="email"
-                name="email"
-                value={user.email}
-                handleChange={handleChange}
-                isPasswordInput={false}
-              />
               <Box
                 sx={{
                   display: "flex",
                   flexDirection: "column",
                   gap: "10px",
+                  marginTop: { xs: "50px", sm: "none" },
+                  width: { xs: "80%", md: "60%" },
                 }}
               >
-                <InputTextField
-                  isPasswordInput={true}
-                  title="Password"
-                  fieldError={passwordError}
-                  handleChange={handleChange}
-                  name="password"
-                  type={showPassword ? "text" : "password"}
-                  value={user.password}
-                  setShowPassword={setShowPassword}
-                  showPassword={showPassword}
-                />
-
-                <Box sx={{ display: "flex", gap: "5px", alignItems: "center" }}>
-                  <Typography variant="subtitle1">Forgot password?</Typography>
+                <Box>
                   <Typography
-                    onClick={handleResetPassword}
-                    sx={{ color: "#4d4dff", cursor: "pointer" }}
-                    variant="subtitle1"
+                    variant="h3"
+                    sx={{
+                      fontFamily: "Montserrat",
+                      fontWeight: "700",
+                      color: "#0E2F56",
+                    }}
                   >
-                    Reset
+                    WELCOME BACK
+                  </Typography>
+                  <Typography
+                    variant="subtitle1"
+                    sx={{
+                      fontWeight: "400",
+                      fontSize: "16px",
+                      color: "#272727",
+                      marginLeft: "10px",
+                      fontFamily: "Montserrat",
+                    }}
+                  >
+                    We are happy that you are here again
                   </Typography>
                 </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "20px",
+                    marginTop: "50px",
+                  }}
+                >
+                  <InputTextField
+                    label="Email Address"
+                    fieldError={emailError}
+                    type="email"
+                    name="email"
+                    value={user.email}
+                    handleChange={handleChange}
+                    isPasswordInput={false}
+                  />
+
+                  <InputTextField
+                    isPasswordInput={true}
+                    label="Password"
+                    fieldError={passwordError}
+                    handleChange={handleChange}
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                    value={user.password}
+                    setShowPassword={setShowPassword}
+                    showPassword={showPassword}
+                  />
+
+                  <Box
+                    sx={{
+                      display: "flex",
+                      gap: "5px",
+                      alignItems: "flex-end",
+                      justifyContent: "flex-end",
+                    }}
+                  >
+                    <Typography
+                      onClick={handleResetPassword}
+                      variant="subtitle1"
+                      sx={{
+                        cursor: "pointer",
+                        color: "#0E2F56",
+                        fontFamily: "Montserrat",
+                      }}
+                    >
+                      Forgot password?
+                    </Typography>
+                  </Box>
+                </Box>
+                <Box
+                  sx={{ display: "flex", flexDirection: "column", gap: "20px" }}
+                >
+                  <Button
+                    type="submit"
+                    sx={{
+                      height: "56px",
+                      backgroundColor: "#0E2F56",
+                      fontStyle: "Montserrat",
+                    }}
+                    variant="contained"
+                  >
+                    Log in
+                  </Button>
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <hr
+                      style={{
+                        width: "45%",
+                        border: "none",
+                        height: "1px",
+                        margin: "20px 0",
+                        backgroundColor: "#C7C7C7",
+                      }}
+                    ></hr>
+                    <p
+                      style={{
+                        width: "10%",
+                        textAlign: "center",
+                        color: "#C7C7C7",
+                      }}
+                    >
+                      or
+                    </p>
+                    <hr
+                      style={{
+                        width: "45%",
+                        border: "none",
+                        height: "1px",
+                        backgroundColor: "#C7C7C7",
+                        margin: "20px 0",
+                      }}
+                    ></hr>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "10px",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Button
+                      onClick={handleLoginGoogle}
+                      sx={{ width: "100%", height: "57px" }}
+                      variant="outlined"
+                    >
+                      <img
+                        style={{
+                          width: "28px",
+                          height: "28px",
+                          marginRight: "10px",
+                        }}
+                        src="/images/google.png"
+                      ></img>
+                      Google
+                    </Button>
+                    <Button
+                      sx={{ width: "100%", height: "57px" }}
+                      variant="outlined"
+                    >
+                      <img
+                        style={{
+                          width: "28px",
+                          height: "28px",
+                          marginRight: "10px",
+                        }}
+                        src="/images/facebook.png"
+                      ></img>
+                      Facebook
+                    </Button>
+                  </Box>
+                  <Box
+                    sx={{
+                      textAlign: "center",
+                      marginBottom: { xs: "50px", md: "0px" },
+                    }}
+                  >
+                    <Typography
+                      sx={{ fontFamily: "Montserrat" }}
+                      variant="subtitle1"
+                    >
+                      Dont have an account?{" "}
+                      <Link style={{ fontStyle: "italic" }} href="/sign-up">
+                        Sign up
+                      </Link>
+                    </Typography>
+                  </Box>
+                </Box>
               </Box>
-              <Button
-                type="submit"
-                sx={{ marginTop: "50px" }}
-                variant="contained"
-              >
-                Log in
-              </Button>
-              <Button
-                onClick={handleLoginGoogle}
-                sx={{
-                  backgroundColor: "red",
-                  ":hover": { backgroundColor: "red", opacity: "0.8" },
-                  color: "white",
-                }}
-              >
-                Login with Google
-              </Button>
-              <Typography variant="subtitle1">
-                Dont have an account?{" "}
-                <Link style={{ fontStyle: "italic" }} href="/sign-up">
-                  Sign up
-                </Link>
-              </Typography>
-            </Box>
-            <Backdrop
-              sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-              open={loader}
-              onClick={() => setLoader(false)}
-            >
-              <CircularProgress color="inherit" />
-            </Backdrop>
-          </Box>
-          <VerifyModal
-            open={openVerifyModal}
-            handleClose={() => setOpenVerifyModal(false)}
-            text={modalText}
-          />
+            </Grid>
+          </Grid>
         </Box>
+        <Backdrop
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={loader}
+          onClick={() => setLoader(false)}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
+        <VerifyModal
+          open={openVerifyModal}
+          handleClose={() => setOpenVerifyModal(false)}
+          text={modalText}
+        />
       </form>
     </>
   );
