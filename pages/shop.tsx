@@ -5,7 +5,6 @@ import Router from "next/router";
 import { useAuth } from "@/context/AuthContext";
 import { GetListings } from "@/utils/Listings";
 import Product from "@/components/Product";
-import { ShopContextProvider } from "@/context/ShopContext";
 
 interface FirestoreData {
   name: string;
@@ -46,28 +45,26 @@ function Shop() {
   }, []);
 
   return (
-    <ShopContextProvider>
-      <Box
-        sx={{
-          height: "100%",
-          padding: "20px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Button onClick={handleOpen} variant="contained">
-          Add listing
-        </Button>
-        <AddListingModal
-          open={openAddListingModal}
-          handleClose={() => setOpenAddListingModal(false)}
-        />
-        {items.map((item, index) => (
-          <Product item={item} user={user} key={index} />
-        ))}
-      </Box>
-    </ShopContextProvider>
+    <Box
+      sx={{
+        height: "100%",
+        padding: "20px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <Button onClick={handleOpen} variant="contained">
+        Add listing
+      </Button>
+      <AddListingModal
+        open={openAddListingModal}
+        handleClose={() => setOpenAddListingModal(false)}
+      />
+      {items.map((item, index) => (
+        <Product item={item} user={user} key={index} />
+      ))}
+    </Box>
   );
 }
 

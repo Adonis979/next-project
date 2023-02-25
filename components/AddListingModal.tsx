@@ -95,9 +95,7 @@ function AddListingModal({ open, handleClose }: Props) {
         text: "Thanks for adding this listing, our team is gonna review your listing and than add it on the listing shop. All the best Grerëzat",
       });
       handleClose();
-      setTimeout(() => {
-        AddListing(item, photoUrl, user, setSnackBar);
-      }, 30000);
+      AddListing(item, photoUrl, user, setSnackBar);
       setItem(initialItem);
     } else {
       alert("You must input a photo");
