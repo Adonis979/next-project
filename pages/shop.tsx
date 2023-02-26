@@ -54,6 +54,7 @@ function Shop() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          backgroundColor: "#FFF6F6",
         }}
       >
         <Button onClick={handleOpen} variant="contained">

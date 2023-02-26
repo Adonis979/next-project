@@ -28,10 +28,10 @@ function Product({ item, user }: Props) {
           alignItems: "center",
           gap: "20px",
           marginTop: "50px",
-
           boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
           padding: "20px",
           width: "90%",
+          backgroundColor: "white",
         }}
       >
         <Box sx={{ width: { xs: 120, sm: 300 }, height: { xs: 300, sm: 300 } }}>

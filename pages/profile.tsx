@@ -128,6 +128,7 @@ function Profile() {
               justifyContent: "center",
               padding: "50px",
               flexDirection: "column",
+              backgroundColor: "#FFF6F6",
             }}
           >
             <Box
@@ -138,6 +139,7 @@ function Profile() {
                 gap: "30px",
                 padding: "50px",
                 boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+                backgroundColor: "white",
               }}
             >
               <ProfileSnackBar setSnackBar={setSnackBar} snackBar={snackBar} />
