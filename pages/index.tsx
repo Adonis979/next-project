@@ -1,8 +1,6 @@
 import Head from "next/head";
 import { Box } from "@mui/material";
-import Typography from "@mui/material/Typography";
 import { useAuth } from "@/context/AuthContext";
-import Image from "next/image";
 import Layout from "@/components/Layout";
 import Text from "@/components/HomePage/Text";
 

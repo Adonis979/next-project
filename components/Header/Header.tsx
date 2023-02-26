@@ -1,20 +1,9 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  Chip,
-  Popover,
-  SwipeableDrawer,
-  Typography,
-} from "@mui/material";
-import Link from "next/link";
+import { Box } from "@mui/material";
 import React, { useState } from "react";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import { useRouter } from "next/router";
 import { useAuth } from "@/context/AuthContext";
 import Drawer from "./Drawer";
 import Logo from "./Logo";
-import ProjectLink from "../ProjectLink";
 import Navigate from "./Navigate";
 
 function Header() {

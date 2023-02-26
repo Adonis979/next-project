@@ -5,8 +5,14 @@ function Text() {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
       <Typography
-        sx={{ fontSize: "97px", fontFamily: "Dosis", color: "#0E2F56" }}
-        variant="h1"
+        sx={{
+          fontSize: { xs: "40px", md: "96px" },
+          width: "100%",
+          fontFamily: "Dosis",
+          color: "#0E2F56",
+          fontWeight: "bold",
+        }}
+        variant="h2"
       >
         LITTLE THINGS MAKES DIFFERENCE
       </Typography>
@@ -15,7 +21,7 @@ function Text() {
           fontFamily: "Montserrat",
           fontSize: "15px",
           color: "#FB3B2D",
-          width: "55%",
+          width: { xs: "100%", md: "55%" },
         }}
         variant="subtitle1"
       >
