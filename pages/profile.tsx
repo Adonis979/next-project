@@ -25,6 +25,7 @@ import UploadImage from "@/components/UploadImage";
 import { GetProfileListing } from "@/utils/Listings";
 import Product from "@/components/Product";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Layout from "@/components/Layout";
 
 function Profile() {
   const { user } = useAuth();
@@ -118,164 +119,166 @@ function Profile() {
         <meta name="description" content="Profile of grerëza" />
         <link rel="icon" href="/images/grerzat.png" />
       </Head>
-      <form onSubmit={(event) => handleSubmit(event)}>
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "50px",
-            flexDirection: "column",
-          }}
-        >
+      <Layout>
+        <form onSubmit={(event) => handleSubmit(event)}>
           <Box
             sx={{
               display: "flex",
-              flexDirection: "column",
-              width: { xs: "100%", lg: "30%" },
-              gap: "30px",
+              alignItems: "center",
+              justifyContent: "center",
               padding: "50px",
-              boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+              flexDirection: "column",
             }}
           >
-            <ProfileSnackBar setSnackBar={setSnackBar} snackBar={snackBar} />
             <Box
               sx={{
                 display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
-              <Typography variant="h4">Profile</Typography>
-              <Button onClick={() => setEdit(!edit)}>
-                <EditIcon />
-              </Button>
-            </Box>
-            <EditableField
-              user={true}
-              name="name"
-              edit={edit}
-              value={editUser.name}
-              title="Name"
-              handleChange={handleChange}
-            />
-            <EditableField
-              user={user?.emailVerified}
-              edit={edit}
-              handleChange={handleChange}
-              name="email"
-              title="Email"
-              value={editUser.email}
-              handleVerifyEmail={handleVerifyEmail}
-            />
-            {edit && (
-              <Button
-                onClick={handleResetPassword}
-                variant="contained"
-                color="error"
-              >
-                Reset Password
-              </Button>
-            )}
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
                 flexDirection: "column",
-                justifyContent: "center",
-                gap: "20px",
+                width: { xs: "100%", lg: "30%" },
+                gap: "30px",
+                padding: "50px",
+                boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
               }}
             >
-              <Typography variant="h6">Photo</Typography>
-              <UploadImage photoUrl={photoUrl} progress={progress} />
-              {edit && (
-                <>
-                  <input
-                    type="file"
-                    onChange={(files) => handleUploadFile(files.target.files)}
-                    ref={fileInputRef}
-                    style={{ display: "none" }}
-                  />
-                  <Button
-                    variant="contained"
-                    color="warning"
-                    onClick={handleUploadClick}
-                  >
-                    Upload
-                  </Button>
-                </>
-              )}
-            </Box>
-            {edit && (
+              <ProfileSnackBar setSnackBar={setSnackBar} snackBar={snackBar} />
               <Box
                 sx={{
-                  marginTop: "50px",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
                 }}
               >
-                <Button
-                  onClick={() => setEdit(false)}
-                  variant="outlined"
-                  color="error"
-                >
-                  Cancel
-                </Button>
-                <Button type="submit" variant="contained" color="success">
-                  Save
+                <Typography variant="h4">Profile</Typography>
+                <Button onClick={() => setEdit(!edit)}>
+                  <EditIcon />
                 </Button>
               </Box>
-            )}
-            {edit && (
-              <Button
-                onClick={deleteAccount}
-                sx={{ marginTop: "50px" }}
-                fullWidth
-                variant="contained"
-                color="error"
-              >
-                Delete account
-              </Button>
-            )}
-            <Box
-              sx={{
-                width: "100%",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Accordion>
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
+              <EditableField
+                user={true}
+                name="name"
+                edit={edit}
+                value={editUser.name}
+                title="Name"
+                handleChange={handleChange}
+              />
+              <EditableField
+                user={user?.emailVerified}
+                edit={edit}
+                handleChange={handleChange}
+                name="email"
+                title="Email"
+                value={editUser.email}
+                handleVerifyEmail={handleVerifyEmail}
+              />
+              {edit && (
+                <Button
+                  onClick={handleResetPassword}
+                  variant="contained"
+                  color="error"
                 >
-                  <Typography>Your listings</Typography>
-                </AccordionSummary>
-                <AccordionDetails
+                  Reset Password
+                </Button>
+              )}
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  gap: "20px",
+                }}
+              >
+                <Typography variant="h6">Photo</Typography>
+                <UploadImage photoUrl={photoUrl} progress={progress} />
+                {edit && (
+                  <>
+                    <input
+                      type="file"
+                      onChange={(files) => handleUploadFile(files.target.files)}
+                      ref={fileInputRef}
+                      style={{ display: "none" }}
+                    />
+                    <Button
+                      variant="contained"
+                      color="warning"
+                      onClick={handleUploadClick}
+                    >
+                      Upload
+                    </Button>
+                  </>
+                )}
+              </Box>
+              {edit && (
+                <Box
                   sx={{
+                    marginTop: "50px",
                     display: "flex",
                     alignItems: "center",
-                    flexDirection: "column",
+                    justifyContent: "space-between",
                   }}
                 >
-                  {items.map((item, index) => (
-                    <Product key={index} item={item} user={user} />
-                  ))}
-                </AccordionDetails>
-              </Accordion>
+                  <Button
+                    onClick={() => setEdit(false)}
+                    variant="outlined"
+                    color="error"
+                  >
+                    Cancel
+                  </Button>
+                  <Button type="submit" variant="contained" color="success">
+                    Save
+                  </Button>
+                </Box>
+              )}
+              {edit && (
+                <Button
+                  onClick={deleteAccount}
+                  sx={{ marginTop: "50px" }}
+                  fullWidth
+                  variant="contained"
+                  color="error"
+                >
+                  Delete account
+                </Button>
+              )}
+              <Box
+                sx={{
+                  width: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Accordion>
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                  >
+                    <Typography>Your listings</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      flexDirection: "column",
+                    }}
+                  >
+                    {items.map((item, index) => (
+                      <Product key={index} item={item} user={user} />
+                    ))}
+                  </AccordionDetails>
+                </Accordion>
+              </Box>
             </Box>
           </Box>
-        </Box>
-        <VerifyModal
-          open={openVerifyModal}
-          handleClose={() => setOpenVerifyModal(false)}
-          text={modalText}
-        />
-      </form>
+          <VerifyModal
+            open={openVerifyModal}
+            handleClose={() => setOpenVerifyModal(false)}
+            text={modalText}
+          />
+        </form>
+      </Layout>
     </>
   );
 }

@@ -1,5 +1,5 @@
 import Footer from "@/components/Footer";
-import Header from "@/components/Header";
+import Header from "@/components/Header/Header";
 import { AuthContextProvider } from "@/context/AuthContext";
 import "../styles/globals.css";
 import type { AppProps } from "next/app";

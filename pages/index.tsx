@@ -3,6 +3,8 @@ import { Box } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { useAuth } from "@/context/AuthContext";
 import Image from "next/image";
+import Layout from "@/components/Layout";
+import Text from "@/components/HomePage/Text";
 
 export default function Home() {
   const { user } = useAuth();
@@ -14,34 +16,21 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/images/grerzat.png" />
       </Head>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          padding: "50px",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "20px",
-        }}
-      >
-        <Typography variant="h6">Welcome to grerezat</Typography>
-        <Image
-          style={{ borderRadius: "50%" }}
-          height={200}
-          width={200}
-          loader={() => "/images/grerzat.png"}
-          src="/images/grerzat.png"
-          alt="grerzat"
-        ></Image>
-        <Image
-          width={350}
-          height={350}
-          style={{ objectFit: "contain" }}
-          loader={() => user?.photo || "/images/no-user-image.png"}
-          src={user?.photo || "/images/no-user-image.png"}
-          alt="user-photo"
-        ></Image>
-      </Box>
+      <Layout>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            height: "100vh",
+            backgroundColor: "#FFF6F6",
+          }}
+        >
+          <Box sx={{ width: "50%", padding: "70px" }}>
+            <Text />
+          </Box>
+        </Box>
+      </Layout>
     </>
   );
 }
