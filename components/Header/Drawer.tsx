@@ -1,9 +1,10 @@
-import { Box, Button, Link, SwipeableDrawer, Typography } from "@mui/material";
+import { Box, Button, SwipeableDrawer, Typography } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import HomeIcon from "@mui/icons-material/Home";
 import InfoIcon from "@mui/icons-material/Info";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import React from "react";
+import Link from "next/link";
 
 interface Props {
   setOpenDrawer: any;
