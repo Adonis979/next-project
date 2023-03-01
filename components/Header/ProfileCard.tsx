@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Chip, Popover } from "@mui/material";
+import { Avatar, Box, Button, Chip, Popover, styled } from "@mui/material";
 import { useRouter } from "next/router";
 import React from "react";
 
@@ -11,6 +11,14 @@ interface Props {
   open: any;
   logout: any;
 }
+
+const StyledPopover = styled(Popover)({
+  "& .MuiPaper-root": {
+    boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
+    border: "1px solid lightblue",
+    borderRadius: "20px",
+  },
+});
 
 function ProfileCard({
   user,
@@ -38,7 +46,7 @@ function ProfileCard({
             label={user.name}
             variant="outlined"
           />
-          <Popover
+          <StyledPopover
             onClose={handleClose}
             id={id}
             anchorEl={anchorEl}
@@ -55,7 +63,6 @@ function ProfileCard({
             <Box
               sx={{
                 padding: "20px",
-                gap: "20px",
                 display: "flex",
                 flexDirection: "column",
               }}
@@ -66,7 +73,7 @@ function ProfileCard({
                   handleClose();
                 }}
                 size="large"
-                sx={{ gap: "10px" }}
+                sx={{ borderRadius: "20px", gap: "10px" }}
               >
                 Profile
                 <Avatar
@@ -81,11 +88,15 @@ function ProfileCard({
                   handleClose();
                 }}
                 size="large"
+                sx={{
+                  borderRadius: "20px",
+                  justifyContent: "flex-start !important",
+                }}
               >
                 Sign Out
               </Button>
             </Box>
-          </Popover>{" "}
+          </StyledPopover>
         </>
       ) : (
         <Button
