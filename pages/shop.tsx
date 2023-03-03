@@ -5,7 +5,7 @@ import Router from "next/router";
 import { useAuth } from "@/context/AuthContext";
 import { GetListings } from "@/utils/Listings";
 import Product from "@/components/Product";
-import Layout from "@/components/Layout";
+import Loader from "@/components/Loader";
 
 interface FirestoreData {
   name: string;
@@ -15,55 +15,52 @@ interface FirestoreData {
   user: string;
   size: string;
   userId: string;
-  date: Date;
+  date: string;
   docId: string;
 }
 
-function Shop() {
+interface MyComponentProps {
+  items: FirestoreData[];
+}
+
+export async function getServerSideProps() {
+  const data = await GetListings();
+  return {
+    props: {
+      items: data,
+      revalidate: 600,
+    },
+  };
+}
+
+function Shop({ items }: MyComponentProps) {
   const { user } = useAuth();
   const [openAddListingModal, setOpenAddListingModal] = useState(false);
-  const [items, setItems] = useState<FirestoreData[]>([
-    {
-      name: "",
-      category: "",
-      description: "",
-      photoUrl: "",
-      user: "",
-      size: "",
-      userId: "",
-      date: new Date(0),
-      docId: "",
-    },
-  ]);
   const handleOpen = () => {
     if (!user) {
       Router.push("/login");
     } else setOpenAddListingModal(true);
   };
 
-  useEffect(() => {
-    GetListings(setItems);
-  }, []);
-
   return (
-    <Layout>
-      <Box
-        sx={{
-          height: "100%",
-          padding: "20px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          backgroundColor: "#FFF6F6",
-        }}
-      >
-        <Button onClick={handleOpen} variant="contained">
-          Add listing
-        </Button>
-        <AddListingModal
-          open={openAddListingModal}
-          handleClose={() => setOpenAddListingModal(false)}
-        />
+    <Box
+      sx={{
+        height: "100%",
+        padding: "20px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        backgroundColor: "#FFF6F6",
+      }}
+    >
+      <Button onClick={handleOpen} variant="contained">
+        Add listing
+      </Button>
+      <AddListingModal
+        open={openAddListingModal}
+        handleClose={() => setOpenAddListingModal(false)}
+      />
+      {items ? (
         <Box
           sx={{
             display: "flex",
@@ -77,8 +74,10 @@ function Shop() {
             <Product item={item} user={user} key={index} />
           ))}
         </Box>
-      </Box>
-    </Layout>
+      ) : (
+        <Loader />
+      )}
+    </Box>
   );
 }
 

@@ -14,38 +14,36 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/images/grerzat.png" />
       </Head>
-      <Layout>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "flex-start",
+          height: "100vh",
+          backgroundColor: "#FFF6F6",
+          gap: "50px",
+          paddingLeft: "70px",
+        }}
+      >
         <Box
           sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "flex-start",
-            height: "100vh",
-            backgroundColor: "#FFF6F6",
-            gap: "50px",
-            paddingLeft: "70px",
+            display: {
+              xs: "flex",
+              md: "none",
+              width: "100px",
+            },
           }}
         >
-          <Box
-            sx={{
-              display: {
-                xs: "flex",
-                md: "none",
-                width: "100px",
-              },
-            }}
-          >
-            <img
-              src="/images/grerzat.png"
-              style={{ width: "100%", borderRadius: "50%" }}
-            ></img>
-          </Box>
-          <Box sx={{ width: "50%" }}>
-            <Text />
-          </Box>
+          <img
+            src="/images/grerzat.png"
+            style={{ width: "100%", borderRadius: "50%" }}
+          ></img>
         </Box>
-      </Layout>
+        <Box sx={{ width: "50%" }}>
+          <Text />
+        </Box>
+      </Box>
     </>
   );
 }

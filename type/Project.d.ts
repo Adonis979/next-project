@@ -6,6 +6,6 @@ interface FirestoreData {
   user: string;
   size: string;
   userId: string;
-  date: Date;
+  date: string;
   docId: string;
 }

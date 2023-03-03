@@ -1,6 +1,7 @@
 import { DeleteListings } from "@/utils/Listings";
 import { Box, Button, Typography } from "@mui/material";
 import React from "react";
+import Image from "next/image";
 
 interface Props {
   item: {
@@ -11,7 +12,7 @@ interface Props {
     category: string;
     userId: string;
     docId: string;
-    date: Date;
+    date: string;
   };
   user: { uid: string };
 }
@@ -34,14 +35,19 @@ function Product({ item, user }: Props) {
           backgroundColor: "white",
         }}
       >
-        <Box sx={{ width: { xs: 120, sm: 300 }, height: { xs: 300, sm: 300 } }}>
-          <img
+        <Box
+          sx={{
+            width: { xs: "150px", md: "300px" },
+            height: "300px",
+            position: "relative",
+          }}
+        >
+          <Image
             src={item.photoUrl || "/images/no-user-image.png"}
             alt=""
-            width="100%"
-            height="100%"
-            style={{ objectFit: "contain" }}
-          ></img>
+            layout="fill"
+            objectFit="contain"
+          />
         </Box>
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <Typography variant="h5">{item.name}</Typography>

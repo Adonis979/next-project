@@ -8,6 +8,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
+import Image from "next/image";
 
 function Login() {
   const [user, setUser] = useState({ email: "", password: "" });
@@ -77,33 +78,35 @@ function Login() {
         <link rel="icon" href="/images/grerzat.png" />
       </Head>
       <form onSubmit={handleSubmit}>
-        <Box sx={{ height: "100vh" }}>
+        <Box>
           <Grid container sx={{ position: "relative" }}>
             <Grid
               item
               xs={12}
               md={6}
-              sx={{ height: { xs: "400px", md: "758px" } }}
+              sx={{
+                height: { xs: "400px", md: "757px" },
+                position: "relative",
+              }}
             >
-              <img
-                style={{
-                  width: "100%",
-                  height: "100%",
-                }}
+              <Image
+                layout="fill"
+                alt="grerza"
                 src="/images/layout-2.png"
-              ></img>
-              <img
+              ></Image>
+              <Image
                 onClick={() => Router.push("/")}
+                width={200}
+                height={35}
                 style={{
                   position: "absolute",
                   top: "66px",
                   left: "38px",
-                  width: "200px",
-                  height: "35px",
                   cursor: "pointer",
                 }}
+                alt="grerzat"
                 src="/images/grerza-white.png"
-              ></img>
+              />
             </Grid>
             <Grid
               item
@@ -320,3 +323,7 @@ function Login() {
 }
 
 export default Login;
+
+Login.noLayout = function PageLayout(page: any) {
+  return <>{page}</>;
+};

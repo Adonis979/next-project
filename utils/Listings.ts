@@ -4,6 +4,7 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDocs,
   onSnapshot,
   orderBy,
   query,
@@ -22,29 +23,27 @@ interface FirestoreData {
   docId: string;
 }
 
-export const GetListings = (setItems: any) => {
-  onSnapshot(
-    query(collection(db, "items"), orderBy("date", "desc")),
-    (querySnapshot) => {
-      const data: FirestoreData[] = querySnapshot.docs.map((doc) => {
-        const firestoreTimestamp = doc.data().date;
-        const date = firestoreTimestamp.toDate();
-        const docId = doc.id;
-        return {
-          name: doc.data().name,
-          category: doc.data().category,
-          description: doc.data().description,
-          photoUrl: doc.data().photoUrl,
-          user: doc.data().user,
-          size: doc.data().size,
-          userId: doc.data().userId,
-          date: date,
-          docId: docId,
-        };
-      });
-      setItems(data);
-    }
+export const GetListings = async () => {
+  const querySnapshot = await getDocs(
+    query(collection(db, "items"), orderBy("date", "desc"))
   );
+  const data: FirestoreData[] = querySnapshot.docs.map((doc) => {
+    const firestoreTimestamp = doc.data().date;
+    const date = firestoreTimestamp.toDate().toISOString();
+    const docId = doc.id;
+    return {
+      name: doc.data().name,
+      category: doc.data().category,
+      description: doc.data().description,
+      photoUrl: doc.data().photoUrl,
+      user: doc.data().user,
+      size: doc.data().size,
+      userId: doc.data().userId,
+      date: date,
+      docId: docId,
+    };
+  });
+  return data;
 };
 
 export const DeleteListings = async (id: string | undefined) => {
