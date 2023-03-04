@@ -25,7 +25,6 @@ import UploadImage from "@/components/UploadImage";
 import { GetProfileListing } from "@/utils/Listings";
 import Product from "@/components/Product";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Layout from "@/components/Layout";
 import { useRouter } from "next/router";
 import Loader from "@/components/Loader";
 
