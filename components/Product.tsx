@@ -18,6 +18,16 @@ interface Props {
 }
 
 function Product({ item, user }: Props) {
+  const date = new Date(item?.date);
+  const formattedDate = date.toLocaleString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    hour12: true,
+  });
   const handleDelete = (id: string) => {
     DeleteListings(id);
   };
@@ -58,7 +68,7 @@ function Product({ item, user }: Props) {
             <Typography variant="subtitle1">Size: {item.size}</Typography>
           </Box>
           <Typography variant="subtitle1">Category: {item.category}</Typography>
-          <Typography variant="h6">{item?.date.toLocaleString()}</Typography>
+          <Typography variant="h6">{formattedDate}</Typography>
           {item.userId === user?.uid ? (
             <Button
               onClick={() => handleDelete(item.docId)}

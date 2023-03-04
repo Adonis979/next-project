@@ -23,7 +23,7 @@ function Login() {
   });
   const [loader, setLoader] = useState(false);
   const Router = useRouter();
-  const { login, loginWithGoogle } = useAuth();
+  const { login, LoginWithGoogle, LoginWithFacebook } = useAuth();
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -54,7 +54,16 @@ function Login() {
   };
   const handleLoginGoogle = async () => {
     try {
-      await loginWithGoogle();
+      await LoginWithGoogle();
+      Router.push("/");
+    } catch (error: any) {
+      alert(error.code);
+    }
+  };
+
+  const handleLoginFacebook = async () => {
+    try {
+      await LoginWithFacebook();
       Router.push("/");
     } catch (error: any) {
       alert(error.code);
@@ -259,28 +268,31 @@ function Login() {
                       sx={{ width: "100%", height: "57px" }}
                       variant="outlined"
                     >
-                      <img
+                      <Image
+                        alt="google"
+                        width={28}
+                        height={28}
                         style={{
-                          width: "28px",
-                          height: "28px",
                           marginRight: "10px",
                         }}
                         src="/images/google.png"
-                      ></img>
+                      ></Image>
                       Google
                     </Button>
                     <Button
+                      onClick={handleLoginFacebook}
                       sx={{ width: "100%", height: "57px" }}
                       variant="outlined"
                     >
-                      <img
+                      <Image
+                        alt="google"
+                        width={28}
+                        height={28}
                         style={{
-                          width: "28px",
-                          height: "28px",
                           marginRight: "10px",
                         }}
                         src="/images/facebook.png"
-                      ></img>
+                      ></Image>
                       Facebook
                     </Button>
                   </Box>

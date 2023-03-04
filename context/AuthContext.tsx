@@ -1,5 +1,6 @@
 import {
   createUserWithEmailAndPassword,
+  FacebookAuthProvider,
   GoogleAuthProvider,
   onAuthStateChanged,
   signInWithEmailAndPassword,
@@ -23,7 +24,7 @@ export const AuthContextProvider = ({
   const Router = useRouter();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser({
           uid: user?.uid,
@@ -37,25 +38,29 @@ export const AuthContextProvider = ({
       }
       setLoading(false);
     });
-    return () => unsubscribe();
   }, []);
 
-  const signup = (email: string, password: string, displayName: string) => {
-    return createUserWithEmailAndPassword(auth, email, password).then(
-      (userCredentials) => {
-        const user = userCredentials.user;
-        updateProfile(user, {
-          displayName: displayName,
-        });
-      }
+  const signup = async (email: string, password: string, UserName: string) => {
+    const userCredentials = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
     );
+    await updateProfile(userCredentials.user, { displayName: UserName });
   };
   const login = (email: string, password: string) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
-  const loginWithGoogle = () => {
+  const LoginWithGoogle = () => {
     const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: "select_account" });
+    return signInWithPopup(auth, provider);
+  };
+
+  const LoginWithFacebook = () => {
+    const provider = new FacebookAuthProvider();
+    provider.setCustomParameters({ propmt: "select_account" });
     return signInWithPopup(auth, provider);
   };
 
@@ -67,7 +72,14 @@ export const AuthContextProvider = ({
 
   return (
     <AuthContext.Provider
-      value={{ user, signup, login, logout, loginWithGoogle }}
+      value={{
+        user,
+        signup,
+        login,
+        logout,
+        LoginWithGoogle,
+        LoginWithFacebook,
+      }}
     >
       {loading ? null : children}
     </AuthContext.Provider>

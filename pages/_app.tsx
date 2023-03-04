@@ -9,7 +9,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
   // check if the current pathname is one of the pages without the layout
-  const isNoLayoutPage = ["/login", "/signup"].includes(router.pathname);
+  const isNoLayoutPage = ["/login", "/sign-up"].includes(router.pathname);
 
   return (
     <AuthContextProvider>

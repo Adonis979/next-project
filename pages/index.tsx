@@ -3,9 +3,9 @@ import { Box } from "@mui/material";
 import { useAuth } from "@/context/AuthContext";
 import Layout from "@/components/Layout";
 import Text from "@/components/HomePage/Text";
+import Image from "next/image";
 
 export default function Home() {
-  const { user } = useAuth();
   return (
     <>
       <Head>
@@ -32,13 +32,11 @@ export default function Home() {
               xs: "flex",
               md: "none",
               width: "100px",
+              position: "relative",
             },
           }}
         >
-          <img
-            src="/images/grerzat.png"
-            style={{ width: "100%", borderRadius: "50%" }}
-          ></img>
+          <Image src="/images/grerzat.png" layout="fill" alt="grerzat"></Image>
         </Box>
         <Box sx={{ width: "50%" }}>
           <Text />
