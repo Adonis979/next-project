@@ -1,10 +1,12 @@
-import { Box } from "@mui/material";
+import { Box, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import Drawer from "./Drawer";
 import Logo from "./Logo";
 import Navigate from "./Navigate";
 import ProfileCard from "./ProfileCard";
+import SearchInput from "./SearchInput";
+import ProjectLink from "../ProjectLink";
 
 function Header() {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
@@ -53,6 +55,9 @@ function Header() {
           >
             <Drawer openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
           </Box>
+          <Box display={{ xs: "flex", md: "none" }}>
+            <ProjectLink text="SHOP" to="/shop" />
+          </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <ProfileCard
               anchorEl={anchorEl}
@@ -68,6 +73,10 @@ function Header() {
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <Logo />
           </Box>
+        </Box>
+        {/* Middle */}
+        <Box display={{ xs: "none", md: "flex" }} width="35%">
+          <SearchInput />
         </Box>
         {/* Right Side */}
         <Box

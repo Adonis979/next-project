@@ -140,6 +140,7 @@ function Shop({ items }: MyComponentProps) {
               flexWrap: "wrap",
               justifyContent: "space-around",
               padding: "50px 0px 100px 0px",
+              gap: "10px",
             }}
           >
             {items.map((item, index) => (

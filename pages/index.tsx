@@ -17,21 +17,27 @@ export default function Home() {
           position: "relative",
           display: "flex",
           justifyContent: "flex-start",
-          alignItems: "center",
-          height: "100vh",
+          alignItems: { xs: "flex-start", md: "center" },
+          height: "90vh",
           backgroundColor: "#FFF6F6",
           gap: "50px",
-          paddingLeft: "70px",
+          paddingLeft: { xs: "20px", md: "75px" },
         }}
       >
-        <Box sx={{ width: "50%" }}>
+        <Box
+          sx={{
+            width: { xs: "70%", md: "50%" },
+            backgroundColor: "#FFF6F6",
+            mt: { xs: "20px", md: "0px" },
+          }}
+        >
           <Text />
         </Box>
         <Box
           sx={{
-            display: { xs: "none", lg: "flex" },
-            width: "50%",
-            height: "100%",
+            display: "flex",
+            width: { xs: "100%", md: "50%" },
+            height: "70%",
             position: "absolute",
             bottom: 0,
             right: 0,

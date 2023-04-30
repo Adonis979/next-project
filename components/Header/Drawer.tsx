@@ -2,9 +2,12 @@ import { Box, Button, SwipeableDrawer, Typography } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import HomeIcon from "@mui/icons-material/Home";
 import InfoIcon from "@mui/icons-material/Info";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import NewspaperIcon from "@mui/icons-material/Newspaper";
 import React from "react";
-import Link from "next/link";
+import SearchInput from "./SearchInput";
+import ProjectLink from "../ProjectLink";
+import { useRouter } from "next/router";
+import ContactPageIcon from "@mui/icons-material/ContactPage";
 
 interface Props {
   setOpenDrawer: any;
@@ -12,6 +15,7 @@ interface Props {
 }
 
 function Drawer({ setOpenDrawer, openDrawer }: Props) {
+  const Router = useRouter();
   return (
     <>
       <Button
@@ -37,69 +41,99 @@ function Drawer({ setOpenDrawer, openDrawer }: Props) {
             padding: "20px",
           }}
         >
-          <Link
-            href="/"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              color: "black",
-              gap: "10px",
-              textDecoration: "none",
+          <SearchInput />
+          <Box
+            onClick={() => {
+              Router.push("/");
+              setOpenDrawer(false);
+            }}
+            display="flex"
+            alignItems="center"
+            color="#272727"
+            sx={{
+              ":active": {
+                backgroundColor: "lightblue",
+                borderRadius: "10px",
+              },
+              padding: "5px",
             }}
           >
-            <HomeIcon />
-            <Typography
-              variant="h5"
-              sx={{
-                fontWeight: "bold",
-                ":hover": { opacity: "0.5", cursor: "pointer" },
-              }}
-            >
-              Home
-            </Typography>
-          </Link>
-          <Link
-            href="/about"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              color: "black",
-              gap: "10px",
-              textDecoration: "none",
+            <HomeIcon color="info" />
+            <ProjectLink text="HOME" to="/" />
+          </Box>
+          <Box
+            onClick={() => {
+              Router.push("/about");
+              setOpenDrawer(false);
+            }}
+            display="flex"
+            alignItems="center"
+            color="#272727"
+            sx={{
+              ":active": {
+                backgroundColor: "lightblue",
+                borderRadius: "10px",
+              },
+              padding: "5px",
             }}
           >
-            <InfoIcon />
-            <Typography
-              variant="h5"
-              sx={{
-                fontWeight: "bold",
-                ":hover": { opacity: "0.5", cursor: "pointer" },
-              }}
-            >
-              About
-            </Typography>
-          </Link>
-          <Link
-            href="/shop"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              color: "black",
-              gap: "10px",
-              textDecoration: "none",
+            <InfoIcon color="info" />
+            <ProjectLink text="ABOUT" to="/about" />
+          </Box>
+          <Box
+            onClick={() => {
+              Router.push("/shop");
+              setOpenDrawer(false);
+            }}
+            display="flex"
+            alignItems="center"
+            sx={{
+              ":active": {
+                backgroundColor: "lightblue",
+                borderRadius: "10px",
+              },
+              padding: "5px",
             }}
           >
-            <ShoppingCartIcon />
-            <Typography
-              variant="h5"
-              sx={{
-                fontWeight: "bold",
-                ":hover": { opacity: "0.5", cursor: "pointer" },
-              }}
-            >
-              Shop
-            </Typography>
-          </Link>
+            <HomeIcon color="info" />
+            <ProjectLink text="SHOP" to="/shop" />
+          </Box>
+          <Box
+            onClick={() => {
+              Router.push("/news");
+              setOpenDrawer(false);
+            }}
+            display="flex"
+            alignItems="center"
+            sx={{
+              ":active": {
+                backgroundColor: "lightblue",
+                borderRadius: "10px",
+              },
+              padding: "5px",
+            }}
+          >
+            <NewspaperIcon color="info" />
+            <ProjectLink text="NEWS" to="/news" />
+          </Box>
+          <Box
+            onClick={() => {
+              Router.push("/contact");
+              setOpenDrawer(false);
+            }}
+            display="flex"
+            alignItems="center"
+            sx={{
+              ":active": {
+                backgroundColor: "lightblue",
+                borderRadius: "10px",
+              },
+              padding: "5px",
+            }}
+          >
+            <ContactPageIcon color="info" />
+            <ProjectLink text="CONTACT" to="/contact" />
+          </Box>
         </Box>
       </SwipeableDrawer>
     </>

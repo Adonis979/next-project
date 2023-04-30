@@ -22,6 +22,7 @@ function Text() {
           fontSize: "15px",
           color: "#FB3B2D",
           width: { xs: "100%", md: "55%" },
+          borderRadius: "100px",
         }}
         variant="subtitle1"
       >

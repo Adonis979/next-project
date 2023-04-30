@@ -25,6 +25,8 @@ function Product({ item, user }: Props) {
           display: "flex",
           alignItems: "flex-start",
           flexDirection: "column",
+          width: { xs: "300px", md: "370px" },
+          height: "500px",
           mt: "20px",
           gap: "10px",
           padding: "10px",
@@ -32,6 +34,16 @@ function Product({ item, user }: Props) {
           borderRadius: "20px",
           boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
           cursor: "pointer",
+          transition: "transform 0.3s ease",
+          "&:hover": {
+            transform: { xs: "none", md: "scale(1.03)" },
+          },
+          "&:active": {
+            transform: { xs: "scale(0.98)", md: "scale(1)" },
+            transition: "transform 0.3s ease",
+            backgroundColor: { xs: "white", md: "lightblue" },
+            borderRadius: "20px",
+          },
         }}
         onClick={() => {}}
       >
@@ -39,16 +51,17 @@ function Product({ item, user }: Props) {
           sx={{
             display: "flex",
             flexDirection: "column",
-            width: "300px",
-            height: "400px",
             position: "relative",
+            borderRadius: "20px",
+            width: "100%",
+            height: "100%",
           }}
         >
           <Image
             src={item.photoUrl || "/images/no-user-image.png"}
             alt=""
             fill
-            objectFit="fill"
+            objectFit="cover"
             style={{ borderRadius: "20px" }}
           />
         </Box>
