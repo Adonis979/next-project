@@ -1,13 +1,15 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import React from "react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 interface Props {
   item: FirestoreData;
-  user: { uid: string };
+  button?: any;
 }
 
-function Product({ item, user }: Props) {
+function Product({ item, button }: Props) {
+  const Router = useRouter();
   const date = new Date(item?.date);
   const formattedDate = date.toLocaleString("en-US", {
     year: "numeric",
@@ -45,7 +47,7 @@ function Product({ item, user }: Props) {
             borderRadius: "20px",
           },
         }}
-        onClick={() => {}}
+        onClick={() => Router.push(`/product-page/${item.docId}`)}
       >
         <Box
           sx={{
@@ -83,6 +85,7 @@ function Product({ item, user }: Props) {
             {formattedDate}
           </Typography>
         </Box>
+        {button}
       </Box>
     </>
   );

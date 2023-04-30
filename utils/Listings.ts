@@ -4,6 +4,7 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDoc,
   getDocs,
   onSnapshot,
   orderBy,
@@ -44,6 +45,30 @@ export const GetListings = async () => {
     };
   });
   return data;
+};
+
+export const getListingById = async (listingId: any) => {
+  const docRef = doc(db, "items", listingId);
+  try {
+    const docSnap = await getDoc(docRef);
+    const firestoreDate = docSnap.data()?.date;
+    const date = firestoreDate.toDate().toISOString();
+    const data: FirestoreData = {
+      name: docSnap.data()?.name,
+      category: docSnap.data()?.category,
+      description: docSnap.data()?.description,
+      photoUrl: docSnap.data()?.photoUrl,
+      user: docSnap.data()?.user,
+      size: docSnap.data()?.size,
+      userId: docSnap.data()?.userId,
+      date: date,
+      docId: "",
+    };
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
 };
 
 export const DeleteListings = async (id: string | undefined) => {

@@ -22,11 +22,12 @@ import {
 import ProfileSnackBar from "@/components/ProfileSnackBar";
 import EditableField from "@/components/EditableField";
 import UploadImage from "@/components/UploadImage";
-import { GetProfileListing } from "@/utils/Listings";
+import { DeleteListings, GetProfileListing } from "@/utils/Listings";
 import Product from "@/components/Product";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useRouter } from "next/router";
 import Loader from "@/components/Loader";
+import { getServerSideProps } from "./shop";
 
 function Profile() {
   const Router = useRouter();
@@ -111,6 +112,7 @@ function Profile() {
   ]);
 
   useEffect(() => {
+    console.log("jam ketu");
     const getUser = async () => {
       try {
         await GetProfileListing(setItems, user?.uid);
@@ -278,7 +280,20 @@ function Profile() {
                     }}
                   >
                     {items.map((item, index) => (
-                      <Product key={index} item={item} user={user} />
+                      <Product
+                        key={index}
+                        item={item}
+                        user={user}
+                        button={
+                          <Button
+                            onClick={() => DeleteListings(item.docId)}
+                            variant="contained"
+                            color="error"
+                          >
+                            DELETE
+                          </Button>
+                        }
+                      />
                     ))}
                   </AccordionDetails>
                 </Accordion>
