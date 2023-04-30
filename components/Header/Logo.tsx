@@ -9,8 +9,8 @@ function Logo() {
       onClick={() => Router.push("/")}
       style={{ cursor: "pointer" }}
       width={200}
-      height={35}
-      src="/images/grerza-white.png"
+      height={60}
+      src="/images/LogoGrerza.png"
       alt="grerza"
     ></Image>
   );

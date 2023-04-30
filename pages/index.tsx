@@ -1,7 +1,5 @@
 import Head from "next/head";
 import { Box } from "@mui/material";
-import { useAuth } from "@/context/AuthContext";
-import Layout from "@/components/Layout";
 import Text from "@/components/HomePage/Text";
 import Image from "next/image";
 
@@ -16,30 +14,30 @@ export default function Home() {
       </Head>
       <Box
         sx={{
+          position: "relative",
           display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "flex-start",
+          justifyContent: "flex-start",
+          alignItems: "center",
           height: "100vh",
           backgroundColor: "#FFF6F6",
           gap: "50px",
           paddingLeft: "70px",
         }}
       >
-        <Box
-          sx={{
-            display: {
-              xs: "flex",
-              md: "none",
-              width: "100px",
-              position: "relative",
-            },
-          }}
-        >
-          <Image src="/images/grerzat.png" layout="fill" alt="grerzat"></Image>
-        </Box>
         <Box sx={{ width: "50%" }}>
           <Text />
+        </Box>
+        <Box
+          sx={{
+            display: { xs: "none", lg: "flex" },
+            width: "50%",
+            height: "100%",
+            position: "absolute",
+            bottom: 0,
+            right: 0,
+          }}
+        >
+          <Image src="/images/maskGroup1.png" alt="grerzat" fill></Image>
         </Box>
       </Box>
     </>

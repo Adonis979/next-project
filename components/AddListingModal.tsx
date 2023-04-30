@@ -32,15 +32,18 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: { xs: "70%", sm: "50%" },
+  width: { xs: "90%", sm: "50%" },
   bgcolor: "background.paper",
   boxShadow: 24,
-  p: 4,
+  p: { xs: 1, md: 4 },
   display: "flex",
   flexDirection: "column",
   gap: "20px",
   height: "80%",
   overflow: "auto",
+  "&::-webkit-scrollbar": {
+    display: { xs: "none", sm: "flex" },
+  },
 };
 
 function AddListingModal({ open, handleClose }: Props) {

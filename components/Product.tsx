@@ -1,19 +1,9 @@
-import { DeleteListings } from "@/utils/Listings";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import React from "react";
 import Image from "next/image";
 
 interface Props {
-  item: {
-    photoUrl: string;
-    name: string;
-    user: string;
-    size: string;
-    category: string;
-    userId: string;
-    docId: string;
-    date: string;
-  };
+  item: FirestoreData;
   user: { uid: string };
 }
 
@@ -28,57 +18,57 @@ function Product({ item, user }: Props) {
     second: "numeric",
     hour12: true,
   });
-  const handleDelete = (id: string) => {
-    DeleteListings(id);
-  };
   return (
     <>
       <Box
         sx={{
           display: "flex",
-          alignItems: "center",
-          gap: "20px",
-          marginTop: "50px",
-          boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
-          padding: "20px",
-          width: "90%",
+          alignItems: "flex-start",
+          flexDirection: "column",
+          mt: "20px",
+          gap: "10px",
+          padding: "10px",
           backgroundColor: "white",
+          borderRadius: "20px",
+          boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
+          cursor: "pointer",
         }}
+        onClick={() => {}}
       >
         <Box
           sx={{
-            width: { xs: "150px", md: "300px" },
-            height: "300px",
+            display: "flex",
+            flexDirection: "column",
+            width: "300px",
+            height: "400px",
             position: "relative",
           }}
         >
           <Image
             src={item.photoUrl || "/images/no-user-image.png"}
             alt=""
-            layout="fill"
-            objectFit="contain"
+            fill
+            objectFit="fill"
+            style={{ borderRadius: "20px" }}
           />
         </Box>
-        <Box sx={{ display: "flex", flexDirection: "column" }}>
-          <Typography variant="h5">{item.name}</Typography>
-          <Box sx={{ display: "flex", flexDirection: "column", gap: "5px" }}>
-            <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-              User: {item.user},
-            </Typography>
-            <Typography variant="subtitle1">Size: {item.size}</Typography>
-          </Box>
-          <Typography variant="subtitle1">Category: {item.category}</Typography>
-          <Typography variant="h6">{formattedDate}</Typography>
-          {item.userId === user?.uid ? (
-            <Button
-              onClick={() => handleDelete(item.docId)}
-              sx={{ marginTop: "20px" }}
-              variant="contained"
-              color="error"
-            >
-              Delete
-            </Button>
-          ) : null}
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
+            ml: "10px",
+          }}
+        >
+          <Typography variant="h6" fontWeight="600">
+            {item?.description.toUpperCase()}
+          </Typography>
+          <Typography variant="body2" fontWeight="600">
+            By: {item.user}
+          </Typography>
+          <Typography variant="caption" fontWeight="600">
+            {formattedDate}
+          </Typography>
         </Box>
       </Box>
     </>

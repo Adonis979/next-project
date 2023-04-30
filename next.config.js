@@ -5,6 +5,7 @@ const nextConfig = {
       "firebasestorage.googleapis.com",
       "localhost:3000",
       "graph.facebook.com",
+      "lh3.googleusercontent.com",
     ],
   },
 };
