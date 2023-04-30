@@ -1,6 +1,6 @@
 import { Avatar, Box, Button, Chip, Popover } from "@mui/material";
 import Router from "next/router";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ProjectLink from "../ProjectLink";
 import ProfileCard from "./ProfileCard";
 
@@ -23,13 +23,108 @@ function Navigate({
   open,
   logout,
 }: Props) {
+  const [isHome, setIsHome] = useState(false);
+  const [isAbout, setIsAbout] = useState(false);
+  const [isShop, setIsShop] = useState(false);
+  const [isNews, setIsNews] = useState(false);
+  const [isContact, setIsContact] = useState(false);
+  const url = window.location.href;
+
+  useEffect(() => {
+    if (url.includes("/")) {
+      setIsHome(true);
+      setIsAbout(false);
+      setIsShop(false);
+      setIsNews(false);
+      setIsContact(false);
+    }
+    if (url.includes("/shop")) {
+      setIsHome(false);
+      setIsAbout(false);
+      setIsShop(true);
+      setIsNews(false);
+      setIsContact(false);
+    }
+    if (url.includes("/about")) {
+      setIsHome(false);
+      setIsAbout(true);
+      setIsShop(false);
+      setIsNews(false);
+      setIsContact(false);
+    }
+    if (url.includes("/news")) {
+      setIsHome(false);
+      setIsAbout(false);
+      setIsShop(false);
+      setIsNews(true);
+      setIsContact(false);
+    }
+    if (url.includes("/contact")) {
+      setIsHome(false);
+      setIsAbout(false);
+      setIsShop(false);
+      setIsNews(false);
+      setIsContact(true);
+    }
+  }, [url]);
+
   return (
     <>
-      <ProjectLink text="HOME" to="/" />
-      <ProjectLink text="ABOUT" to="/about" />
-      <ProjectLink text="SHOP" to="/shop" />
-      <ProjectLink text="NEWS" to="/news" />
-      <ProjectLink text="CONTACT" to="/contact" />
+      <Box display="flex" flexDirection="column">
+        <ProjectLink text="HOME" to="/" />
+        {isHome && (
+          <hr
+            style={{
+              borderTop: "2px solid red",
+              margin: "5px 0",
+            }}
+          />
+        )}
+      </Box>
+      <Box display="flex" flexDirection="column">
+        <ProjectLink text="ABOUT" to="/about" />
+        {isAbout && (
+          <hr
+            style={{
+              borderTop: "2px solid red",
+              margin: "5px 0",
+            }}
+          />
+        )}
+      </Box>
+      <Box display="flex" flexDirection="column">
+        <ProjectLink text="SHOP" to="/shop" />
+        {isShop && (
+          <hr
+            style={{
+              borderTop: "2px solid red",
+              margin: "5px 0",
+            }}
+          />
+        )}
+      </Box>
+      <Box display="flex" flexDirection="column">
+        <ProjectLink text="NEWS" to="/news" />
+        {isNews && (
+          <hr
+            style={{
+              borderTop: "2px solid red",
+              margin: "5px 0",
+            }}
+          />
+        )}
+      </Box>
+      <Box display="flex" flexDirection="column">
+        <ProjectLink text="CONTACT" to="/contact" />
+        {isContact && (
+          <hr
+            style={{
+              borderTop: "2px solid red",
+              margin: "5px 0",
+            }}
+          />
+        )}
+      </Box>
       <ProfileCard
         anchorEl={anchorEl}
         handleClick={handleClick}

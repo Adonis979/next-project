@@ -11,7 +11,11 @@ interface Props {
 function ProjectLink({ to, text }: Props) {
   const Router = useRouter();
   return (
-    <IconButton onClick={() => Router.push(`${to}`)}>
+    <IconButton
+      onClick={() => {
+        Router.push(`${to}`);
+      }}
+    >
       <Typography
         sx={{
           color: "#272727",

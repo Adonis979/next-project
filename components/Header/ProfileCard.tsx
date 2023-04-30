@@ -14,7 +14,7 @@ interface Props {
 
 const StyledPopover = styled(Popover)({
   "& .MuiPaper-root": {
-    boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
+    boxShadow: "rgba(149, 157, 165, 0.2) 0px 0px 0px",
     border: "1px solid lightblue",
     borderRadius: "20px",
   },
