@@ -29,42 +29,47 @@ function Navigate({
   const [isNews, setIsNews] = useState(false);
   const [isContact, setIsContact] = useState(false);
   const url = window.location.href;
+  const path = url.substring(url.lastIndexOf("/") + 1);
+
+  console.log(url);
 
   useEffect(() => {
-    if (url.includes("/")) {
-      setIsHome(true);
-      setIsAbout(false);
-      setIsShop(false);
-      setIsNews(false);
-      setIsContact(false);
-    }
-    if (url.includes("/shop")) {
+    if (path === "shop") {
       setIsHome(false);
       setIsAbout(false);
       setIsShop(true);
       setIsNews(false);
       setIsContact(false);
-    }
-    if (url.includes("/about")) {
+    } else if (path === "about") {
       setIsHome(false);
       setIsAbout(true);
       setIsShop(false);
       setIsNews(false);
       setIsContact(false);
-    }
-    if (url.includes("/news")) {
+    } else if (path === "news") {
       setIsHome(false);
       setIsAbout(false);
       setIsShop(false);
       setIsNews(true);
       setIsContact(false);
-    }
-    if (url.includes("/contact")) {
+    } else if (path === "contact") {
       setIsHome(false);
       setIsAbout(false);
       setIsShop(false);
       setIsNews(false);
       setIsContact(true);
+    } else if (path === "") {
+      setIsHome(true);
+      setIsAbout(false);
+      setIsShop(false);
+      setIsNews(false);
+      setIsContact(false);
+    } else {
+      setIsHome(false);
+      setIsAbout(false);
+      setIsShop(false);
+      setIsNews(false);
+      setIsContact(false);
     }
   }, [url]);
 

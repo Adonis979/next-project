@@ -87,7 +87,7 @@ function Shop({ items }: MyComponentProps) {
           padding="10px"
           zIndex="1"
           mt="70px"
-          width={{ xs: "100%", md: "40%" }}
+          width={{ xs: "100%", md: "25%" }}
           borderRadius="20px"
         >
           <List
@@ -143,7 +143,7 @@ function Shop({ items }: MyComponentProps) {
             }}
           >
             {items.map((item, index) => (
-              <Product item={item} user={user} key={index} />
+              <Product item={item} key={index} />
             ))}
           </Box>
         ) : (
