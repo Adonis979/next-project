@@ -1,8 +1,7 @@
 interface FirestoreData {
-  name: string;
-  category: string;
+  title: string;
   description: string;
-  photoUrl: string;
+  photoUrl: string[];
   user: string;
   size: string;
   userId: string;

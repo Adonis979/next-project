@@ -9,9 +9,14 @@ function ProductPage({ product }: any) {
   return (
     <div>
       <h1>Producti {productID}</h1>
-      <h1>{product.name}</h1>
+      <h1>{product.title}</h1>
       <h1>{product.description}</h1>
       <h1>{product.user}</h1>
+      <div style={{ marginTop: "100px" }}>
+        {product.photoUrl?.map((photo: string, index: number) => (
+          <h1 key={index}>{photo}, </h1>
+        ))}
+      </div>
     </div>
   );
 }

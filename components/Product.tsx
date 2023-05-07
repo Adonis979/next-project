@@ -60,7 +60,7 @@ function Product({ item, button }: Props) {
           }}
         >
           <Image
-            src={item.photoUrl || "/images/no-user-image.png"}
+            src={item.photoUrl[0] || "/images/no-user-image.png"}
             alt=""
             fill
             objectFit="cover"
@@ -76,7 +76,7 @@ function Product({ item, button }: Props) {
           }}
         >
           <Typography variant="h6" fontWeight="600">
-            {item?.description.toUpperCase()}
+            {item?.title.toUpperCase()}
           </Typography>
           <Typography variant="body2" fontWeight="600">
             By: {item.user}

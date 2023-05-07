@@ -13,8 +13,7 @@ import {
 } from "firebase/firestore";
 
 interface FirestoreData {
-  name: string;
-  category: string;
+  title: string;
   description: string;
   photoUrl: string;
   user: string;
@@ -33,8 +32,7 @@ export const GetListings = async () => {
     const date = firestoreTimestamp.toDate().toISOString();
     const docId = doc.id;
     return {
-      name: doc.data().name,
-      category: doc.data().category,
+      title: doc.data().name,
       description: doc.data().description,
       photoUrl: doc.data().photoUrl,
       user: doc.data().user,
@@ -54,8 +52,7 @@ export const getListingById = async (listingId: any) => {
     const firestoreDate = docSnap.data()?.date;
     const date = firestoreDate.toDate().toISOString();
     const data: FirestoreData = {
-      name: docSnap.data()?.name,
-      category: docSnap.data()?.category,
+      title: docSnap.data()?.name,
       description: docSnap.data()?.description,
       photoUrl: docSnap.data()?.photoUrl,
       user: docSnap.data()?.user,
@@ -83,32 +80,31 @@ export const DeleteListings = async (id: string | undefined) => {
 
 export const AddListing = async (
   item: {
-    name: string;
+    title: string;
     description: string;
     size: string;
-    category: string;
+    color: string;
+    price: string;
+    currency: string;
   },
-  photoUrl: string | null,
-  user: { uid: string; name: string },
-  setSnackBar: any
+  photoUrl: string[] | null,
+  user: { uid: string; name: string }
 ) => {
   try {
     await addDoc(collection(db, "items"), {
-      name: item.name,
+      name: item.title,
       description: item.description,
+      price: item.price,
       size: item.size,
-      category: item.category,
+      color: item.color,
+      currency: item.currency,
       photoUrl: photoUrl,
       user: user.name,
       date: new Date(),
       userId: user?.uid,
     });
   } catch (e) {
-    setSnackBar({
-      show: true,
-      severity: "error",
-      text: "Something went wrong try again",
-    });
+    console.log(e);
   }
 };
 
@@ -120,7 +116,7 @@ export const GetProfileListing = (setItems: any, id: string | null) => {
       const date = firestoreTimestamp.toDate();
       const docId = doc.id;
       return {
-        name: doc.data().name,
+        title: doc.data().name,
         category: doc.data().category,
         description: doc.data().description,
         photoUrl: doc.data().photoUrl,

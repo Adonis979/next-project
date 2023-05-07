@@ -283,7 +283,6 @@ function Profile() {
                       <Product
                         key={index}
                         item={item}
-                        user={user}
                         button={
                           <Button
                             onClick={() => DeleteListings(item.docId)}

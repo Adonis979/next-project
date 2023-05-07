@@ -1,4 +1,3 @@
-import AddListingModal from "@/components/AddListingModal";
 import {
   Box,
   Button,
@@ -17,10 +16,9 @@ import Loader from "@/components/Loader";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 
 export interface FirestoreData {
-  name: string;
-  category: string;
+  title: string;
   description: string;
-  photoUrl: string;
+  photoUrl: string[];
   user: string;
   size: string;
   userId: string;
@@ -43,12 +41,11 @@ export async function getServerSideProps() {
 
 function Shop({ items }: MyComponentProps) {
   const { user } = useAuth();
-  const [openAddListingModal, setOpenAddListingModal] = useState(false);
   const handleOpen = () => {
     if (!user) {
       alert("In order to add listing you must login!");
       Router.push("/login");
-    } else setOpenAddListingModal(true);
+    } else Router.push("/add-product");
   };
 
   const [openProductType, setOpenProductType] = useState(false);
@@ -69,14 +66,13 @@ function Shop({ items }: MyComponentProps) {
       <Button onClick={handleOpen} variant="contained">
         Add listing
       </Button>
-      <AddListingModal
-        open={openAddListingModal}
-        handleClose={() => setOpenAddListingModal(false)}
-      />
       <Box
         display="flex"
         flexDirection={{ xs: "column", md: "row" }}
         alignItems={{ xs: "center", md: "flex-start" }}
+        justifyContent="center"
+        gap="30px"
+        width="100%"
       >
         <Box
           display="flex"
@@ -135,11 +131,9 @@ function Shop({ items }: MyComponentProps) {
           <Box
             sx={{
               display: "flex",
-              alignItems: "center",
               flexWrap: "wrap",
-              justifyContent: "space-around",
-              padding: "50px 0px 100px 0px",
-              gap: "10px",
+              gap: "20px",
+              mt: "50px",
             }}
           >
             {items.map((item, index) => (
