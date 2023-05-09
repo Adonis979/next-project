@@ -19,11 +19,36 @@ export interface Product {
   userId: string;
 }
 
-function ProductPage({ product }: any) {
+function ProductPage() {
+  const [product, setProduct] = useState<Product>({
+    date: "",
+    description: "",
+    price: "",
+    currency: "",
+    color: "",
+    docId: "",
+    photoUrl: [],
+    size: "",
+    title: "",
+    user: "",
+    userId: "",
+  });
   const Router = useRouter();
   const productID = Router.query.productID;
 
-  console.log(product);
+  useEffect(() => {
+    console.log("jam ketu");
+    getData();
+  }, []);
+
+  const getData = async () => {
+    const data = await getListingById(productID);
+    console.log(data, "data");
+    // @ts-ignore
+    setProduct(data);
+  };
+
+  console.log(product, "asd");
 
   return (
     <Container
@@ -44,24 +69,6 @@ function ProductPage({ product }: any) {
       </Box>
     </Container>
   );
-}
-
-export async function getServerSideProps({ query }: any) {
-  const productID = query.productID;
-
-  try {
-    const product = await getListingById(productID);
-    return {
-      props: {
-        product,
-      },
-    };
-  } catch (error) {
-    console.log(error);
-    return {
-      notFound: true,
-    };
-  }
 }
 
 export default ProductPage;

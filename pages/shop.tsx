@@ -7,7 +7,7 @@ import {
   ListItemText,
   ListSubheader,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Router from "next/router";
 import { useAuth } from "@/context/AuthContext";
 import { GetListings } from "@/utils/Listings";
@@ -26,21 +26,9 @@ export interface FirestoreData {
   docId: string;
 }
 
-interface MyComponentProps {
-  items: FirestoreData[];
-}
-
-export async function getServerSideProps() {
-  const data = await GetListings();
-  return {
-    props: {
-      items: data,
-    },
-  };
-}
-
-function Shop({ items }: MyComponentProps) {
+function Shop() {
   const { user } = useAuth();
+  const [items, setItems] = useState<FirestoreData[]>([]);
   const handleOpen = () => {
     if (!user) {
       alert("In order to add listing you must login!");
@@ -48,10 +36,19 @@ function Shop({ items }: MyComponentProps) {
     } else Router.push("/add-product");
   };
 
+  const getData = async () => {
+    const data = await GetListings();
+    // @ts-ignore
+    setItems(data);
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
   const [openProductType, setOpenProductType] = useState(false);
   const [openSize, setOpenSize] = useState(false);
   const [openColor, setOpenColor] = useState(false);
-
   return (
     <Box
       sx={{

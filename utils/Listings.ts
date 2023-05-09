@@ -30,7 +30,7 @@ export const GetListings = async () => {
   const querySnapshot = await getDocs(
     query(collection(db, "items"), orderBy("date", "desc"))
   );
-  const data: FirestoreData[] = querySnapshot.docs.map((doc) => {
+  const data: FirestoreData[] | null = querySnapshot.docs.map((doc) => {
     const firestoreTimestamp = doc.data().date;
     const date = firestoreTimestamp.toDate().toISOString();
     const docId = doc.id;
