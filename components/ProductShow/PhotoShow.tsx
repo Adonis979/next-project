@@ -5,14 +5,23 @@ import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
-import { Pagination } from "swiper";
+import SwiperCore, { Pagination } from "swiper";
 
 interface Props {
   product: Product;
 }
 
 function PhotoShow({ product }: Props) {
-  const [photoOnSlide, setPhotoOnSlide] = useState(product.photoUrl[0]);
+  const [photoOnSlide, setPhotoOnSlide] = useState(0);
+  const [swiperInstance, setSwiperInstance] = useState<SwiperCore | null>(null);
+
+  const handleButtonClick = (index: number) => {
+    if (swiperInstance) {
+      swiperInstance.slideTo(index);
+      setPhotoOnSlide(index);
+    }
+  };
+
   return (
     <Box
       display="flex"
@@ -25,6 +34,9 @@ function PhotoShow({ product }: Props) {
     >
       <Box
         display="flex"
+        flexWrap="wrap"
+        alignItems="center"
+        justifyContent="center"
         flexDirection={{ xs: "row", md: "column" }}
         gap="10px"
       >
@@ -33,8 +45,10 @@ function PhotoShow({ product }: Props) {
             key={index}
             width={{ xs: "50px", md: "80px" }}
             height={{ xs: "50px", md: "80px" }}
+            sx={{ cursor: "pointer" }}
             position="relative"
             borderRadius="20px"
+            onClick={() => handleButtonClick(index)}
           >
             <Image
               src={photo}
@@ -42,7 +56,7 @@ function PhotoShow({ product }: Props) {
               fill
               style={{
                 border:
-                  photo === photoOnSlide
+                  index === photoOnSlide
                     ? "2px solid lightblue"
                     : "2px solid #FFF6F6",
                 borderRadius: "20px",
@@ -64,9 +78,10 @@ function PhotoShow({ product }: Props) {
             clickable: true,
           }}
           modules={[Pagination]}
+          onSwiper={setSwiperInstance}
           className="mySwiper"
           onSlideChange={(swiper) => {
-            setPhotoOnSlide(product.photoUrl[swiper.activeIndex]);
+            setPhotoOnSlide(swiper.activeIndex);
           }}
           style={{ borderRadius: "20px" }}
         >
