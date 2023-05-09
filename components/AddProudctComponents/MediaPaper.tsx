@@ -49,7 +49,7 @@ function MediaPaper() {
           >
             <input {...getInputProps()} />
             {photos.length === 0 ? (
-              <p>Drag 'n' drop some files here, or click to select files</p>
+              <p>Drag and drop some files here, or click to select files</p>
             ) : (
               <Box
                 sx={{

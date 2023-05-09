@@ -3,14 +3,14 @@ import React from "react";
 import Image from "next/image";
 
 interface Props {
-  progress: number;
+  progress: boolean;
   photoUrl: string | null;
 }
 
 function UploadImage({ progress, photoUrl }: Props) {
   return (
     <>
-      {progress > 0 ? (
+      {progress ? (
         <CircularProgress color="success" />
       ) : (
         <Image

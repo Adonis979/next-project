@@ -12,7 +12,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { auth } from "@/firebase";
 import VerifyModal from "@/components/VerifyModal";
 import Head from "next/head";
-import { uploadFile } from "@/utils/UploadImage";
+import { uploadFiles } from "@/utils/UploadImage";
 import {
   DeleteAccount,
   ResetPassword,
@@ -33,7 +33,7 @@ function Profile() {
   const Router = useRouter();
   const { user } = useAuth();
   const [edit, setEdit] = useState(false);
-  const [progress, setProgress] = useState(0);
+  const [progress, setProgress] = useState(false);
   const [snackBar, setSnackBar] = useState({
     show: false,
     type: "",
@@ -52,8 +52,12 @@ function Profile() {
       fileInputRef.current.click();
     }
   };
-  const handleUploadFile = (files: any) => {
-    uploadFile(files, "images", { setProgress, setPhotoUrl });
+  const handleUploadFile = async (files: any) => {
+    setProgress(true);
+    await uploadFiles(files, "profile").then((urls) => {
+      setPhotoUrl(urls[0]);
+    });
+    setProgress(false);
   };
   const handleChange = (
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
@@ -99,10 +103,9 @@ function Profile() {
 
   const [items, setItems] = useState<FirestoreData[]>([
     {
-      name: "",
-      category: "",
+      title: "",
       description: "",
-      photoUrl: "",
+      photoUrl: [""],
       user: "",
       size: "",
       userId: "",
