@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Product } from "@/pages/product-page/[productID]";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -61,6 +61,7 @@ function PhotoShow({ product }: Props) {
         <Swiper
           pagination={{
             dynamicBullets: true,
+            clickable: true,
           }}
           modules={[Pagination]}
           className="mySwiper"
@@ -69,8 +70,8 @@ function PhotoShow({ product }: Props) {
           }}
           style={{ borderRadius: "20px" }}
         >
-          {product.photoUrl.map((photo) => (
-            <SwiperSlide>
+          {product.photoUrl.map((photo, index) => (
+            <SwiperSlide key={index}>
               <Image src={photo} alt="image" objectFit="cover" fill />
             </SwiperSlide>
           ))}
