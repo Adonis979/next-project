@@ -27,7 +27,6 @@ import Product from "@/components/Product";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useRouter } from "next/router";
 import Loader from "@/components/Loader";
-import { getServerSideProps } from "./shop";
 
 function Profile() {
   const Router = useRouter();
