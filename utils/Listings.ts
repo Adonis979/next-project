@@ -15,6 +15,9 @@ import {
 interface FirestoreData {
   title: string;
   description: string;
+  price?: string;
+  color?: string;
+  currency?: string;
   photoUrl: string;
   user: string;
   size: string;
@@ -54,6 +57,9 @@ export const getListingById = async (listingId: any) => {
     const data: FirestoreData = {
       title: docSnap.data()?.name,
       description: docSnap.data()?.description,
+      price: docSnap.data()?.price,
+      color: docSnap.data()?.color,
+      currency: docSnap.data()?.currency,
       photoUrl: docSnap.data()?.photoUrl,
       user: docSnap.data()?.user,
       size: docSnap.data()?.size,

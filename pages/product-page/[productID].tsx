@@ -1,23 +1,48 @@
+import InfoShow from "@/components/ProductShow/InfoShow";
+import PhotoShow from "@/components/ProductShow/PhotoShow";
 import { getListingById } from "@/utils/Listings";
+import { Box, Container } from "@mui/material";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+
+export interface Product {
+  date: string;
+  description: string;
+  price: string;
+  currency: string;
+  color: string;
+  docId: string;
+  photoUrl: string[];
+  size: string;
+  title: string;
+  user: string;
+  userId: string;
+}
 
 function ProductPage({ product }: any) {
   const Router = useRouter();
   const productID = Router.query.productID;
 
+  console.log(product);
+
   return (
-    <div>
-      <h1>Producti {productID}</h1>
-      <h1>{product.title}</h1>
-      <h1>{product.description}</h1>
-      <h1>{product.user}</h1>
-      <div style={{ marginTop: "100px" }}>
-        {product.photoUrl?.map((photo: string, index: number) => (
-          <h1 key={index}>{photo}, </h1>
-        ))}
-      </div>
-    </div>
+    <Container
+      sx={{
+        display: "flex",
+        flexDirection: { xs: "column", md: "row" },
+        padding: "50px 0px 50px 0px",
+        gap: "30px",
+      }}
+    >
+      {/* Left hand side */}
+      <Box display="flex" width={{ xs: "100%", md: "60%" }}>
+        <PhotoShow product={product} />
+      </Box>
+      {/* Right hand side */}
+      <Box display="flex" width={{ xs: "100%", md: "40%" }}>
+        <InfoShow product={product} />
+      </Box>
+    </Container>
   );
 }
 
