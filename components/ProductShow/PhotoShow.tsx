@@ -30,13 +30,13 @@ function PhotoShow({ product }: Props) {
       >
         {product.photoUrl.map((photo, index) => (
           <Box
+            key={index}
             width={{ xs: "50px", md: "80px" }}
             height={{ xs: "50px", md: "80px" }}
             position="relative"
             borderRadius="20px"
           >
             <Image
-              key={index}
               src={photo}
               alt="image"
               fill
