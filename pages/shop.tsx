@@ -133,9 +133,10 @@ function Shop() {
           <Box
             sx={{
               display: "flex",
+              justifyContent: "space-around",
               flexWrap: "wrap",
-              gap: "20px",
               mt: "50px",
+              width: { xs: "100%", md: "70%" },
             }}
           >
             {items.map((item, index) => (

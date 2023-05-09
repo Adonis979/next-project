@@ -27,7 +27,7 @@ function Product({ item, button }: Props) {
           display: "flex",
           alignItems: "flex-start",
           flexDirection: "column",
-          width: { xs: "300px", md: "370px" },
+          width: { xs: "100%", md: "30%" },
           height: "500px",
           mt: "20px",
           gap: "10px",
