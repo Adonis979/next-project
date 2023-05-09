@@ -28,7 +28,7 @@ export interface FirestoreData {
 
 function Shop() {
   const { user } = useAuth();
-  const [items, setItems] = useState<FirestoreData[]>([]);
+  const [items, setItems] = useState<FirestoreData[] | null>(null);
   const handleOpen = () => {
     if (!user) {
       alert("In order to add listing you must login!");
@@ -49,6 +49,11 @@ function Shop() {
   const [openProductType, setOpenProductType] = useState(false);
   const [openSize, setOpenSize] = useState(false);
   const [openColor, setOpenColor] = useState(false);
+
+  if (!items) {
+    return <Loader />;
+  }
+
   return (
     <Box
       sx={{

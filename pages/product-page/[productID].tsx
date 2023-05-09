@@ -1,3 +1,4 @@
+import Loader from "@/components/Loader";
 import InfoShow from "@/components/ProductShow/InfoShow";
 import PhotoShow from "@/components/ProductShow/PhotoShow";
 import { getListingById } from "@/utils/Listings";
@@ -37,19 +38,18 @@ function ProductPage() {
   const productID = Router.query.productID;
 
   useEffect(() => {
-    console.log("jam ketu");
     getData();
   }, []);
 
   const getData = async () => {
     const data = await getListingById(productID);
-    console.log(data, "data");
     // @ts-ignore
     setProduct(data);
   };
 
-  console.log(product, "asd");
-
+  if (product.date === "") {
+    return <Loader />;
+  }
   return (
     <Container
       sx={{
