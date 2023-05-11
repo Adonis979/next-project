@@ -94,15 +94,18 @@ function Login() {
               xs={12}
               md={6}
               sx={{
-                height: { xs: "400px", md: "757px" },
                 position: "relative",
+                height: "100vh",
               }}
             >
-              <Image
-                layout="fill"
-                alt="grerza"
-                src="/images/layout-2.png"
-              ></Image>
+              <Box height="100%" width="100%" position="relative">
+                <Image
+                  layout="fill"
+                  objectFit="cover"
+                  alt="grerza"
+                  src="/images/layout-2.png"
+                ></Image>
+              </Box>
               <Image
                 onClick={() => Router.push("/")}
                 width={200}

@@ -70,7 +70,14 @@ function Header() {
             />
           </Box>
           {/* Logo */}
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+          <Box
+            sx={{
+              display: { xs: "none", md: "flex" },
+              position: "absolute",
+              width: "200px",
+              height: "60px",
+            }}
+          >
             <Logo />
           </Box>
         </Box>

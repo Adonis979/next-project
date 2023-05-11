@@ -36,14 +36,19 @@ export default function Home() {
         <Box
           sx={{
             display: "flex",
-            width: { xs: "100%", md: "50%" },
-            height: "70%",
             position: "absolute",
+            width: "70%",
+            height: "100%",
             bottom: 0,
             right: 0,
           }}
         >
-          <Image src="/images/maskGroup1.png" alt="grerzat" fill></Image>
+          <Image
+            src="/images/maskGroup1.png"
+            alt="grerzat"
+            fill
+            objectFit="cover"
+          ></Image>
         </Box>
       </Box>
     </>

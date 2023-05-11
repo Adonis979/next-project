@@ -8,8 +8,8 @@ function Logo() {
     <Image
       onClick={() => Router.push("/")}
       style={{ cursor: "pointer" }}
-      width={200}
-      height={60}
+      fill
+      objectFit="cover"
       src="/images/LogoGrerza.png"
       alt="grerza"
     ></Image>
