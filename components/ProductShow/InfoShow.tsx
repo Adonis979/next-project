@@ -15,44 +15,26 @@ function InfoShow({ product }: Props) {
       padding={{ xs: "20px", md: "0px" }}
     >
       <Box>
-        <Typography variant="body2" fontFamily="Montserrat">
-          Description:
-        </Typography>
-        <Typography variant="h6" fontFamily="Montserrat">
-          {product.description}
-        </Typography>
+        <Typography variant="body2">Description:</Typography>
+        <Typography variant="h6">{product.description}</Typography>
       </Box>
       <Box>
-        <Typography variant="body2" fontFamily="Montserrat">
-          Color:
-        </Typography>
-        <Typography variant="h6" fontFamily="Montserrat">
-          {product.color}
-        </Typography>
+        <Typography variant="body2">Color:</Typography>
+        <Typography variant="h6">{product.color}</Typography>
       </Box>
       <Box>
-        <Typography variant="body2" fontFamily="Montserrat">
-          Size:
-        </Typography>
-        <Typography variant="h6" fontFamily="Montserrat">
-          {product.size}
-        </Typography>
+        <Typography variant="body2">Size:</Typography>
+        <Typography variant="h6">{product.size}</Typography>
       </Box>
       <Box>
-        <Typography variant="body2" fontFamily="Montserrat">
-          Price:
-        </Typography>
-        <Typography variant="h6" fontFamily="Montserrat" fontWeight="bold">
+        <Typography variant="body2">Price:</Typography>
+        <Typography variant="h6" fontWeight="bold">
           {product.price} {product.currency}
         </Typography>
       </Box>
       <Box>
-        <Typography variant="body2" fontFamily="Montserrat">
-          By:
-        </Typography>
-        <Typography variant="h6" fontFamily="Montserrat">
-          {product.user}
-        </Typography>
+        <Typography variant="body2">By:</Typography>
+        <Typography variant="h6">{product.user}</Typography>
       </Box>
     </Box>
   );

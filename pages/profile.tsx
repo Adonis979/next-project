@@ -272,7 +272,7 @@ function Profile() {
                     aria-controls="panel1a-content"
                     id="panel1a-header"
                   >
-                    <Typography>Your listings</Typography>
+                    <Typography variant="body1">Your listings</Typography>
                   </AccordionSummary>
                   <AccordionDetails
                     sx={{

@@ -19,9 +19,7 @@ function ProjectLink({ to, text }: Props) {
       <Typography
         sx={{
           color: "#272727",
-          fontFamily: "Montserrat",
-          fontSize: "16px",
-          fontWeight: "bold",
+          fontWeight: "500",
           cursor: "pointer",
         }}
       >

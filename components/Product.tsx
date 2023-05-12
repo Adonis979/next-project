@@ -75,15 +75,9 @@ function Product({ item, button }: Props) {
             ml: "10px",
           }}
         >
-          <Typography variant="h6" fontWeight="600">
-            {item?.title.toUpperCase()}
-          </Typography>
-          <Typography variant="body2" fontWeight="600">
-            By: {item.user}
-          </Typography>
-          <Typography variant="caption" fontWeight="600">
-            {formattedDate}
-          </Typography>
+          <Typography variant="h6">{item?.title.toUpperCase()}</Typography>
+          <Typography variant="body2">By: {item.user}</Typography>
+          <Typography variant="caption">{formattedDate}</Typography>
         </Box>
         {button}
       </Box>

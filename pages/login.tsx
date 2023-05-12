@@ -144,21 +144,16 @@ function Login() {
                   <Typography
                     variant="h3"
                     sx={{
-                      fontFamily: "Montserrat",
-                      fontWeight: "700",
                       color: "#0E2F56",
                     }}
                   >
                     WELCOME BACK
                   </Typography>
                   <Typography
-                    variant="subtitle1"
+                    variant="body2"
                     sx={{
-                      fontWeight: "400",
-                      fontSize: "16px",
                       color: "#272727",
                       marginLeft: "10px",
-                      fontFamily: "Montserrat",
                     }}
                   >
                     We are happy that you are here again
@@ -169,7 +164,7 @@ function Login() {
                     display: "flex",
                     flexDirection: "column",
                     gap: "20px",
-                    marginTop: "50px",
+                    marginTop: "30px",
                   }}
                 >
                   <InputTextField
@@ -208,7 +203,6 @@ function Login() {
                       sx={{
                         cursor: "pointer",
                         color: "#0E2F56",
-                        fontFamily: "Montserrat",
                       }}
                     >
                       Forgot password?
@@ -305,10 +299,7 @@ function Login() {
                       marginBottom: { xs: "50px", md: "0px" },
                     }}
                   >
-                    <Typography
-                      sx={{ fontFamily: "Montserrat" }}
-                      variant="subtitle1"
-                    >
+                    <Typography variant="subtitle1">
                       Dont have an account?{" "}
                       <Link style={{ fontStyle: "italic" }} href="/sign-up">
                         Sign up

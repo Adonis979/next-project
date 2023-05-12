@@ -29,6 +29,8 @@ export default function Home() {
             width: { xs: "70%", md: "50%" },
             backgroundColor: "#FFF6F6",
             mt: { xs: "20px", md: "0px" },
+            zIndex: 999,
+            borderRadius: { xs: "100px", md: "0px" },
           }}
         >
           <Text />
@@ -37,10 +39,11 @@ export default function Home() {
           sx={{
             display: "flex",
             position: "absolute",
-            width: "70%",
+            width: { xs: "100%", md: "70%" },
             height: "100%",
             bottom: 0,
             right: 0,
+            zIndex: 0,
           }}
         >
           <Image
