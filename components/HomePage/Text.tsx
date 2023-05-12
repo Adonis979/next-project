@@ -8,7 +8,7 @@ function Text() {
         display: "flex",
         flexDirection: "column",
         gap: "10px",
-        borderRadius: "50px",
+        borderRadius: "100px",
       }}
     >
       <Typography
@@ -16,14 +16,17 @@ function Text() {
           width: "100%",
           color: "#0E2F56",
         }}
+        variant="h3"
+        fontWeight="500"
       >
         LITTLE THINGS MAKES DIFFERENCE
       </Typography>
       <Typography
         sx={{
-          color: "#FB3B2D",
+          color: "black",
           width: { xs: "100%", md: "55%" },
         }}
+        fontWeight={700}
         variant="subtitle1"
       >
         Sometimes our stress about things makes it necessary for us to find a

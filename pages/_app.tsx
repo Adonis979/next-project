@@ -16,69 +16,6 @@ const montserrat = Montserrat({
 const theme = createTheme({
   typography: {
     fontFamily: montserrat.style.fontFamily,
-    h1: {
-      fontSize: "36px",
-      fontWeight: 600,
-      lineHeight: "36px",
-      textTransform: "uppercase",
-      "::selection": {
-        backgroundColor: "#ef3e33",
-        color: "white",
-      },
-      "@media (max-width: 599px)": {
-        fontSize: "32px",
-        lineHeight: "32px",
-      },
-    },
-    h2: {
-      fontSize: "36px",
-      lineHeight: "44px",
-
-      "@media (max-width: 599px)": {
-        fontSize: "32px",
-        lineHeight: "38px",
-      },
-    },
-    h3: {
-      fontSize: "24px",
-      lineHeight: "30px",
-      "@media (max-width: 599px)": {
-        fontSize: "20px",
-        lineHeight: "28px",
-      },
-    },
-    h4: {
-      fontSize: "22px",
-      lineHeight: "30px",
-      "@media (max-width: 599px)": {
-        fontSize: "18px",
-        lineHeight: "24px",
-      },
-    },
-    subtitle1: {
-      fontSize: "18px",
-      lineHeight: "24px",
-      "@media (max-width: 599px)": {
-        fontSize: "15px",
-        lineHeight: "18px",
-      },
-    },
-    subtitle2: {
-      fontSize: "16px",
-      lineHeight: "20px",
-      "@media (max-width: 599px)": {
-        fontSize: "13px",
-        lineHeight: "16px",
-      },
-    },
-    caption: {
-      fontSize: "14px",
-      lineHeight: "20px",
-      "@media (max-width: 599px)": {
-        fontSize: "13px",
-        lineHeight: "16px",
-      },
-    },
   },
 });
 

@@ -27,10 +27,8 @@ export default function Home() {
         <Box
           sx={{
             width: { xs: "70%", md: "50%" },
-            backgroundColor: "#FFF6F6",
             mt: { xs: "20px", md: "0px" },
             zIndex: 999,
-            borderRadius: { xs: "100px", md: "0px" },
           }}
         >
           <Text />

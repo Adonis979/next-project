@@ -68,16 +68,33 @@ function Product({ item, button }: Props) {
           />
         </Box>
         <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-start",
-            ml: "10px",
-          }}
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+          width="95%"
         >
-          <Typography variant="h6">{item?.title.toUpperCase()}</Typography>
-          <Typography variant="body2">By: {item.user}</Typography>
-          <Typography variant="caption">{formattedDate}</Typography>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              ml: "10px",
+            }}
+          >
+            <Typography variant="subtitle1" fontWeight={600}>
+              {item?.title.toUpperCase()}
+            </Typography>
+            <Typography variant="body2">By: {item.user}</Typography>
+            <Typography variant="caption">{formattedDate}</Typography>
+          </Box>
+          <Typography
+            variant="subtitle1"
+            fontWeight={600}
+            width="30%"
+            sx={{ textAlign: "right" }}
+          >
+            {item?.price} {item?.currency}
+          </Typography>
         </Box>
         {button}
       </Box>

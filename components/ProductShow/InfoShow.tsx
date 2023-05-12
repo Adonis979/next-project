@@ -16,25 +16,33 @@ function InfoShow({ product }: Props) {
     >
       <Box>
         <Typography variant="body2">Description:</Typography>
-        <Typography variant="h6">{product.description}</Typography>
+        <Typography variant="subtitle1" fontWeight="500">
+          {product.description}
+        </Typography>
       </Box>
       <Box>
         <Typography variant="body2">Color:</Typography>
-        <Typography variant="h6">{product.color}</Typography>
+        <Typography variant="subtitle1" fontWeight="500">
+          {product.color}
+        </Typography>
       </Box>
       <Box>
         <Typography variant="body2">Size:</Typography>
-        <Typography variant="h6">{product.size}</Typography>
+        <Typography variant="subtitle1" fontWeight="500">
+          {product.size}
+        </Typography>
       </Box>
       <Box>
         <Typography variant="body2">Price:</Typography>
-        <Typography variant="h6" fontWeight="bold">
+        <Typography variant="subtitle1" fontWeight="bold">
           {product.price} {product.currency}
         </Typography>
       </Box>
       <Box>
         <Typography variant="body2">By:</Typography>
-        <Typography variant="h6">{product.user}</Typography>
+        <Typography variant="subtitle1" fontWeight="500">
+          {product.user}
+        </Typography>
       </Box>
     </Box>
   );

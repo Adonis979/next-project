@@ -37,6 +37,8 @@ export const GetListings = async () => {
     return {
       title: doc.data().name,
       description: doc.data().description,
+      price: doc.data().price,
+      currency: doc.data().currency,
       photoUrl: doc.data().photoUrl,
       user: doc.data().user,
       size: doc.data().size,

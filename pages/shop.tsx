@@ -18,6 +18,8 @@ import { ExpandLess, ExpandMore } from "@mui/icons-material";
 export interface FirestoreData {
   title: string;
   description: string;
+  price: number;
+  currency: string;
   photoUrl: string[];
   user: string;
   size: string;

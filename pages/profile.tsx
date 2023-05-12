@@ -103,6 +103,8 @@ function Profile() {
   const [items, setItems] = useState<FirestoreData[]>([
     {
       title: "",
+      price: 0,
+      currency: "",
       description: "",
       photoUrl: [""],
       user: "",
