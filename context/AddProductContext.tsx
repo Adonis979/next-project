@@ -3,8 +3,14 @@ import { uploadFiles } from "@/utils/UploadImage";
 import { createContext, useContext, useState } from "react";
 import { useAuth } from "./AuthContext";
 import { SelectChangeEvent } from "@mui/material";
+import {
+  validateNotEmpty,
+  validateOnlyLetters,
+  validateOnlyNumbers,
+} from "@/utils/validate";
+import { validate } from "uuid";
 
-interface PhotoFile extends File {
+export interface PhotoFile extends File {
   readonly lastModified: number;
   readonly name: string;
   readonly size: number;
@@ -35,10 +41,48 @@ export const AddProductContextProvider = ({
     peopleCategory: "Women",
     clothesCategory: "",
     size: "",
-    color: "",
+    color: "#FFFFFF",
     price: "",
     currency: "",
   });
+
+  const [titleError, setTitleError] = useState({
+    error: false,
+    helperText: "",
+  });
+  const [descriptionError, setDescriptionError] = useState({
+    error: false,
+    helperText: "",
+  });
+  const [photoError, setPhotoError] = useState({
+    error: false,
+    helperText: "",
+  });
+  const [peopleCategoryError, setPeopleCategoryError] = useState({
+    error: false,
+    helperText: "",
+  });
+  const [clothesCategoryError, setClothesCategoryError] = useState({
+    error: false,
+    helperText: "",
+  });
+  const [sizeError, setSizeError] = useState({ error: false, helperText: "" });
+  const [colorError, setColorError] = useState({
+    error: false,
+    helperText: "",
+  });
+  const [priceError, setPriceError] = useState({
+    error: false,
+    helperText: "",
+  });
+  const [currencyError, setCurrencyError] = useState({
+    error: false,
+    helperText: "",
+  });
+
+  const handleClick = (value: string) => {
+    setProduct({ ...product, color: value });
+  };
   const [photos, setPhotos] = useState<PhotoFile[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -65,14 +109,52 @@ export const AddProductContextProvider = ({
     setPhotos(updatedPhotos);
   };
 
+  const validate = () => {
+    const title = validateOnlyLetters(product.title, setTitleError);
+    const peopleCategory = validateNotEmpty(
+      product.peopleCategory,
+      setPeopleCategoryError
+    );
+    const clothesCategory = validateNotEmpty(
+      product.clothesCategory,
+      setClothesCategoryError
+    );
+    const description = validateNotEmpty(
+      product.description,
+      setDescriptionError
+    );
+    const photo = validateNotEmpty(photos, setPhotoError);
+    const color = validateNotEmpty(product.color, setColorError);
+    const size = validateNotEmpty(product.size, setSizeError);
+    const price = validateOnlyNumbers(product.price, setPriceError);
+    const currency = validateNotEmpty(product.currency, setCurrencyError);
+
+    if (
+      !title &&
+      !peopleCategory &&
+      !clothesCategory &&
+      !description &&
+      !photo &&
+      !color &&
+      !size &&
+      !price &&
+      !currency
+    ) {
+      return true;
+    } else return false;
+  };
+
   const handleSubmit = async () => {
-    setLoading(true);
-    let photoUrls: string[] = [];
-    await uploadFiles(photos, product.title).then((urls) => {
-      photoUrls = urls;
-    });
-    AddListing(product, photoUrls, user);
-    setLoading(false);
+    const valid = validate();
+    if (valid) {
+      setLoading(true);
+      let photoUrls: string[] = [];
+      await uploadFiles(photos, product.title).then((urls) => {
+        photoUrls = urls;
+      });
+      AddListing(product, photoUrls, user);
+      setLoading(false);
+    }
   };
 
   return (
@@ -81,10 +163,20 @@ export const AddProductContextProvider = ({
         product,
         photos,
         loading,
+        titleError,
+        peopleCategoryError,
+        clothesCategoryError,
+        descriptionError,
+        photoError,
+        colorError,
+        sizeError,
+        priceError,
+        currencyError,
         handleChange,
         handleAddPhoto,
         handleSubmit,
         handleDelete,
+        handleClick,
       }}
     >
       {children}

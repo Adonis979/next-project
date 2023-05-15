@@ -3,7 +3,8 @@ import { Box, MenuItem, Paper, TextField, Typography } from "@mui/material";
 import React from "react";
 
 function PricePaper() {
-  const { handleChange, product } = useAddProductContext();
+  const { handleChange, product, priceError, currencyError } =
+    useAddProductContext();
   return (
     <Paper
       elevation={3}
@@ -27,6 +28,8 @@ function PricePaper() {
       </Typography>
       <Box display="flex" gap="20px">
         <TextField
+          error={priceError.error}
+          helperText={priceError.helperText}
           onChange={handleChange}
           name="price"
           value={product.price}
@@ -37,6 +40,8 @@ function PricePaper() {
           variant="outlined"
         />
         <TextField
+          error={currencyError.error}
+          helperText={currencyError.error}
           onChange={handleChange}
           name="currency"
           value={product.currency}

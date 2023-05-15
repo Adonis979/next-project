@@ -12,7 +12,7 @@ import { useAddProductContext } from "@/context/AddProductContext";
 import ColorPicker from "./ColorPicker";
 
 function SizeColorPaper() {
-  const { handleChange, product } = useAddProductContext();
+  const { handleChange, product, sizeError } = useAddProductContext();
   return (
     <Paper
       elevation={3}
@@ -36,6 +36,8 @@ function SizeColorPaper() {
       </Typography>
       <ColorPicker />
       <TextField
+        error={sizeError.error}
+        helperText={sizeError.helperText}
         onChange={(event) => handleChange(event)}
         name="size"
         value={product.size}

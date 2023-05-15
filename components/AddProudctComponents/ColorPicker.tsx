@@ -1,4 +1,5 @@
-import { Box } from "@mui/material";
+import { useAddProductContext } from "@/context/AddProductContext";
+import { Box, IconButton } from "@mui/material";
 import React, { useState } from "react";
 
 const colors = [
@@ -20,31 +21,35 @@ const colors = [
 ];
 
 function ColorPicker() {
-  const [selectedColor, setSelectedColor] = useState("#FFFFFF");
-  const handleClick = (value: string) => {
-    setSelectedColor(value);
-  };
+  const { handleClick, product } = useAddProductContext();
   return (
-    <Box display="flex" gap="10px" flexWrap="wrap" padding="10px">
+    <Box
+      display="flex"
+      alignItems="center"
+      justifyContent="flex-start"
+      flexWrap="wrap"
+      padding="10px"
+    >
       {colors.map((color, index) => (
-        <Box
-          key={index}
-          padding="2px"
-          border={
-            color.hex === selectedColor ? "2px solid blue" : "2px solid white"
-          }
-          borderRadius="50%"
-        >
+        <IconButton onClick={() => handleClick(color.hex)}>
           <Box
             key={index}
-            onClick={() => handleClick(color.hex)}
-            sx={{ cursor: "pointer" }}
-            height="20px"
-            width="20px"
+            padding="2px"
+            border={
+              color.hex === product.color ? "2px solid blue" : "2px solid white"
+            }
             borderRadius="50%"
-            bgcolor={color.name}
-          />
-        </Box>
+          >
+            <Box
+              key={index}
+              sx={{ cursor: "pointer" }}
+              height="20px"
+              width="20px"
+              borderRadius="50%"
+              bgcolor={color.name}
+            />
+          </Box>
+        </IconButton>
       ))}
     </Box>
   );

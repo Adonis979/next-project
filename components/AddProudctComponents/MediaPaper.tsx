@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useAddProductContext } from "@/context/AddProductContext";
 
 function MediaPaper() {
-  const { handleAddPhoto, photos, handleDelete, handleClick } =
+  const { handleAddPhoto, photos, handleDelete, photoError } =
     useAddProductContext();
   return (
     <Paper
@@ -38,7 +38,7 @@ function MediaPaper() {
               alignItems: "center",
               justifyContent: "center",
               p: 3,
-              border: "2px dashed blue",
+              border: photoError.error ? "2px dashed red" : "2px dashed blue",
               borderRadius: "10px",
               cursor: "pointer",
               "&:hover": {
@@ -103,6 +103,13 @@ function MediaPaper() {
           </Box>
         )}
       </Dropzone>
+      {photoError.error && (
+        <Box>
+          <Typography color="red">
+            You must insert at least one photo
+          </Typography>
+        </Box>
+      )}
     </Paper>
   );
 }

@@ -13,7 +13,7 @@ import {
   RadioGroup,
 } from "@mui/material";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const allCategories = [
   {
@@ -73,7 +73,21 @@ const allCategories = [
 ];
 
 function InfoPaper() {
-  const { handleChange, product } = useAddProductContext();
+  const titleRef = useRef(null);
+  const {
+    handleChange,
+    product,
+    titleError,
+    descriptionError,
+    clothesCategoryError,
+  } = useAddProductContext();
+
+  useEffect(() => {
+    if (titleError.error) {
+      // @ts-ignore
+      titleRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [titleError.error]);
 
   const categories = allCategories.find(
     (category) => category.group === product.peopleCategory
@@ -100,8 +114,11 @@ function InfoPaper() {
         Info
       </Typography>
       <TextField
+        ref={titleRef}
         onChange={(event) => handleChange(event)}
         name="title"
+        error={titleError.error}
+        helperText={titleError.helperText}
         value={product.title}
         placeholder="Short sleeve t-shirt"
         label="Title"
@@ -129,6 +146,7 @@ function InfoPaper() {
           value={product.clothesCategory}
           onChange={(event) => handleChange(event)}
           name="clothesCategory"
+          error={clothesCategoryError.error}
         >
           <ListSubheader>{categories?.group}</ListSubheader>
           {categories?.options.map((option: any) => (
@@ -139,6 +157,8 @@ function InfoPaper() {
         </Select>
       </FormControl>
       <TextField
+        error={descriptionError.error}
+        helperText={descriptionError.helperText}
         onChange={handleChange}
         name="description"
         value={product.description}
