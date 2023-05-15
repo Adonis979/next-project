@@ -27,6 +27,7 @@ function InfoShow({ product }: Props) {
           height="20px"
           borderRadius="50%"
           bgcolor={product.color}
+          mt="5px"
         />
       </Box>
       <Box>
