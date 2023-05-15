@@ -1,7 +1,7 @@
 import { PhotoFile } from "../context/AddProductContext";
 
 const OnlyLetters: RegExp = /^[a-zA-Z]+$/;
-const OnlyNumbers: RegExp = /^\d+$/;
+const OnlyNumbers: RegExp = /^[\d\s]+$/;
 
 export const validateNotEmpty = (
   value: string | PhotoFile[],
