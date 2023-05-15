@@ -22,9 +22,12 @@ function InfoShow({ product }: Props) {
       </Box>
       <Box>
         <Typography variant="body2">Color:</Typography>
-        <Typography variant="subtitle1" fontWeight="500">
-          {product.color}
-        </Typography>
+        <Box
+          width="20px"
+          height="20px"
+          borderRadius="50%"
+          bgcolor={product.color}
+        />
       </Box>
       <Box>
         <Typography variant="body2">Size:</Typography>
