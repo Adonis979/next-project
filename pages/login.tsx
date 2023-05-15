@@ -95,7 +95,7 @@ function Login() {
               md={6}
               sx={{
                 position: "relative",
-                height: "100vh",
+                height: { xs: "70vh", md: "100vh" },
               }}
             >
               <Box height="100%" width="100%" position="relative">
@@ -136,7 +136,7 @@ function Login() {
                   display: "flex",
                   flexDirection: "column",
                   gap: "10px",
-                  marginTop: { xs: "50px", sm: "none" },
+                  marginTop: { xs: "40px", sm: "none" },
                   width: { xs: "80%", md: "60%" },
                 }}
               >

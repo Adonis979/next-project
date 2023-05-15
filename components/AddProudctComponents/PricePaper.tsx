@@ -46,8 +46,8 @@ function PricePaper() {
           label="Select"
           defaultValue="EUR"
         >
-          <MenuItem value="EUR">Euro €</MenuItem>
-          <MenuItem value="DOLLAR">Dollar $</MenuItem>
+          <MenuItem value="€">Euro €</MenuItem>
+          <MenuItem value="$">Dollar $</MenuItem>
         </TextField>
       </Box>
     </Paper>

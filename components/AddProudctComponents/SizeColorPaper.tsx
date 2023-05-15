@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useAddProductContext } from "@/context/AddProductContext";
+import ColorPicker from "./ColorPicker";
 
 function SizeColorPaper() {
   const { handleChange, product } = useAddProductContext();
@@ -33,16 +34,16 @@ function SizeColorPaper() {
       >
         Size & Color
       </Typography>
+      <ColorPicker />
       <TextField
-        onChange={handleChange}
-        name="color"
-        value={product.value}
-        label="Color"
-        fullWidth
+        onChange={(event) => handleChange(event)}
+        name="size"
+        value={product.size}
+        placeholder="Small, Large, 42, ..."
+        label="Size"
         variant="outlined"
-        placeholder="Type your product color"
       />
-      <FormControl fullWidth>
+      {/* <FormControl fullWidth>
         <InputLabel>Size</InputLabel>
         <Select
           onChange={handleChange}
@@ -57,7 +58,7 @@ function SizeColorPaper() {
           <MenuItem value="Extra Large">Extra Large</MenuItem>
           <MenuItem value="Extra Extra Large">Extra extra Large</MenuItem>
         </Select>
-      </FormControl>
+      </FormControl> */}
     </Paper>
   );
 }

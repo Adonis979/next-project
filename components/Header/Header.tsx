@@ -82,7 +82,7 @@ function Header() {
           </Box>
         </Box>
         {/* Middle */}
-        <Box display={{ xs: "none", md: "flex" }} width="35%">
+        <Box display={{ xs: "none", md: "flex" }} width="30%">
           <SearchInput />
         </Box>
         {/* Right Side */}

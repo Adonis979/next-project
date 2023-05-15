@@ -8,6 +8,8 @@ import SearchInput from "./SearchInput";
 import ProjectLink from "../ProjectLink";
 import { useRouter } from "next/router";
 import ContactPageIcon from "@mui/icons-material/ContactPage";
+import LocalGroceryStoreIcon from "@mui/icons-material/LocalGroceryStore";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 
 interface Props {
   setOpenDrawer: any;
@@ -95,12 +97,12 @@ function Drawer({ setOpenDrawer, openDrawer }: Props) {
               padding: "5px",
             }}
           >
-            <HomeIcon color="info" />
+            <LocalGroceryStoreIcon color="info" />
             <ProjectLink text="SHOP" to="/shop" />
           </Box>
           <Box
             onClick={() => {
-              Router.push("/news");
+              Router.push("/add-product");
               setOpenDrawer(false);
             }}
             display="flex"
@@ -113,8 +115,8 @@ function Drawer({ setOpenDrawer, openDrawer }: Props) {
               padding: "5px",
             }}
           >
-            <NewspaperIcon color="info" />
-            <ProjectLink text="NEWS" to="/news" />
+            <AddShoppingCartIcon color="info" />
+            <ProjectLink text="ADD LISTING" to="/add-product" />
           </Box>
           <Box
             onClick={() => {

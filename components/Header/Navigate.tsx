@@ -46,7 +46,7 @@ function Navigate({
       setIsShop(false);
       setIsNews(false);
       setIsContact(false);
-    } else if (path === "news") {
+    } else if (path === "add-product") {
       setIsHome(false);
       setIsAbout(false);
       setIsShop(false);
@@ -109,7 +109,7 @@ function Navigate({
         )}
       </Box>
       <Box display="flex" flexDirection="column">
-        <ProjectLink text="NEWS" to="/news" />
+        <ProjectLink text="ADD LISTING" to="/add-product" />
         {isNews && (
           <hr
             style={{

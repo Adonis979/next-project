@@ -2,6 +2,7 @@ import { AddListing } from "@/utils/Listings";
 import { uploadFiles } from "@/utils/UploadImage";
 import { createContext, useContext, useState } from "react";
 import { useAuth } from "./AuthContext";
+import { SelectChangeEvent } from "@mui/material";
 
 interface PhotoFile extends File {
   readonly lastModified: number;
@@ -12,6 +13,8 @@ interface PhotoFile extends File {
 interface Product {
   title: string;
   description: string;
+  peopleCategory: string;
+  clothesCategory: string;
   size: string;
   color: string;
   price: string;
@@ -29,6 +32,8 @@ export const AddProductContextProvider = ({
   const [product, setProduct] = useState<Product>({
     title: "",
     description: "",
+    peopleCategory: "Women",
+    clothesCategory: "",
     size: "",
     color: "",
     price: "",
@@ -38,10 +43,14 @@ export const AddProductContextProvider = ({
   const [loading, setLoading] = useState(false);
 
   const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event:
+      | SelectChangeEvent<any>
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
     const name = event.target.name;
     const value = event.target.value;
+    console.log(value);
     setProduct({ ...product, [name]: value });
   };
 
