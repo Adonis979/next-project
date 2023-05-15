@@ -31,9 +31,8 @@ function ColorPicker() {
       padding="10px"
     >
       {colors.map((color, index) => (
-        <IconButton onClick={() => handleClick(color.hex)}>
+        <IconButton key={index} onClick={() => handleClick(color.hex)}>
           <Box
-            key={index}
             padding="2px"
             border={
               color.hex === product.color ? "2px solid blue" : "2px solid white"
