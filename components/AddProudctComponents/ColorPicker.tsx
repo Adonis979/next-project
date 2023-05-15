@@ -28,6 +28,7 @@ function ColorPicker() {
     <Box display="flex" gap="10px" flexWrap="wrap" padding="10px">
       {colors.map((color, index) => (
         <Box
+          key={index}
           padding="2px"
           border={
             color.hex === selectedColor ? "2px solid blue" : "2px solid white"
