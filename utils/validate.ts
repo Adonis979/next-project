@@ -1,7 +1,7 @@
 import { PhotoFile } from "../context/AddProductContext";
 
-const OnlyLetters: RegExp = /^[a-zA-Z]+$/;
-const OnlyNumbers: RegExp = /^[\d\s]+$/;
+const OnlyLetters: RegExp = /^(?=.*[A-Za-z])[A-Za-z0-9 ]+$/;
+const OnlyNumbers: RegExp = /^\d+$/;
 
 export const validateNotEmpty = (
   value: string | PhotoFile[],
@@ -21,7 +21,7 @@ export const validateOnlyLetters = (value: string, setError: any) => {
     setError({ error: true, helperText: "Field cannot be empty" });
     return true;
   } else if (!OnlyLetters.test(value)) {
-    setError({ error: true, helperText: "Field cannot contain numbers" });
+    setError({ error: true, helperText: "Must have at least one letter" });
     return true;
   } else {
     setError({ error: false, helperText: "" });
