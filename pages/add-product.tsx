@@ -6,8 +6,18 @@ import SizeColorPaper from "@/components/AddProudctComponents/SizeColorPaper";
 import PricePaper from "@/components/AddProudctComponents/PricePaper";
 import { AddProductContextProvider } from "@/context/AddProductContext";
 import AddProductButton from "@/components/AddProudctComponents/AddProductButton";
+import { useAuth } from "@/context/AuthContext";
+import Router from "next/router";
+import Loader from "@/components/Loader";
 
 function AddProduct() {
+  const { user } = useAuth();
+
+  if (!user) {
+    Router.push("/login");
+    return <Loader />;
+  }
+
   return (
     <AddProductContextProvider>
       <Box
