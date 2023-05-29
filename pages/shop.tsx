@@ -14,13 +14,14 @@ import { GetListings } from "@/utils/Listings";
 import Product from "@/components/Product";
 import Loader from "@/components/Loader";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
+import axios from "axios";
 
 export interface FirestoreData {
   title: string;
   description: string;
   price: number;
   currency: string;
-  photoUrl: string[];
+  photo: string[];
   user: string;
   size: string;
   userId: string;
@@ -38,14 +39,16 @@ function Shop() {
     } else Router.push("/add-product");
   };
 
-  const getData = async () => {
-    const data = await GetListings();
-    // @ts-ignore
-    setItems(data);
-  };
+  console.log(items, "items");
 
   useEffect(() => {
-    getData();
+    const getListing = async () => {
+      await axios.get("http://localhost:5000/api/product").then((res) => {
+        setItems(res.data);
+        console.log(res.data);
+      });
+    };
+    getListing();
   }, []);
 
   const [openProductType, setOpenProductType] = useState(false);

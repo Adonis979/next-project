@@ -40,35 +40,34 @@ function Login() {
       await login(user.email, user.password);
       setEmailError({ error: false, helperText: "" });
       setPasswordError({ error: false, helperText: "" });
-      Router.push("/");
       setLoader(false);
     } catch (error: any) {
-      if (error.code === "auth/wrong-password") {
-        setPasswordError({ error: true, helperText: "Wrong password" });
-      }
-      if (error.code === "auth/user-not-found") {
-        setEmailError({ error: true, helperText: "This email does not exist" });
-      }
+      setEmailError({ error: true, helperText: "" });
+      setPasswordError({
+        error: true,
+        helperText: "Email or password is wrong",
+      });
+      console.log(error);
     }
     setLoader(false);
   };
-  const handleLoginGoogle = async () => {
-    try {
-      await LoginWithGoogle();
-      Router.push("/");
-    } catch (error: any) {
-      alert(error.code);
-    }
-  };
+  // const handleLoginGoogle = async () => {
+  //   try {
+  //     await LoginWithGoogle();
+  //     Router.push("/");
+  //   } catch (error: any) {
+  //     alert(error.code);
+  //   }
+  // };
 
-  const handleLoginFacebook = async () => {
-    try {
-      await LoginWithFacebook();
-      Router.push("/");
-    } catch (error: any) {
-      alert(error.code);
-    }
-  };
+  // const handleLoginFacebook = async () => {
+  //   try {
+  //     await LoginWithFacebook();
+  //     Router.push("/");
+  //   } catch (error: any) {
+  //     alert(error.code);
+  //   }
+  // };
 
   const [modalText, setModalText] = useState("");
   const [openVerifyModal, setOpenVerifyModal] = useState(false);
@@ -261,7 +260,7 @@ function Login() {
                     }}
                   >
                     <Button
-                      onClick={handleLoginGoogle}
+                      // onClick={handleLoginGoogle}
                       sx={{ width: "100%", height: "57px" }}
                       variant="outlined"
                     >
@@ -277,7 +276,7 @@ function Login() {
                       Google
                     </Button>
                     <Button
-                      onClick={handleLoginFacebook}
+                      // onClick={handleLoginFacebook}
                       sx={{ width: "100%", height: "57px" }}
                       variant="outlined"
                     >

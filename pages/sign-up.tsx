@@ -50,12 +50,9 @@ function SignUp() {
       setLoader(true);
       try {
         await signup(user.email, user.password, user.name);
-        Router.push("/");
         setLoader(false);
       } catch (error: any) {
-        if (error.code === "auth/email-already-in-use") {
-          setEmailError({ error: true, helperText: "Email already in use" });
-        }
+        setEmailError({ error: true, helperText: "Email already in use" });
       }
       setLoader(false);
     }

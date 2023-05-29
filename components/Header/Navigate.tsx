@@ -1,8 +1,8 @@
 import { Avatar, Box, Button, Chip, Popover } from "@mui/material";
-import Router from "next/router";
 import React, { useEffect, useState } from "react";
 import ProjectLink from "../ProjectLink";
 import ProfileCard from "./ProfileCard";
+import { useRouter } from "next/router";
 
 interface Props {
   user: any;
@@ -28,10 +28,9 @@ function Navigate({
   const [isShop, setIsShop] = useState(false);
   const [isNews, setIsNews] = useState(false);
   const [isContact, setIsContact] = useState(false);
-  const url = window.location.href;
+  const Router = useRouter();
+  const url = Router.asPath;
   const path = url.substring(url.lastIndexOf("/") + 1);
-
-  console.log(url);
 
   useEffect(() => {
     if (path === "shop") {

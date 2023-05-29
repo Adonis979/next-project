@@ -2,6 +2,7 @@ import { Box, Button, Typography } from "@mui/material";
 import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 interface Props {
   item: FirestoreData;
@@ -50,6 +51,9 @@ function Product({ item, button }: Props) {
         onClick={() => Router.push(`/product-page/${item.docId}`)}
       >
         <Box
+          component="img"
+          src={`http://localhost:5000/${item.photo[0]}`}
+          alt=""
           sx={{
             display: "flex",
             flexDirection: "column",
@@ -58,15 +62,8 @@ function Product({ item, button }: Props) {
             width: "100%",
             height: "100%",
           }}
-        >
-          <Image
-            src={item.photoUrl[0] || "/images/no-user-image.png"}
-            alt=""
-            fill
-            objectFit="cover"
-            style={{ borderRadius: "20px" }}
-          />
-        </Box>
+        />
+        <Typography>{`http://localhost:5000/${item.photo[0]}`}</Typography>
         <Box
           display="flex"
           alignItems="center"

@@ -39,7 +39,7 @@ function Profile() {
     text: "",
   });
   const [editUser, setEditUser] = useState({
-    name: user?.name,
+    name: user?.username,
     email: user?.email,
   });
 
@@ -115,17 +115,16 @@ function Profile() {
     },
   ]);
 
-  useEffect(() => {
-    console.log("jam ketu");
-    const getUser = async () => {
-      try {
-        await GetProfileListing(setItems, user?.uid);
-      } catch (error: any) {
-        Router.push("/login");
-      }
-    };
-    getUser();
-  }, []);
+  // useEffect(() => {
+  //   const getUser = async () => {
+  //     try {
+  //       await GetProfileListing(setItems, user?.uid);
+  //     } catch (error: any) {
+  //       Router.push("/login");
+  //     }
+  //   };
+  //   getUser();
+  // }, []);
 
   if (!user) {
     return <Loader />;

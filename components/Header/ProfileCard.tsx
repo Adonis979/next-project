@@ -43,7 +43,7 @@ function ProfileCard({
                 src={user.photo || "/images/no-user-image.png"}
               />
             }
-            label={user.name}
+            label={user.username}
             variant="outlined"
           />
           <StyledPopover

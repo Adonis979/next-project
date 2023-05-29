@@ -1,15 +1,4 @@
-import {
-  createUserWithEmailAndPassword,
-  FacebookAuthProvider,
-  GoogleAuthProvider,
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-  signOut,
-  updateProfile,
-} from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
-import { auth } from "@/firebase";
 import { useRouter } from "next/router";
 import axios from "axios";
 
@@ -25,58 +14,55 @@ export const AuthContextProvider = ({
   const Router = useRouter();
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser({
-          uid: user?.uid,
-          email: user?.email,
-          photo: user?.photoURL,
-          name: user?.displayName,
-          emailVerified: user?.emailVerified,
-        });
-      } else {
-        setUser(null);
-      }
-      setLoading(false);
-    });
+    const user = localStorage.getItem("user");
+    if (user) {
+      setUser(JSON.parse(user));
+    } else setUser(null);
   }, []);
 
   const signup = async (email: string, password: string, UserName: string) => {
-    const userCredentials = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-    await updateProfile(userCredentials.user, { displayName: UserName });
+    await axios
+      .post("http://localhost:5000/api/auth/register", {
+        username: UserName,
+        email: email,
+        password: password,
+      })
+      .then(() => Router.push("/login"));
   };
+
   const login = async (email: string, password: string) => {
-    return signInWithEmailAndPassword(auth, email, password);
-    // try {
-    //   await axios.post("http://localhost:5000/api/auth/login", {
-    //     email: email,
-    //     password: password,
-    //   });
-    // } catch (error) {
-    //   alert(error);
-    // }
+    setLoading(true);
+    await axios
+      .post("http://localhost:5000/api/auth/login", {
+        email: email,
+        password: password,
+      })
+      .then((res) => {
+        setUser(res.data.user);
+        localStorage.setItem("user", JSON.stringify(res.data.user));
+        localStorage.setItem("token", res.data.token);
+        Router.push("/");
+      });
+    setLoading(false);
   };
 
-  const LoginWithGoogle = () => {
-    const provider = new GoogleAuthProvider();
-    provider.setCustomParameters({ prompt: "select_account" });
-    return signInWithPopup(auth, provider);
-  };
+  // const LoginWithGoogle = () => {
+  //   const provider = new GoogleAuthProvider();
+  //   provider.setCustomParameters({ prompt: "select_account" });
+  //   return signInWithPopup(auth, provider);
+  // };
 
-  const LoginWithFacebook = () => {
-    const provider = new FacebookAuthProvider();
-    provider.setCustomParameters({ propmt: "select_account" });
-    return signInWithPopup(auth, provider);
-  };
+  // const LoginWithFacebook = () => {
+  //   const provider = new FacebookAuthProvider();
+  //   provider.setCustomParameters({ propmt: "select_account" });
+  //   return signInWithPopup(auth, provider);
+  // };
 
   const logout = async () => {
     Router.push("/login");
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
     setUser(null);
-    await signOut(auth);
   };
 
   return (
@@ -86,11 +72,9 @@ export const AuthContextProvider = ({
         signup,
         login,
         logout,
-        LoginWithGoogle,
-        LoginWithFacebook,
       }}
     >
-      {loading ? null : children}
+      {children}
     </AuthContext.Provider>
   );
 };

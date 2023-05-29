@@ -3,7 +3,7 @@ interface FirestoreData {
   description: string;
   price: number;
   currency: string;
-  photoUrl: string[];
+  photo: string[];
   user: string;
   size: string;
   userId: string;

@@ -1,4 +1,5 @@
 import { db } from "@/firebase";
+import axios from "axios";
 import {
   addDoc,
   collection,
@@ -27,27 +28,30 @@ interface FirestoreData {
 }
 
 export const GetListings = async () => {
-  const querySnapshot = await getDocs(
-    query(collection(db, "items"), orderBy("date", "desc"))
-  );
-  const data: FirestoreData[] | null = querySnapshot.docs.map((doc) => {
-    const firestoreTimestamp = doc.data().date;
-    const date = firestoreTimestamp.toDate().toISOString();
-    const docId = doc.id;
-    return {
-      title: doc.data().name,
-      description: doc.data().description,
-      price: doc.data().price,
-      currency: doc.data().currency,
-      photoUrl: doc.data().photoUrl,
-      user: doc.data().user,
-      size: doc.data().size,
-      userId: doc.data().userId,
-      date: date,
-      docId: docId,
-    };
+  // const querySnapshot = await getDocs(
+  //   query(collection(db, "items"), orderBy("date", "desc"))
+  // );
+  // const data: FirestoreData[] | null = querySnapshot.docs.map((doc) => {
+  //   const firestoreTimestamp = doc.data().date;
+  //   const date = firestoreTimestamp.toDate().toISOString();
+  //   const docId = doc.id;
+  //   return {
+  //     title: doc.data().name,
+  //     description: doc.data().description,
+  //     price: doc.data().price,
+  //     currency: doc.data().currency,
+  //     photoUrl: doc.data().photoUrl,
+  //     user: doc.data().user,
+  //     size: doc.data().size,
+  //     userId: doc.data().userId,
+  //     date: date,
+  //     docId: docId,
+  //   };
+  // });
+  // return data;
+  await axios.get("http://localhost:5000/api/product").then((res) => {
+    return res.data;
   });
-  return data;
 };
 
 export const getListingById = async (listingId: any) => {
