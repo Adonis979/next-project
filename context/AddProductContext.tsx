@@ -168,21 +168,21 @@ export const AddProductContextProvider = ({
     // formData.append("color", product.color);
     // formData.append("currency", product.currency);
 
-    try {
-      await axios.post(
-        "http://localhost:5000/api/product/add-product",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            "x-auth-token":
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDZkMmEzNGMzMWU0ZjM3ZjdjODQ0MTYiLCJpYXQiOjE2ODUyOTYxNzJ9.KbfyKRvUVf7wgF6yQaXnNg9xL4n5j_fQp70VtTviklI",
-          },
-        }
-      );
-    } catch (error) {
-      console.log(error);
-    }
+    //   try {
+    //     await axios.post(
+    //       "http://localhost:5000/api/product/add-product",
+    //       formData,
+    //       {
+    //         headers: {
+    //           "Content-Type": "multipart/form-data",
+    //           "x-auth-token":
+    //             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDZkMmEzNGMzMWU0ZjM3ZjdjODQ0MTYiLCJpYXQiOjE2ODUyOTYxNzJ9.KbfyKRvUVf7wgF6yQaXnNg9xL4n5j_fQp70VtTviklI",
+    //         },
+    //       }
+    //     );
+    //   } catch (error) {
+    //     console.log(error);
+    // }
   };
 
   return (
