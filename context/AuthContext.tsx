@@ -11,6 +11,7 @@ import {
 import { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "@/firebase";
 import { useRouter } from "next/router";
+import axios from "axios";
 
 const AuthContext = createContext<any>({});
 
@@ -48,8 +49,16 @@ export const AuthContextProvider = ({
     );
     await updateProfile(userCredentials.user, { displayName: UserName });
   };
-  const login = (email: string, password: string) => {
+  const login = async (email: string, password: string) => {
     return signInWithEmailAndPassword(auth, email, password);
+    // try {
+    //   await axios.post("http://localhost:5000/api/auth/login", {
+    //     email: email,
+    //     password: password,
+    //   });
+    // } catch (error) {
+    //   alert(error);
+    // }
   };
 
   const LoginWithGoogle = () => {

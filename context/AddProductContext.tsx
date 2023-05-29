@@ -9,6 +9,7 @@ import {
   validateOnlyNumbers,
 } from "@/utils/validate";
 import { validate } from "uuid";
+import axios from "axios";
 
 export interface PhotoFile extends File {
   readonly lastModified: number;
@@ -94,7 +95,6 @@ export const AddProductContextProvider = ({
   ) => {
     const name = event.target.name;
     const value = event.target.value;
-    console.log(value);
     setProduct({ ...product, [name]: value });
   };
 
@@ -154,6 +154,34 @@ export const AddProductContextProvider = ({
       });
       AddListing(product, photoUrls, user);
       setLoading(false);
+    }
+    // const formData = new FormData();
+    // formData.append("title", product.title);
+    // formData.append("description", product.description);
+    // formData.append("price", product.price);
+    // formData.append("size", product.size);
+    // photos.forEach((photo) => {
+    //   formData.append(`photo[]`, photo);
+    // });
+    // formData.append("peopleCategory", product.peopleCategory);
+    // formData.append("clothesCategory", product.clothesCategory);
+    // formData.append("color", product.color);
+    // formData.append("currency", product.currency);
+
+    try {
+      await axios.post(
+        "http://localhost:5000/api/product/add-product",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            "x-auth-token":
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDZkMmEzNGMzMWU0ZjM3ZjdjODQ0MTYiLCJpYXQiOjE2ODUyOTYxNzJ9.KbfyKRvUVf7wgF6yQaXnNg9xL4n5j_fQp70VtTviklI",
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error);
     }
   };
 
