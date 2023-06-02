@@ -1,6 +1,5 @@
 import { Box } from "@mui/material";
 import React, { useRef, useState } from "react";
-import { Product } from "@/pages/product-page/[productID]";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -8,7 +7,7 @@ import "swiper/css/pagination";
 import SwiperCore, { Pagination } from "swiper";
 
 interface Props {
-  product: Product;
+  product: FirestoreData;
 }
 
 function PhotoShow({ product }: Props) {
@@ -40,7 +39,7 @@ function PhotoShow({ product }: Props) {
         flexDirection={{ xs: "row", md: "column" }}
         gap="10px"
       >
-        {product.photoUrl.map((photo, index) => (
+        {product.photos?.map((photo, index) => (
           <Box
             key={index}
             width={{ xs: "50px", md: "80px" }}
@@ -85,7 +84,7 @@ function PhotoShow({ product }: Props) {
           }}
           style={{ borderRadius: "20px" }}
         >
-          {product.photoUrl.map((photo, index) => (
+          {product.photos?.map((photo, index) => (
             <SwiperSlide key={index}>
               <Image src={photo} alt="image" objectFit="cover" fill />
             </SwiperSlide>

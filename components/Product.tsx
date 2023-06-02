@@ -1,8 +1,7 @@
 import { Box, Button, Typography } from "@mui/material";
 import React from "react";
-import Image from "next/image";
 import { useRouter } from "next/router";
-import Link from "next/link";
+import Image from "next/image";
 
 interface Props {
   item: FirestoreData;
@@ -48,12 +47,9 @@ function Product({ item, button }: Props) {
             borderRadius: "20px",
           },
         }}
-        onClick={() => Router.push(`/product-page/${item.docId}`)}
+        onClick={() => Router.push(`/product-page/${item._id}`)}
       >
         <Box
-          component="img"
-          src={`http://localhost:5000/${item.photo[0]}`}
-          alt=""
           sx={{
             display: "flex",
             flexDirection: "column",
@@ -62,8 +58,15 @@ function Product({ item, button }: Props) {
             width: "100%",
             height: "100%",
           }}
-        />
-        <Typography>{`http://localhost:5000/${item.photo[0]}`}</Typography>
+        >
+          <Image
+            src={item.photos[0] || "/images/no-user-image.png"}
+            alt=""
+            fill
+            objectFit="cover"
+            style={{ borderRadius: "20px" }}
+          />
+        </Box>
         <Box
           display="flex"
           alignItems="center"
@@ -81,7 +84,9 @@ function Product({ item, button }: Props) {
             <Typography variant="subtitle1" fontWeight={600}>
               {item?.title.toUpperCase()}
             </Typography>
-            <Typography variant="body2">By: {item.user}</Typography>
+            <Typography variant="body2">
+              By: {item.publisher.username}
+            </Typography>
             <Typography variant="caption">{formattedDate}</Typography>
           </Box>
           <Typography

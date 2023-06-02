@@ -1,9 +1,8 @@
-import { Product } from "@/pages/product-page/[productID]";
 import { Box, Typography } from "@mui/material";
 import React from "react";
 
 interface Props {
-  product: Product;
+  product: FirestoreData;
 }
 
 function InfoShow({ product }: Props) {
@@ -17,7 +16,7 @@ function InfoShow({ product }: Props) {
       <Box>
         <Typography variant="body2">Description:</Typography>
         <Typography variant="subtitle1" fontWeight="500">
-          {product.description}
+          {product?.description}
         </Typography>
       </Box>
       <Box>
@@ -26,26 +25,26 @@ function InfoShow({ product }: Props) {
           width="20px"
           height="20px"
           borderRadius="50%"
-          bgcolor={product.color}
+          bgcolor={product?.color}
           mt="5px"
         />
       </Box>
       <Box>
         <Typography variant="body2">Size:</Typography>
         <Typography variant="subtitle1" fontWeight="500">
-          {product.size}
+          {product?.size}
         </Typography>
       </Box>
       <Box>
         <Typography variant="body2">Price:</Typography>
         <Typography variant="subtitle1" fontWeight="bold">
-          {product.price} {product.currency}
+          {product?.price} {product?.currency}
         </Typography>
       </Box>
       <Box>
         <Typography variant="body2">By:</Typography>
         <Typography variant="subtitle1" fontWeight="500">
-          {product.user}
+          {product.publisher?.username}
         </Typography>
       </Box>
     </Box>

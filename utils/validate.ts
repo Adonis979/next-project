@@ -8,7 +8,10 @@ export const validateNotEmpty = (
   setError: any
 ) => {
   if (value === "" || value.length === 0) {
-    setError({ error: true, helperText: "Field cannot be empty" });
+    setError({
+      error: true,
+      helperText: "Field cannot be empty and must have at least 5 char",
+    });
     return true;
   } else {
     setError({ error: false, helperText: "" });

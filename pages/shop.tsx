@@ -10,24 +10,10 @@ import {
 import React, { useEffect, useState } from "react";
 import Router from "next/router";
 import { useAuth } from "@/context/AuthContext";
-import { GetListings } from "@/utils/Listings";
 import Product from "@/components/Product";
 import Loader from "@/components/Loader";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import axios from "axios";
-
-export interface FirestoreData {
-  title: string;
-  description: string;
-  price: number;
-  currency: string;
-  photo: string[];
-  user: string;
-  size: string;
-  userId: string;
-  date: string;
-  docId: string;
-}
 
 function Shop() {
   const { user } = useAuth();
@@ -39,13 +25,10 @@ function Shop() {
     } else Router.push("/add-product");
   };
 
-  console.log(items, "items");
-
   useEffect(() => {
     const getListing = async () => {
       await axios.get("http://localhost:5000/api/product").then((res) => {
         setItems(res.data);
-        console.log(res.data);
       });
     };
     getListing();
