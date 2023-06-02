@@ -1,53 +1,37 @@
 import Loader from "@/components/Loader";
 import InfoShow from "@/components/ProductShow/InfoShow";
 import PhotoShow from "@/components/ProductShow/PhotoShow";
-import { getListingById } from "@/utils/Listings";
 import { Box, Container } from "@mui/material";
+import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
-export interface Product {
-  date: string;
-  description: string;
-  price: string;
-  currency: string;
-  color: string;
-  docId: string;
-  photoUrl: string[];
-  size: string;
-  title: string;
-  user: string;
-  userId: string;
-}
-
 function ProductPage() {
-  const [product, setProduct] = useState<Product>({
-    date: "",
-    description: "",
-    price: "",
-    currency: "",
-    color: "",
-    docId: "",
-    photoUrl: [],
-    size: "",
-    title: "",
-    user: "",
-    userId: "",
-  });
+  const [product, setProduct] = useState<FirestoreData | null>(null);
   const Router = useRouter();
-  const productID = Router.query.productID;
+
+  const { productID } = Router.query;
 
   useEffect(() => {
-    getData();
-  }, []);
+    if (productID) {
+      // Only fetch data if the productID is available
+      getData();
+    }
+  }, [productID]);
 
   const getData = async () => {
-    const data = await getListingById(productID);
-    // @ts-ignore
-    setProduct(data);
+    try {
+      await axios
+        .get(`http://localhost:5000/api/product/${productID}`)
+        .then((res) => {
+          setProduct(res.data.product);
+        });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  if (product.date === "") {
+  if (!product) {
     return <Loader />;
   }
   return (

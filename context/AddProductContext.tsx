@@ -1,4 +1,3 @@
-import { AddListing } from "@/utils/Listings";
 import { uploadFiles } from "@/utils/UploadImage";
 import { createContext, useContext, useState } from "react";
 import { useAuth } from "./AuthContext";
@@ -10,6 +9,7 @@ import {
 } from "@/utils/validate";
 import { validate } from "uuid";
 import axios from "axios";
+import { authenticate } from "@/utils/sendCredentials";
 
 export interface PhotoFile extends File {
   readonly lastModified: number;
@@ -26,6 +26,7 @@ interface Product {
   color: string;
   price: string;
   currency: string;
+  photos: string[];
 }
 
 const AddProductContext = createContext<any>({});
@@ -35,7 +36,6 @@ export const AddProductContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { user } = useAuth();
   const [product, setProduct] = useState<Product>({
     title: "",
     description: "",
@@ -45,6 +45,7 @@ export const AddProductContextProvider = ({
     color: "#FFFFFF",
     price: "",
     currency: "",
+    photos: [],
   });
 
   const [titleError, setTitleError] = useState({
@@ -80,6 +81,7 @@ export const AddProductContextProvider = ({
     error: false,
     helperText: "",
   });
+  const [error, setError] = useState({ error: false, helperText: "" });
 
   const handleClick = (value: string) => {
     setProduct({ ...product, color: value });
@@ -152,37 +154,25 @@ export const AddProductContextProvider = ({
       await uploadFiles(photos, product.title).then((urls) => {
         photoUrls = urls;
       });
-      AddListing(product, photoUrls, user);
-      setLoading(false);
+      try {
+        await axios
+          .post(
+            "http://localhost:5000/api/product/add-product",
+            {
+              product: { ...product, photos: photoUrls },
+            },
+            authenticate
+          )
+          .then((res) => setError({ error: false, helperText: "" }));
+      } catch (error) {
+        setLoading(false);
+        setError({
+          error: true,
+          helperText: "Something went wrong, please check",
+        });
+      }
     }
-    // const formData = new FormData();
-    // formData.append("title", product.title);
-    // formData.append("description", product.description);
-    // formData.append("price", product.price);
-    // formData.append("size", product.size);
-    // photos.forEach((photo) => {
-    //   formData.append(`photo[]`, photo);
-    // });
-    // formData.append("peopleCategory", product.peopleCategory);
-    // formData.append("clothesCategory", product.clothesCategory);
-    // formData.append("color", product.color);
-    // formData.append("currency", product.currency);
-
-    //   try {
-    //     await axios.post(
-    //       "http://localhost:5000/api/product/add-product",
-    //       formData,
-    //       {
-    //         headers: {
-    //           "Content-Type": "multipart/form-data",
-    //           "x-auth-token":
-    //             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDZkMmEzNGMzMWU0ZjM3ZjdjODQ0MTYiLCJpYXQiOjE2ODUyOTYxNzJ9.KbfyKRvUVf7wgF6yQaXnNg9xL4n5j_fQp70VtTviklI",
-    //         },
-    //       }
-    //     );
-    //   } catch (error) {
-    //     console.log(error);
-    // }
+    setLoading(false);
   };
 
   return (
@@ -200,6 +190,7 @@ export const AddProductContextProvider = ({
         sizeError,
         priceError,
         currencyError,
+        error,
         handleChange,
         handleAddPhoto,
         handleSubmit,

@@ -3,10 +3,18 @@ interface FirestoreData {
   description: string;
   price: number;
   currency: string;
-  photo: string[];
-  user: string;
+  photos: string[];
   size: string;
-  userId: string;
   date: string;
-  docId: string;
+  color: string;
+  peopleCategory: string;
+  clothesCategory: string;
+  _id: string;
+  publisher: {
+    username: string;
+    email: string;
+    phoneNumber: string;
+    profilePicture: string;
+    type: string;
+  };
 }
