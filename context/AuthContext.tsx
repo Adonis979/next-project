@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
+import { authenticateFunction } from "@/utils/sendCredentials";
 
 const AuthContext = createContext<any>({});
 
@@ -10,15 +11,24 @@ export const AuthContextProvider = ({
   children: React.ReactNode;
 }) => {
   const [user, setUser] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
   const Router = useRouter();
 
   useEffect(() => {
     const user = localStorage.getItem("user");
-    if (user) {
-      setUser(JSON.parse(user));
-    } else setUser(null);
+    if (user) setUser(JSON.parse(user));
   }, []);
+
+  const getUser = () => {
+    const authenticate = authenticateFunction();
+    try {
+      axios
+        .get("http://localhost:5000/api/users/me", authenticate)
+        .then((res) => {
+          setUser(res.data.user);
+          localStorage.setItem("user", JSON.stringify(res.data.user));
+        });
+    } catch (error) {}
+  };
 
   const signup = async (email: string, password: string, UserName: string) => {
     await axios
@@ -31,7 +41,6 @@ export const AuthContextProvider = ({
   };
 
   const login = async (email: string, password: string) => {
-    setLoading(true);
     await axios
       .post("http://localhost:5000/api/auth/login", {
         email: email,
@@ -39,11 +48,10 @@ export const AuthContextProvider = ({
       })
       .then((res) => {
         setUser(res.data.user);
-        localStorage.setItem("user", JSON.stringify(res.data.user));
         localStorage.setItem("token", res.data.token);
         Router.push("/");
+        getUser();
       });
-    setLoading(false);
   };
 
   // const LoginWithGoogle = () => {

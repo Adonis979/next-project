@@ -15,7 +15,7 @@ function ProductPage() {
   useEffect(() => {
     if (productID) {
       // Only fetch data if the productID is available
-      getData();
+      getData();  
     }
   }, [productID]);
 

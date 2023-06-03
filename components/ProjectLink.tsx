@@ -15,6 +15,7 @@ function ProjectLink({ to, text }: Props) {
       onClick={() => {
         Router.push(`${to}`);
       }}
+      sx={{ borderRadius: "10px" }}
     >
       <Typography
         sx={{

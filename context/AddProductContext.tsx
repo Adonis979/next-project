@@ -9,7 +9,7 @@ import {
 } from "@/utils/validate";
 import { validate } from "uuid";
 import axios from "axios";
-import { authenticate } from "@/utils/sendCredentials";
+import { authenticate, authenticateFunction } from "@/utils/sendCredentials";
 
 export interface PhotoFile extends File {
   readonly lastModified: number;
@@ -161,7 +161,7 @@ export const AddProductContextProvider = ({
             {
               product: { ...product, photos: photoUrls },
             },
-            authenticate
+            authenticateFunction()
           )
           .then((res) => setError({ error: false, helperText: "" }));
       } catch (error) {

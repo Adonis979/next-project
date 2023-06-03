@@ -22,11 +22,13 @@ import {
 import ProfileSnackBar from "@/components/ProfileSnackBar";
 import EditableField from "@/components/EditableField";
 import UploadImage from "@/components/UploadImage";
-import { DeleteListings, GetProfileListing } from "@/utils/Listings";
 import Product from "@/components/Product";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useRouter } from "next/router";
 import Loader from "@/components/Loader";
+import { User } from "firebase/auth";
+import axios from "axios";
+import { authenticateFunction } from "@/utils/sendCredentials";
 
 function Profile() {
   const Router = useRouter();
@@ -38,13 +40,14 @@ function Profile() {
     type: "",
     text: "",
   });
-  const [editUser, setEditUser] = useState({
-    name: user?.username,
-    email: user?.email,
-  });
 
+  const [editUser, setEditUser] = useState({ name: "", email: "" });
   const [photoUrl, setPhotoUrl] = useState(user?.photo);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    setEditUser({ name: user?.username, email: user?.email });
+  }, [user]);
 
   const handleUploadClick = () => {
     if (fileInputRef.current) {
@@ -92,41 +95,40 @@ function Profile() {
       ResetPassword(user, { setOpenVerifyModal, setModalText });
     }
   };
+  const [items, setItems] = useState<FirestoreData[] | undefined>(undefined);
 
-  const deleteAccount = async () => {
-    const user = auth.currentUser;
-    if (user) {
-      DeleteAccount(user, { setOpenVerifyModal, setModalText });
+  const DeleteListing = async (product_id: string) => {
+    try {
+      axios.delete(
+        `http://localhost:5000/api/product/delete/${product_id}`,
+        authenticateFunction()
+      );
+      const updatedItems = items?.filter((item) => item._id !== product_id);
+      setItems(updatedItems);
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  const [items, setItems] = useState<FirestoreData[]>([
-    {
-      title: "",
-      price: 0,
-      currency: "",
-      description: "",
-      photoUrl: [""],
-      user: "",
-      size: "",
-      userId: "",
-      date: "",
-      docId: "",
-    },
-  ]);
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        await axios
+          .get(
+            "http://localhost:5000/api/product/user/products",
+            authenticateFunction()
+          )
+          .then((res) => {
+            setItems(res.data);
+          });
+      } catch (error: any) {
+        Router.push("/login");
+      }
+    };
+    getUser();
+  }, []);
 
-  // useEffect(() => {
-  //   const getUser = async () => {
-  //     try {
-  //       await GetProfileListing(setItems, user?.uid);
-  //     } catch (error: any) {
-  //       Router.push("/login");
-  //     }
-  //   };
-  //   getUser();
-  // }, []);
-
-  if (!user) {
+  if (!user || !editUser) {
     return <Loader />;
   } else
     return (
@@ -249,7 +251,7 @@ function Profile() {
               )}
               {edit && (
                 <Button
-                  onClick={deleteAccount}
+                  // onClick={deleteAccount}
                   sx={{ marginTop: "50px" }}
                   fullWidth
                   variant="contained"
@@ -282,13 +284,13 @@ function Profile() {
                       flexDirection: "column",
                     }}
                   >
-                    {items.map((item, index) => (
+                    {items?.map((item, index) => (
                       <Product
                         key={index}
                         item={item}
                         button={
                           <Button
-                            onClick={() => DeleteListings(item.docId)}
+                            onClick={() => DeleteListing(item._id)}
                             variant="contained"
                             color="error"
                           >
