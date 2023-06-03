@@ -6,9 +6,10 @@ import React from "react";
 interface Props {
   to: string;
   text: string;
+  color?: string;
 }
 
-function ProjectLink({ to, text }: Props) {
+function ProjectLink({ to, text, color }: Props) {
   const Router = useRouter();
   return (
     <IconButton
@@ -19,7 +20,7 @@ function ProjectLink({ to, text }: Props) {
     >
       <Typography
         sx={{
-          color: "#272727",
+          color: color || "#272727",
           fontWeight: "500",
           cursor: "pointer",
         }}

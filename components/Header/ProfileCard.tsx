@@ -40,7 +40,7 @@ function ProfileCard({
             avatar={
               <Avatar
                 alt="Natacha"
-                src={user.photo || "/images/no-user-image.png"}
+                src={user.profilePicture || "/images/no-user-image.png"}
               />
             }
             label={user.username}
@@ -79,7 +79,7 @@ function ProfileCard({
                 <Avatar
                   sx={{ height: "25px", width: "25px" }}
                   alt="Remy Sharp"
-                  src={user.photo || "/images/no-user-image.png"}
+                  src={user.profilePicture || "/images/no-user-image.png"}
                 />
               </Button>
               <Button

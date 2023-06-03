@@ -1,7 +1,6 @@
 import InputTextField from "@/components/InputTextField";
 import VerifyModal from "@/components/VerifyModal";
 import { useAuth } from "@/context/AuthContext";
-import { ResetPassword } from "@/utils/Profile";
 import { Backdrop, Box, Button, CircularProgress, Grid } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Head from "next/head";
@@ -42,12 +41,21 @@ function Login() {
       setPasswordError({ error: false, helperText: "" });
       setLoader(false);
     } catch (error: any) {
-      setEmailError({ error: true, helperText: "" });
-      setPasswordError({
-        error: true,
-        helperText: "Email or password is wrong",
-      });
       console.log(error);
+      if (error.response.status === 410) {
+        setEmailError({ error: true, helperText: "" });
+        setPasswordError({
+          error: true,
+          helperText: "Business Account has not been verified",
+        });
+      } else {
+        setEmailError({ error: true, helperText: "" });
+        setPasswordError({
+          error: true,
+          helperText: error.response.data.message,
+        });
+        console.log(error);
+      }
     }
     setLoader(false);
   };
@@ -73,9 +81,9 @@ function Login() {
   const [openVerifyModal, setOpenVerifyModal] = useState(false);
 
   const handleResetPassword = async () => {
-    if (user.email) {
-      ResetPassword(user, { setOpenVerifyModal, setModalText });
-    }
+    // if (user.email) {
+    //   ResetPassword(user, { setOpenVerifyModal, setModalText });
+    // }
   };
 
   return (

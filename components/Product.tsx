@@ -47,7 +47,7 @@ function Product({ item, button }: Props) {
             borderRadius: "20px",
           },
         }}
-        // onClick={() => Router.push(`/product-page/${item._id}`)}
+        onClick={() => Router.push(`/product-page/${item._id}`)}
       >
         <Box
           sx={{

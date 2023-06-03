@@ -13,12 +13,6 @@ import { auth } from "@/firebase";
 import VerifyModal from "@/components/VerifyModal";
 import Head from "next/head";
 import { uploadFiles } from "@/utils/UploadImage";
-import {
-  DeleteAccount,
-  ResetPassword,
-  UpdateProfile,
-  VerifyEmail,
-} from "@/utils/Profile";
 import ProfileSnackBar from "@/components/ProfileSnackBar";
 import EditableField from "@/components/EditableField";
 import UploadImage from "@/components/UploadImage";
@@ -35,20 +29,28 @@ function Profile() {
   const { user } = useAuth();
   const [edit, setEdit] = useState(false);
   const [progress, setProgress] = useState(false);
+  const [items, setItems] = useState<FirestoreData[] | undefined>(undefined);
   const [snackBar, setSnackBar] = useState({
     show: false,
     type: "",
     text: "",
   });
 
-  const [editUser, setEditUser] = useState({ name: "", email: "" });
-  const [photoUrl, setPhotoUrl] = useState(user?.photo);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [editUser, setEditUser] = useState({
+    username: "",
+    email: "",
+    profilePicture: "",
+  });
 
   useEffect(() => {
-    setEditUser({ name: user?.username, email: user?.email });
+    setEditUser({
+      username: user?.username,
+      email: user?.email,
+      profilePicture: user?.profilePicture,
+    });
   }, [user]);
 
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const handleUploadClick = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
@@ -57,10 +59,11 @@ function Profile() {
   const handleUploadFile = async (files: any) => {
     setProgress(true);
     await uploadFiles(files, "profile").then((urls) => {
-      setPhotoUrl(urls[0]);
+      setEditUser({ ...editUser, profilePicture: urls[0] });
     });
     setProgress(false);
   };
+
   const handleChange = (
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
@@ -71,31 +74,18 @@ function Profile() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const user = auth.currentUser;
-    if (user) {
-      UpdateProfile(user, editUser, photoUrl, { setEdit, setSnackBar });
-    } else {
-      alert("You should sign in");
+    try {
+      await axios
+        .put(
+          "http://localhost:5000/api/users/update",
+          editUser,
+          authenticateFunction()
+        )
+        .then((res) => localStorage.setItem("user", JSON.stringify(res.data)));
+    } catch (error) {
+      console.log(error);
     }
   };
-
-  const [modalText, setModalText] = useState("");
-  const [openVerifyModal, setOpenVerifyModal] = useState(false);
-
-  const handleVerifyEmail = async () => {
-    const user = auth.currentUser;
-    if (user) {
-      VerifyEmail(user, { setOpenVerifyModal, setModalText });
-    }
-  };
-
-  const handleResetPassword = async () => {
-    const user = auth.currentUser;
-    if (user?.email) {
-      ResetPassword(user, { setOpenVerifyModal, setModalText });
-    }
-  };
-  const [items, setItems] = useState<FirestoreData[] | undefined>(undefined);
 
   const DeleteListing = async (product_id: string) => {
     try {
@@ -175,24 +165,24 @@ function Profile() {
               </Box>
               <EditableField
                 user={true}
-                name="name"
+                name="username"
                 edit={edit}
-                value={editUser.name}
+                value={editUser.username}
                 title="Name"
                 handleChange={handleChange}
               />
               <EditableField
-                user={user?.emailVerified}
+                user={user?.isVerified === "3"}
                 edit={edit}
                 handleChange={handleChange}
                 name="email"
                 title="Email"
                 value={editUser.email}
-                handleVerifyEmail={handleVerifyEmail}
+                // handleVerifyEmail={handleVerifyEmail}
               />
               {edit && (
                 <Button
-                  onClick={handleResetPassword}
+                  // onClick={handleResetPassword}
                   variant="contained"
                   color="error"
                 >
@@ -209,7 +199,10 @@ function Profile() {
                 }}
               >
                 <Typography variant="h6">Photo</Typography>
-                <UploadImage photoUrl={photoUrl} progress={progress} />
+                <UploadImage
+                  photoUrl={editUser.profilePicture}
+                  progress={progress}
+                />
                 {edit && (
                   <>
                     <input
@@ -304,11 +297,6 @@ function Profile() {
               </Box>
             </Box>
           </Box>
-          <VerifyModal
-            open={openVerifyModal}
-            handleClose={() => setOpenVerifyModal(false)}
-            text={modalText}
-          />
         </form>
       </>
     );
