@@ -9,8 +9,6 @@ import {
 } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
-import { auth } from "@/firebase";
-import VerifyModal from "@/components/VerifyModal";
 import Head from "next/head";
 import { uploadFiles } from "@/utils/UploadImage";
 import ProfileSnackBar from "@/components/ProfileSnackBar";
@@ -20,7 +18,6 @@ import Product from "@/components/Product";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useRouter } from "next/router";
 import Loader from "@/components/Loader";
-import { User } from "firebase/auth";
 import axios from "axios";
 import { authenticateFunction } from "@/utils/sendCredentials";
 
@@ -117,6 +114,22 @@ function Profile() {
     };
     getUser();
   }, []);
+
+  const deleteAccount = () => {
+    try {
+      axios
+        .delete(
+          "http://localhost:5000/api/users/delete",
+          authenticateFunction()
+        )
+        .then(() => {
+          alert("User deleted successfully");
+          Router.push("/login");
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   if (!user || !editUser) {
     return <Loader />;
@@ -244,7 +257,7 @@ function Profile() {
               )}
               {edit && (
                 <Button
-                  // onClick={deleteAccount}
+                  onClick={deleteAccount}
                   sx={{ marginTop: "50px" }}
                   fullWidth
                   variant="contained"
