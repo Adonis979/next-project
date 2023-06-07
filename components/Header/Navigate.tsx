@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Chip, Popover } from "@mui/material";
+import { Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import ProjectLink from "../ProjectLink";
 import ProfileCard from "./ProfileCard";

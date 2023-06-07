@@ -15,14 +15,14 @@ function ProductPage() {
   useEffect(() => {
     if (productID) {
       // Only fetch data if the productID is available
-      getData();  
+      getData();
     }
   }, [productID]);
 
   const getData = async () => {
     try {
       await axios
-        .get(`http://localhost:5000/api/product/${productID}`)
+        .get(`${process.env.NEXT_PUBLIC_API_KEY}/product/${productID}`)
         .then((res) => {
           setProduct(res.data.product);
         });

@@ -9,7 +9,7 @@ import {
 } from "@/utils/validate";
 import { validate } from "uuid";
 import axios from "axios";
-import { authenticate, authenticateFunction } from "@/utils/sendCredentials";
+import { authenticateFunction } from "@/utils/sendCredentials";
 
 export interface PhotoFile extends File {
   readonly lastModified: number;
@@ -157,7 +157,7 @@ export const AddProductContextProvider = ({
       try {
         await axios
           .post(
-            "http://localhost:5000/api/product/add-product",
+            `${process.env.NEXT_PUBLIC_API_KEY}/product/add-product`,
             {
               product: { ...product, photos: photoUrls },
             },

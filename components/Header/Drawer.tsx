@@ -1,8 +1,7 @@
-import { Box, Button, SwipeableDrawer, Typography } from "@mui/material";
+import { Box, Button, SwipeableDrawer } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import HomeIcon from "@mui/icons-material/Home";
 import InfoIcon from "@mui/icons-material/Info";
-import NewspaperIcon from "@mui/icons-material/Newspaper";
 import React from "react";
 import SearchInput from "./SearchInput";
 import ProjectLink from "../ProjectLink";

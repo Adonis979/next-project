@@ -14,7 +14,7 @@ function EmailVerify() {
       try {
         axios
           .patch(
-            `http://localhost:5000/api/users/verify/email`,
+            `${process.env.NEXT_PUBLIC_API_KEY}/users/verify/email`,
             {},
             {
               headers: {

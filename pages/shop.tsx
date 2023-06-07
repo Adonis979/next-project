@@ -27,9 +27,11 @@ function Shop() {
 
   useEffect(() => {
     const getListing = async () => {
-      await axios.get("http://localhost:5000/api/product").then((res) => {
-        setItems(res.data);
-      });
+      await axios
+        .get(`${process.env.NEXT_PUBLIC_API_KEY}/product`)
+        .then((res) => {
+          setItems(res.data);
+        });
     };
     getListing();
   }, []);

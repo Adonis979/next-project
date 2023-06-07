@@ -74,7 +74,7 @@ function Profile() {
     try {
       await axios
         .put(
-          "http://localhost:5000/api/users/update",
+          `${process.env.NEXT_PUBLIC_API_KEY}/users/update`,
           editUser,
           authenticateFunction()
         )
@@ -87,7 +87,7 @@ function Profile() {
   const DeleteListing = async (product_id: string) => {
     try {
       axios.delete(
-        `http://localhost:5000/api/product/delete/${product_id}`,
+        `${process.env.NEXT_PUBLIC_API_KEY}/product/delete/${product_id}`,
         authenticateFunction()
       );
       const updatedItems = items?.filter((item) => item._id !== product_id);
@@ -102,7 +102,7 @@ function Profile() {
       try {
         await axios
           .get(
-            "http://localhost:5000/api/product/user/products",
+            `${process.env.NEXT_PUBLIC_API_KEY}/product/user/products`,
             authenticateFunction()
           )
           .then((res) => {
@@ -119,7 +119,7 @@ function Profile() {
     try {
       axios
         .delete(
-          "http://localhost:5000/api/users/delete",
+          `${process.env.NEXT_PUBLIC_API_KEY}/users/delete`,
           authenticateFunction()
         )
         .then(() => {
