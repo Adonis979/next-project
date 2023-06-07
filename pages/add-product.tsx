@@ -7,11 +7,12 @@ import PricePaper from "@/components/AddProudctComponents/PricePaper";
 import { AddProductContextProvider } from "@/context/AddProductContext";
 import AddProductButton from "@/components/AddProudctComponents/AddProductButton";
 import { useAuth } from "@/context/AuthContext";
-import Router from "next/router";
 import Loader from "@/components/Loader";
+import { useRouter } from "next/router";
 
 function AddProduct() {
   const { user } = useAuth();
+  const Router = useRouter();
 
   if (!user) {
     Router.push("/login");
