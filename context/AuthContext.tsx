@@ -22,7 +22,7 @@ export const AuthContextProvider = ({
     const authenticate = authenticateFunction();
     try {
       axios
-        .get("http://localhost:5000/api/users/me", authenticate)
+        .get(`${process.env.NEXT_PUBLIC_API_KEY}/users/me`, authenticate)
         .then((res) => {
           setUser(res.data.user);
           localStorage.setItem("user", JSON.stringify(res.data.user));
@@ -32,7 +32,7 @@ export const AuthContextProvider = ({
 
   const signup = async (email: string, password: string, UserName: string) => {
     await axios
-      .post("http://localhost:5000/api/auth/register", {
+      .post(`${process.env.NEXT_PUBLIC_API_KEY}/auth/register`, {
         username: UserName,
         email: email,
         password: password,
@@ -42,7 +42,7 @@ export const AuthContextProvider = ({
 
   const login = async (email: string, password: string) => {
     await axios
-      .post("http://localhost:5000/api/auth/login", {
+      .post(`${process.env.NEXT_PUBLIC_API_KEY}/auth/login`, {
         email: email,
         password: password,
       })
