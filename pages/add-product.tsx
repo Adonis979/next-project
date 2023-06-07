@@ -1,5 +1,5 @@
 import { Box, Button, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import InfoPaper from "@/components/AddProudctComponents/InfoPaper";
 import MediaPaper from "@/components/AddProudctComponents/MediaPaper";
 import SizeColorPaper from "@/components/AddProudctComponents/SizeColorPaper";
@@ -14,8 +14,13 @@ function AddProduct() {
   const { user } = useAuth();
   const Router = useRouter();
 
+  useEffect(() => {
+    if (!user) {
+      Router.push("/login");
+    }
+  }, []);
+
   if (!user) {
-    Router.push("/login");
     return <Loader />;
   }
 
