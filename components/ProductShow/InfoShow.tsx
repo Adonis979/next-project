@@ -1,11 +1,13 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
+import Image from "next/image";
 
 interface Props {
   product: FirestoreData;
 }
 
 function InfoShow({ product }: Props) {
+  console.log(product, "product");
   return (
     <Box
       display="flex"
@@ -43,9 +45,16 @@ function InfoShow({ product }: Props) {
       </Box>
       <Box>
         <Typography variant="body2">By:</Typography>
-        <Typography variant="subtitle1" fontWeight="500">
+        <Typography variant="subtitle1" fontWeight="600">
           {product.publisher?.username}
         </Typography>
+        <Image
+          style={{ borderRadius: "20px", objectFit: "fill" }}
+          src={product.publisher.profilePicture}
+          width={190}
+          height={150}
+          alt="profile"
+        />
       </Box>
     </Box>
   );
