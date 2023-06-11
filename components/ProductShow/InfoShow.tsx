@@ -49,10 +49,10 @@ function InfoShow({ product }: Props) {
           {product.publisher?.username}
         </Typography>
         <Image
-          style={{ borderRadius: "10px", objectFit: "cover" }}
+          style={{ borderRadius: "50%", objectFit: "cover" }}
           src={product.publisher.profilePicture}
-          width={140}
-          height={170}
+          width={100}
+          height={100}
           alt="profile"
         />
       </Box>
