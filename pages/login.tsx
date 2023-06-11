@@ -42,7 +42,7 @@ function Login() {
       setLoader(false);
     } catch (error: any) {
       console.log(error);
-      if (error.response.status === 410) {
+      if (error.response && error.response.status === 410) {
         setEmailError({ error: true, helperText: "" });
         setPasswordError({
           error: true,
@@ -52,7 +52,7 @@ function Login() {
         setEmailError({ error: true, helperText: "" });
         setPasswordError({
           error: true,
-          helperText: error.response.data.message,
+          helperText: error?.response?.data?.message,
         });
         console.log(error);
       }

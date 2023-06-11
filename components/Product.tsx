@@ -85,7 +85,7 @@ function Product({ item, button }: Props) {
               {item?.title.toUpperCase()}
             </Typography>
             <Typography variant="body2">
-              By: {item.publisher.username}
+              By: {item?.publisher?.username}
             </Typography>
             <Typography variant="caption">{formattedDate}</Typography>
           </Box>
