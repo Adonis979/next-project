@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { authenticateFunction } from "@/utils/sendCredentials";
+import { error } from "console";
 
 const AuthContext = createContext<any>({});
 
@@ -30,14 +31,22 @@ export const AuthContextProvider = ({
     } catch (error) {}
   };
 
-  const signup = async (email: string, password: string, UserName: string) => {
-    await axios
-      .post(`${process.env.NEXT_PUBLIC_API_KEY}/auth/register`, {
+  const signup = async (
+    email: string,
+    password: string,
+    UserName: string,
+    type: string
+  ) => {
+    try {
+      await axios.post(`${process.env.NEXT_PUBLIC_API_KEY}/auth/register`, {
         username: UserName,
         email: email,
         password: password,
-      })
-      .then(() => Router.push("/login"));
+        type: type,
+      });
+    } catch (error) {
+      throw error;
+    }
   };
 
   const login = async (email: string, password: string) => {
@@ -80,6 +89,7 @@ export const AuthContextProvider = ({
         signup,
         login,
         logout,
+        getUser,
       }}
     >
       {children}

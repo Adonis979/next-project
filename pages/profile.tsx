@@ -20,13 +20,16 @@ import { useRouter } from "next/router";
 import Loader from "@/components/Loader";
 import axios from "axios";
 import { authenticateFunction } from "@/utils/sendCredentials";
+import ChangePasswordModal from "@/components/ProfileComponents/ChangePasswordModal";
+import EmailVerificationModal from "@/components/EmailVerificationModal";
 
 function Profile() {
   const Router = useRouter();
-  const { user } = useAuth();
+  const { user, getUser } = useAuth();
   const [edit, setEdit] = useState(false);
   const [progress, setProgress] = useState(false);
   const [items, setItems] = useState<FirestoreData[] | undefined>(undefined);
+  const [passwordChangeModal, setPasswordChangeModal] = useState(false);
   const [snackBar, setSnackBar] = useState({
     show: false,
     type: "",
@@ -46,6 +49,10 @@ function Profile() {
       profilePicture: user?.profilePicture,
     });
   }, [user]);
+
+  useEffect(() => {
+    getUser();
+  }, []);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const handleUploadClick = () => {
@@ -98,7 +105,7 @@ function Profile() {
   };
 
   useEffect(() => {
-    const getUser = async () => {
+    const getUserProducts = async () => {
       try {
         await axios
           .get(
@@ -112,7 +119,7 @@ function Profile() {
         Router.push("/login");
       }
     };
-    getUser();
+    getUserProducts();
   }, []);
 
   const deleteAccount = () => {
@@ -131,6 +138,21 @@ function Profile() {
     }
   };
 
+  const [openVerifyEmailModal, setOpenVerifyEmailModal] = useState(false);
+
+  const VerifyEmail = () => {
+    try {
+      axios.patch(
+        `${process.env.NEXT_PUBLIC_API_KEY}/users/send/email/profile`,
+        {},
+        authenticateFunction()
+      );
+      setOpenVerifyEmailModal(true);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   if (!user || !editUser) {
     return <Loader />;
   } else
@@ -141,6 +163,11 @@ function Profile() {
           <meta name="description" content="Profile of grerëza" />
           <link rel="icon" href="/images/grerzat.png" />
         </Head>
+        <EmailVerificationModal
+          email={editUser.email}
+          open={openVerifyEmailModal}
+          handleClose={() => setOpenVerifyEmailModal(false)}
+        />
         <form onSubmit={(event) => handleSubmit(event)}>
           <Box
             sx={{
@@ -185,17 +212,17 @@ function Profile() {
                 handleChange={handleChange}
               />
               <EditableField
-                user={user?.isVerified === "3"}
+                user={user?.userType.isVerified === "3"}
                 edit={edit}
                 handleChange={handleChange}
                 name="email"
                 title="Email"
                 value={editUser.email}
-                // handleVerifyEmail={handleVerifyEmail}
+                handleVerifyEmail={VerifyEmail}
               />
               {edit && (
                 <Button
-                  // onClick={handleResetPassword}
+                  onClick={() => setPasswordChangeModal(true)}
                   variant="contained"
                   color="error"
                 >
@@ -311,6 +338,10 @@ function Profile() {
             </Box>
           </Box>
         </form>
+        <ChangePasswordModal
+          open={passwordChangeModal}
+          handleClose={() => setPasswordChangeModal(false)}
+        />
       </>
     );
 }

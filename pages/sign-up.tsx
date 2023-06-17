@@ -1,13 +1,16 @@
+import EmailVerificationModal from "@/components/EmailVerificationModal";
 import InputTextField from "@/components/InputTextField";
 import { useAuth } from "@/context/AuthContext";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   Backdrop,
   Box,
   Button,
   CircularProgress,
-  InputAdornment,
-  TextField,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Radio,
+  RadioGroup,
 } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Head from "next/head";
@@ -16,7 +19,14 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 
 function SignUp() {
-  const [user, setUser] = useState({ name: "", email: "", password: "" });
+  const [emailVerificationModal, setOpenEmailVerificationModal] =
+    useState(false);
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+    type: "normal",
+  });
   const [loader, setLoader] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [emailError, setEmailError] = useState({
@@ -28,7 +38,7 @@ function SignUp() {
     helperText: "",
   });
   const { signup } = useAuth();
-  const Router = useRouter();
+  const router = useRouter();
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -49,10 +59,19 @@ function SignUp() {
     } else {
       setLoader(true);
       try {
-        await signup(user.email, user.password, user.name);
+        const result = await signup(
+          user.email,
+          user.password,
+          user.name,
+          user.type
+        );
+        router.push("/login");
         setLoader(false);
       } catch (error: any) {
-        setEmailError({ error: true, helperText: "Email already in use" });
+        if (error.response && error.response.status === 418) {
+          setOpenEmailVerificationModal(true);
+        } else
+          setEmailError({ error: true, helperText: "Email already in use" });
       }
       setLoader(false);
     }
@@ -65,6 +84,11 @@ function SignUp() {
         <meta name="description" content="Sign up to grerëzat" />
         <link rel="icon" href="/images/grerzat.png" />
       </Head>
+      <EmailVerificationModal
+        email={user.email}
+        open={emailVerificationModal}
+        handleClose={() => setOpenEmailVerificationModal(false)}
+      />
       <form onSubmit={handleSubmit}>
         <Box
           sx={{
@@ -83,6 +107,8 @@ function SignUp() {
               gap: "30px",
               padding: "50px",
               boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+              bgcolor: "#fff",
+              borderRadius: "20px",
             }}
           >
             <Typography variant="h4">Sign Up</Typography>
@@ -93,6 +119,30 @@ function SignUp() {
                 gap: "10px",
               }}
             >
+              <FormControl>
+                <FormLabel id="demo-radio-buttons-group-label">
+                  Choose account type
+                </FormLabel>
+                <RadioGroup
+                  aria-labelledby="demo-radio-buttons-group-label"
+                  defaultValue="normal"
+                  name="type"
+                  onChange={handleChange}
+                >
+                  <Box display="flex">
+                    <FormControlLabel
+                      value="normal"
+                      control={<Radio />}
+                      label="Normal"
+                    />
+                    <FormControlLabel
+                      value="business"
+                      control={<Radio />}
+                      label="Business"
+                    />
+                  </Box>
+                </RadioGroup>
+              </FormControl>
               <InputTextField
                 handleChange={handleChange}
                 label="Your name"

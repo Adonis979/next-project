@@ -7,7 +7,6 @@ interface Props {
 }
 
 function InfoShow({ product }: Props) {
-  console.log(product, "product");
   return (
     <Box
       display="flex"
@@ -50,7 +49,7 @@ function InfoShow({ product }: Props) {
         </Typography>
         <Image
           style={{ borderRadius: "50%", objectFit: "cover" }}
-          src={product.publisher.profilePicture}
+          src={product.publisher?.profilePicture}
           width={100}
           height={100}
           alt="profile"

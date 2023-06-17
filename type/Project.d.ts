@@ -15,6 +15,9 @@ interface FirestoreData {
     email: string;
     phoneNumber: string;
     profilePicture: string;
-    type: string;
+    userType: {
+      isVerified: string;
+      type: string;
+    };
   };
 }

@@ -1,4 +1,12 @@
-import { Avatar, Box, Button, Chip, Popover, styled } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  Chip,
+  IconButton,
+  Popover,
+  styled,
+} from "@mui/material";
 import { useRouter } from "next/router";
 import React from "react";
 
@@ -34,18 +42,13 @@ function ProfileCard({
     <>
       {user ? (
         <>
-          <Chip
-            sx={{ marginRight: { xs: "30px", md: "none" } }}
-            onClick={handleClick}
-            avatar={
-              <Avatar
-                alt="Natacha"
-                src={user.profilePicture || "/images/no-user-image.png"}
-              />
-            }
-            label={user.username}
-            variant="outlined"
-          />
+          <IconButton onClick={handleClick}>
+            <Avatar
+              sx={{ width: 50, height: 50 }}
+              alt="Natacha"
+              src={user.profilePicture || "/images/no-user-image.png"}
+            />
+          </IconButton>
           <StyledPopover
             onClose={handleClose}
             id={id}

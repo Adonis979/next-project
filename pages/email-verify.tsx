@@ -9,6 +9,14 @@ function EmailVerify() {
   const [loader, setLoader] = useState(true);
   const router = useRouter();
   const { token } = router.query;
+
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (user) setUser(JSON.parse(user));
+  }, []);
+
   useEffect(() => {
     if (token) {
       try {
@@ -44,10 +52,19 @@ function EmailVerify() {
       alignItems="center"
       height="100vh"
     >
-      <Typography>
-        Thank you for veryfing your email you can now procced to login page
-      </Typography>
-      <ProjectLink text="Go to Login" to="/login" color="blue" />
+      {!user ? (
+        <>
+          <Typography>
+            Thank you for veryfing your email you can now procced to login page
+          </Typography>
+          <ProjectLink text="Go to Login" to="/login" color="blue" />
+        </>
+      ) : (
+        <>
+          <Typography>You have successfully verified your email!</Typography>
+          <ProjectLink text="Continue Shopping" to="/shop" color="blue" />
+        </>
+      )}
     </Box>
   );
 }
