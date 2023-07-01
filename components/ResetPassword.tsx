@@ -76,7 +76,7 @@ function ResetPassword({
             backgroundColor: "#0E2F56",
           }}
         >
-          Search
+          Continue
         </Button>
       </Box>
     </Box>
