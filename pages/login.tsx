@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import Image from "next/image";
+import LeftSideImage from "@/components/LeftSideImage";
 
 function Login() {
   const [user, setUser] = useState({ email: "", password: "" });
@@ -81,9 +82,7 @@ function Login() {
   const [openVerifyModal, setOpenVerifyModal] = useState(false);
 
   const handleResetPassword = async () => {
-    // if (user.email) {
-    //   ResetPassword(user, { setOpenVerifyModal, setModalText });
-    // }
+    Router.push("/forgot-password");
   };
 
   return (
@@ -96,37 +95,7 @@ function Login() {
       <form onSubmit={handleSubmit}>
         <Box>
           <Grid container sx={{ position: "relative" }}>
-            <Grid
-              item
-              xs={12}
-              md={6}
-              sx={{
-                position: "relative",
-                height: { xs: "70vh", md: "100vh" },
-              }}
-            >
-              <Box height="100%" width="100%" position="relative">
-                <Image
-                  layout="fill"
-                  objectFit="cover"
-                  alt="grerza"
-                  src="/images/layout-2.png"
-                ></Image>
-              </Box>
-              <Image
-                onClick={() => Router.push("/")}
-                width={200}
-                height={35}
-                style={{
-                  position: "absolute",
-                  top: "66px",
-                  left: "38px",
-                  cursor: "pointer",
-                }}
-                alt="grerzat"
-                src="/images/grerza-white.png"
-              />
-            </Grid>
+            <LeftSideImage />
             <Grid
               item
               xs={12}
@@ -224,7 +193,6 @@ function Login() {
                     sx={{
                       height: "56px",
                       backgroundColor: "#0E2F56",
-                      fontStyle: "Montserrat",
                     }}
                     variant="contained"
                   >

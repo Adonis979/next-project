@@ -35,6 +35,7 @@ function InputTextField({
   return (
     <>
       <TextField
+        sx={{ backgroundColor: "white" }}
         fullWidth
         error={fieldError?.error}
         helperText={fieldError?.helperText}
