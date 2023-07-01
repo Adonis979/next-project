@@ -43,9 +43,8 @@ function EmailVerificationModal({ open, handleClose, email }: Props) {
         </Typography>
         <Typography
           variant="body1"
-          sx={{ mt: 2 }}
+          sx={{ mt: 2, overflowWrap: "break-word", wordWrap: "break-word" }}
           textAlign="center"
-          sx={{ overflowWrap: "break-word", wordWrap: "break-word" }}
         >
           Please notice that it might take a bit to recieve the email! Please be
           patient.
