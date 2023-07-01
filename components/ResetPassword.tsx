@@ -32,7 +32,9 @@ function ResetPassword({
       padding="20px"
       borderRadius="10px"
     >
-      <Typography>Check the code we sent you on {email}</Typography>
+      <Typography>
+        Check the code we sent to <b>{email}</b>
+      </Typography>
       <InputTextField
         handleChange={handleChange}
         label="Code"

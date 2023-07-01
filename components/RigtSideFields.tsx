@@ -5,7 +5,7 @@ import axios from "axios";
 import ResetPassword from "./ResetPassword";
 import { useRouter } from "next/router";
 
-function RigtSideFields() {
+function RigtSideFields({ setLoader }: any) {
   const Router = useRouter();
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState({
@@ -37,6 +37,7 @@ function RigtSideFields() {
 
   const handleSubmitEmail = async (event: any) => {
     event.preventDefault();
+    setLoader(true);
     try {
       await axios
         .post(`${process.env.NEXT_PUBLIC_API_KEY}/auth/forgot-password`, {
@@ -44,6 +45,7 @@ function RigtSideFields() {
         })
         .then(() => {
           setFirstStep(true);
+          setLoader(false);
         });
     } catch (error: any) {
       if (error.response && error.response.status === 400) {
@@ -58,6 +60,7 @@ function RigtSideFields() {
   };
   const handleSubmitResetPassword = async (event: any) => {
     event.preventDefault();
+    setLoader(true);
     try {
       await axios
         .post(
@@ -68,7 +71,10 @@ function RigtSideFields() {
             email: email,
           }
         )
-        .then(() => Router.push("/login"));
+        .then(() => {
+          Router.push("/login");
+          setLoader(false);
+        });
     } catch (error: any) {
       if (error.response && error.response.status === 400) {
         setPasswordError({
