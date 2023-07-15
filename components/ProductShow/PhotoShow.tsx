@@ -86,7 +86,7 @@ function PhotoShow({ product }: Props) {
         >
           {product.photos?.map((photo, index) => (
             <SwiperSlide key={index}>
-              <Image src={photo} alt="image" objectFit="cover" fill />
+              <Image src={photo} alt="image" objectFit="scale-down" fill />
             </SwiperSlide>
           ))}
         </Swiper>

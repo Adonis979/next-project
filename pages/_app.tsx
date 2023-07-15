@@ -5,19 +5,8 @@ import type { AppProps } from "next/app";
 import React from "react";
 import Layout from "@/components/Layout";
 import { useRouter } from "next/router";
-import { Montserrat } from "@next/font/google";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-});
-
-const theme = createTheme({
-  typography: {
-    fontFamily: montserrat.style.fontFamily,
-  },
-});
+import theme from "../styles/theme";
+import { ThemeProvider } from "@mui/material/styles";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();

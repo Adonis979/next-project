@@ -5,6 +5,7 @@ import {
   Chip,
   IconButton,
   Popover,
+  Typography,
   styled,
 } from "@mui/material";
 import { useRouter } from "next/router";
@@ -38,13 +39,28 @@ function ProfileCard({
   logout,
 }: Props) {
   const Router = useRouter();
+  console.log(user);
   return (
     <>
       {user ? (
         <>
-          <IconButton onClick={handleClick}>
+          <IconButton
+            onClick={handleClick}
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              borderRadius: "10px",
+              gap: "10px",
+            }}
+          >
+            {user.userType.type === "business" ? (
+              <Typography>Business</Typography>
+            ) : (
+              <Typography>Personal</Typography>
+            )}
+
             <Avatar
-              sx={{ width: 50, height: 50 }}
+              sx={{ width: 30, height: 30 }}
               alt="Natacha"
               src={user.profilePicture || "/images/no-user-image.png"}
             />

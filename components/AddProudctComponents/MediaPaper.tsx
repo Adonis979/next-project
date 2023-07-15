@@ -33,6 +33,10 @@ function MediaPaper() {
         {({ getRootProps, getInputProps }) => (
           <Box
             sx={{
+              transition: "transform 0.1s",
+              "&:hover": {
+                transform: "scale(1.01)",
+              },
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
@@ -41,9 +45,7 @@ function MediaPaper() {
               border: photoError.error ? "2px dashed red" : "2px dashed blue",
               borderRadius: "10px",
               cursor: "pointer",
-              "&:hover": {
-                backgroundColor: "#a7e6eb",
-              },
+              backgroundColor: "#f5f2f2",
             }}
             {...getRootProps()}
           >

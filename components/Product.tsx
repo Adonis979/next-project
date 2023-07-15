@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import React from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
@@ -44,7 +44,6 @@ function Product({ item, button }: Props) {
           "&:active": {
             transform: { xs: "scale(0.98)", md: "scale(1)" },
             transition: "transform 0.3s ease",
-            backgroundColor: { xs: "white", md: "lightblue" },
             borderRadius: "20px",
           },
         }}
@@ -105,7 +104,7 @@ function Product({ item, button }: Props) {
             src={item.photos[0] || "/images/no-user-image.png"}
             alt=""
             fill
-            objectFit="cover"
+            objectFit="scale-down"
             style={{ borderRadius: "20px" }}
           />
         </Box>

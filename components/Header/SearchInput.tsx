@@ -17,10 +17,6 @@ function SearchInput() {
         }}
         sx={{
           backgroundColor: "white",
-          borderRadius: "20px",
-          "& .MuiOutlinedInput-notchedOutline": {
-            borderRadius: "20px",
-          },
         }}
         fullWidth
         variant="outlined"
