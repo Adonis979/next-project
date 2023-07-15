@@ -3,6 +3,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import VerifiedIcon from "@mui/icons-material/Verified";
+import NewReleasesIcon from "@mui/icons-material/NewReleases";
 
 interface Props {
   item: FirestoreData;
@@ -59,12 +60,12 @@ function Product({ item, button }: Props) {
             height: "100%",
           }}
         >
-          {item.publisher?.userType.type === "business" &&
+          {item.publisher?.userType.type === "business" ? (
             item.publisher?.userType.isVerified === "3" && (
               <Box
                 position="absolute"
-                top={-15}
-                left={-10}
+                top={0}
+                left={0}
                 zIndex={99}
                 display="flex"
                 alignItems="center"
@@ -72,40 +73,57 @@ function Product({ item, button }: Props) {
                 padding="5px"
                 borderRadius="10px"
                 border="1px solid green"
+                gap="5px"
               >
                 <VerifiedIcon color="success" />
                 <Typography variant="caption" color="green" fontWeight={600}>
                   Verified seller
                 </Typography>
               </Box>
-            )}
-          {item.publisher?.userType.type === "business" && (
+            )
+          ) : (
             <Box
               position="absolute"
-              top={-25}
-              right={-15}
+              top={0}
+              left={0}
               zIndex={99}
-              width="70px"
-              height="70px"
+              display="flex"
+              alignItems="center"
               bgcolor="#fff"
-              borderRadius="50%"
+              padding="5px"
+              borderRadius="10px"
+              border="1px solid #9d9e9d"
+              gap="5px"
             >
-              <Image
-                fill
-                src={
-                  item.publisher.profilePicture || "/images/no-user-image.png"
-                }
-                alt=""
-                style={{ borderRadius: "50%", objectFit: "cover" }}
-              />
+              <NewReleasesIcon sx={{ color: "lightgrey" }} />
+              <Typography variant="caption" color="#9d9e9d" fontWeight={600}>
+                Personal seller
+              </Typography>
             </Box>
           )}
+
+          <Box
+            position="absolute"
+            top={0}
+            right={0}
+            zIndex={99}
+            width="40px"
+            height="40px"
+            bgcolor="#fff"
+            borderRadius="50%"
+          >
+            <Image
+              fill
+              src={item.publisher.profilePicture || "/images/no-user-image.png"}
+              alt=""
+              style={{ borderRadius: "50%", objectFit: "cover" }}
+            />
+          </Box>
           <Image
             src={item.photos[0] || "/images/no-user-image.png"}
             alt=""
             fill
-            objectFit="scale-down"
-            style={{ borderRadius: "20px" }}
+            style={{ borderRadius: "20px", objectFit: "cover" }}
           />
         </Box>
         <Box

@@ -59,6 +59,7 @@ function PhotoShow({ product }: Props) {
                     ? "2px solid lightblue"
                     : "2px solid #FFF6F6",
                 borderRadius: "20px",
+                objectFit: "cover",
               }}
             />
           </Box>
