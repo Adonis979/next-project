@@ -9,6 +9,7 @@ import AddProductButton from "@/components/AddProudctComponents/AddProductButton
 import { useAuth } from "@/context/AuthContext";
 import Loader from "@/components/Loader";
 import { useRouter } from "next/router";
+import MetaData from "@/components/MetaData";
 
 function AddProduct() {
   const { user } = useAuth();
@@ -26,50 +27,53 @@ function AddProduct() {
 
   return (
     <AddProductContextProvider>
-      <Box
-        display="flex"
-        justifyContent={{ xs: "flex-start", md: "center" }}
-        flexWrap="wrap"
-        padding="10px"
-        gap={{ xs: "0px", lg: "20px" }}
-        bgcolor="#FFF6F6"
-      >
+      <>
+        <MetaData text="Add Listing" />
         <Box
           display="flex"
-          padding="20px"
-          flexDirection="column"
-          alignItems="center"
-          gap="20px"
-          width={{ xs: "100%", lg: "45%" }}
+          justifyContent={{ xs: "flex-start", md: "center" }}
+          flexWrap="wrap"
+          padding="10px"
+          gap={{ xs: "0px", lg: "20px" }}
+          bgcolor="#FFF6F6"
         >
-          <Typography
-            variant="h6"
-            marginLeft="10px"
-            fontWeight="500px"
-            fontFamily="Montserrat"
+          <Box
+            display="flex"
+            padding="20px"
+            flexDirection="column"
+            alignItems="center"
+            gap="20px"
+            width={{ xs: "100%", lg: "45%" }}
           >
-            Add Product
-          </Typography>
-          <InfoPaper />
-          <MediaPaper />
+            <Typography
+              variant="h6"
+              marginLeft="10px"
+              fontWeight="500px"
+              fontFamily="Montserrat"
+            >
+              Add Product
+            </Typography>
+            <InfoPaper />
+            <MediaPaper />
+          </Box>
+          <Box
+            display="flex"
+            position={{ xs: "relative", md: "sticky" }}
+            left="0"
+            top="0"
+            padding="20px"
+            flexDirection="column"
+            alignItems="center"
+            gap="20px"
+            width={{ xs: "100%", lg: "25%" }}
+            mt={{ xs: "0px", lg: "52px" }}
+          >
+            <SizeColorPaper />
+            <PricePaper />
+            <AddProductButton />
+          </Box>
         </Box>
-        <Box
-          display="flex"
-          position={{ xs: "relative", md: "sticky" }}
-          left="0"
-          top="0"
-          padding="20px"
-          flexDirection="column"
-          alignItems="center"
-          gap="20px"
-          width={{ xs: "100%", lg: "25%" }}
-          mt={{ xs: "0px", lg: "52px" }}
-        >
-          <SizeColorPaper />
-          <PricePaper />
-          <AddProductButton />
-        </Box>
-      </Box>
+      </>
     </AddProductContextProvider>
   );
 }

@@ -1,5 +1,6 @@
 import EmailVerificationModal from "@/components/EmailVerificationModal";
 import InputTextField from "@/components/InputTextField";
+import MetaData from "@/components/MetaData";
 import { useAuth } from "@/context/AuthContext";
 import {
   Backdrop,
@@ -79,11 +80,7 @@ function SignUp() {
 
   return (
     <>
-      <Head>
-        <title>Grerëzat - Sign up</title>
-        <meta name="description" content="Sign up to grerëzat" />
-        <link rel="icon" href="/images/grerzat.png" />
-      </Head>
+      <MetaData text="Register" />
       <EmailVerificationModal
         email={user.email}
         open={emailVerificationModal}

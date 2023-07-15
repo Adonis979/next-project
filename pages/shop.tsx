@@ -14,6 +14,7 @@ import Product from "@/components/Product";
 import Loader from "@/components/Loader";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import axios from "axios";
+import MetaData from "@/components/MetaData";
 
 function Shop() {
   const { user } = useAuth();
@@ -46,6 +47,7 @@ function Shop() {
 
   return (
     <>
+      <MetaData text="Shop" />
       <Box
         sx={{
           height: "100%",

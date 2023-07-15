@@ -81,7 +81,10 @@ export const AddProductContextProvider = ({
     error: false,
     helperText: "",
   });
-  const [error, setError] = useState({ error: false, helperText: "" });
+  const [error, setError] = useState<{
+    error: boolean;
+    helperText: string;
+  } | null>(null);
 
   const handleClick = (value: string) => {
     setProduct({ ...product, color: value });
@@ -112,7 +115,6 @@ export const AddProductContextProvider = ({
   };
 
   const validate = () => {
-    const title = validateOnlyLetters(product.title, setTitleError);
     const peopleCategory = validateNotEmpty(
       product.peopleCategory,
       setPeopleCategoryError
@@ -132,7 +134,6 @@ export const AddProductContextProvider = ({
     const currency = validateNotEmpty(product.currency, setCurrencyError);
 
     if (
-      !title &&
       !peopleCategory &&
       !clothesCategory &&
       !description &&
