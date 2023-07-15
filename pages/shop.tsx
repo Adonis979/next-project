@@ -70,7 +70,7 @@ function Shop() {
           width="100%"
         >
           <Box
-            display="flex"
+            display={{ xs: "none", md: "flex" }}
             position={{ xs: "relative", md: "sticky" }}
             left="0"
             top={{ xs: "0", md: "10px" }}
