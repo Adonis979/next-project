@@ -137,25 +137,22 @@ function InfoPaper() {
         <FormControlLabel value="Men" control={<Radio />} label="Men" />
         <FormControlLabel value="Kids" control={<Radio />} label="Kids" />
       </RadioGroup>
-      <FormControl fullWidth>
-        <InputLabel id="category-label">Category</InputLabel>
-        <Select
-          labelId="category-label"
-          id="category-select"
-          label="Category"
-          value={product.clothesCategory}
-          onChange={(event) => handleChange(event)}
-          name="clothesCategory"
-          error={clothesCategoryError.error}
-        >
-          <ListSubheader>{categories?.group}</ListSubheader>
-          {categories?.options.map((option: any) => (
-            <MenuItem key={option} value={option}>
-              {option}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+      <TextField
+        select
+        id="category-select"
+        label="Category"
+        value={product.clothFesCategory}
+        onChange={(event) => handleChange(event)}
+        name="clothesCategory"
+        error={clothesCategoryError.error}
+      >
+        <ListSubheader>{categories?.group}</ListSubheader>
+        {categories?.options.map((option: any) => (
+          <MenuItem key={option} value={option}>
+            {option}
+          </MenuItem>
+        ))}{" "}
+      </TextField>
       <TextField
         error={descriptionError.error}
         helperText={descriptionError.helperText}
