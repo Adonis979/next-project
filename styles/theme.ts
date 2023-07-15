@@ -4,6 +4,7 @@ const theme = createTheme({
   typography: {
     fontFamily: "Montserrat, sans-serif",
   },
+  //@ts-ignore
   components: {
     MuiTextField: {
       styleOverrides: {
