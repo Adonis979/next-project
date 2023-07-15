@@ -1,10 +1,9 @@
-import { createTheme } from "@material-ui/core";
+import { createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
   typography: {
     fontFamily: "Montserrat, sans-serif",
   },
-  //@ts-ignore
   components: {
     MuiTextField: {
       styleOverrides: {
@@ -16,6 +15,7 @@ const theme = createTheme({
             transform: "scale(1.01)",
           },
           "& .MuiOutlinedInput-root": {
+            borderRadius: "15px",
             "&:hover fieldset": {
               borderRadius: "15px",
             },
