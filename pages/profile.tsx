@@ -22,6 +22,7 @@ import axios from "axios";
 import { authenticateFunction } from "@/utils/sendCredentials";
 import ChangePasswordModal from "@/components/ProfileComponents/ChangePasswordModal";
 import EmailVerificationModal from "@/components/EmailVerificationModal";
+import MetaData from "@/components/MetaData";
 
 function Profile() {
   const Router = useRouter();
@@ -158,11 +159,7 @@ function Profile() {
   } else
     return (
       <>
-        <Head>
-          <title>Grerëzat - Profile</title>
-          <meta name="description" content="Profile of grerëza" />
-          <link rel="icon" href="/images/grerzat.png" />
-        </Head>
+        <MetaData text="Profile" />
         <EmailVerificationModal
           email={editUser.email}
           open={openVerifyEmailModal}

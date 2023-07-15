@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import Image from "next/image";
 import LeftSideImage from "@/components/LeftSideImage";
+import MetaData from "@/components/MetaData";
 
 function Login() {
   const [user, setUser] = useState({ email: "", password: "" });
@@ -87,11 +88,7 @@ function Login() {
 
   return (
     <>
-      <Head>
-        <title>Grerëzat - Login</title>
-        <meta name="description" content="Login to grerëzat" />
-        <link rel="icon" href="/images/grerzat.png" />
-      </Head>
+      <MetaData text="Login" />
       <form onSubmit={handleSubmit}>
         <Box>
           <Grid container sx={{ position: "relative" }}>
