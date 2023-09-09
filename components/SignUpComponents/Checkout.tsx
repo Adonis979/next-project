@@ -50,8 +50,8 @@ function Checkout({ step, setStep, forward }: Props) {
           `${process.env.NEXT_PUBLIC_API_KEY}/payment/paypal`,
           {
             success_url:
-              "https://localhost:3000/payment/success?payment=paypal",
-            cancel_url: "https://localhost:3000/payment/cancel",
+              "https://grerezat.vercel.app/payment/success?payment=paypal",
+            cancel_url: "https://grerezat.vercel.app/payment/cancel",
             item_id: subscription,
           },
           authenticateFunction(cookie)
@@ -64,8 +64,8 @@ function Checkout({ step, setStep, forward }: Props) {
           `${process.env.NEXT_PUBLIC_API_KEY}/payment/stripe`,
           {
             success_url:
-              "https://localhost:3000/payment/success?payment=stripe",
-            cancel_url: "https://localhost:3000/payment/cancel",
+              "https://grerezat.vercel.app/payment/success?payment=stripe",
+            cancel_url: "https://grerezat.vercel.app/payment/cancel",
             item_id: subscription,
           },
           authenticateFunction(cookie)
