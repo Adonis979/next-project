@@ -7,7 +7,7 @@ import axios from "axios";
 import Loader from "@/components/Loader";
 import { useAuth } from "@/context/AuthContext";
 
-function success() {
+function Success() {
   const router = useRouter();
   const { payment, paymentId, PayerID } = router.query;
   const [loader, setLoader] = useState(true);
@@ -80,4 +80,4 @@ function success() {
   );
 }
 
-export default success;
+export default Success;

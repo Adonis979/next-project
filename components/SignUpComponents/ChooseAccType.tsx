@@ -62,8 +62,8 @@ function ChooseAccType({ setStep, setType }: any) {
               checked={user.type === "normal"}
             />
             <Box display="flex" flexDirection="column" gap="10px">
-              {normalAcc.map((feature) => (
-                <Box display="flex" gap="10px">
+              {normalAcc.map((feature, index) => (
+                <Box display="flex" gap="10px" key={index}>
                   {feature.contains ? (
                     <CheckCircleIcon color="success" />
                   ) : (
