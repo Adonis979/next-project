@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { authenticateFunction } from "@/utils/sendCredentials";
-import { error } from "console";
+import { useCookies } from "react-cookie";
 
 const AuthContext = createContext<any>({});
 
@@ -13,6 +13,7 @@ export const AuthContextProvider = ({
 }) => {
   const [user, setUser] = useState<any>(null);
   const Router = useRouter();
+  const [cookie, setCookie] = useCookies(["token"]);
 
   useEffect(() => {
     const user = localStorage.getItem("user");
@@ -31,24 +32,6 @@ export const AuthContextProvider = ({
     } catch (error) {}
   };
 
-  const signup = async (
-    email: string,
-    password: string,
-    UserName: string,
-    type: string
-  ) => {
-    try {
-      await axios.post(`${process.env.NEXT_PUBLIC_API_KEY}/auth/register`, {
-        username: UserName,
-        email: email,
-        password: password,
-        type: type,
-      });
-    } catch (error) {
-      throw error;
-    }
-  };
-
   const login = async (email: string, password: string) => {
     await axios
       .post(`${process.env.NEXT_PUBLIC_API_KEY}/auth/login`, {
@@ -56,10 +39,24 @@ export const AuthContextProvider = ({
         password: password,
       })
       .then((res) => {
-        setUser(res.data.user);
-        localStorage.setItem("token", res.data.token);
-        Router.push("/");
-        getUser();
+        if (res.status === 201) {
+          setCookie("token", res.data.token, {
+            maxAge: 1800,
+          });
+          Router.push({
+            pathname: "/sign-up",
+            query: {
+              step: 2,
+              type: "business",
+              forward: 1,
+            },
+          });
+        } else {
+          setUser(res.data.user);
+          localStorage.setItem("token", res.data.token);
+          Router.push("/");
+          getUser();
+        }
       });
   };
 
@@ -86,7 +83,6 @@ export const AuthContextProvider = ({
     <AuthContext.Provider
       value={{
         user,
-        signup,
         login,
         logout,
         getUser,
