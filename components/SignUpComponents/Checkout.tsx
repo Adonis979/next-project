@@ -127,8 +127,9 @@ function Checkout({ step, setStep, forward }: Props) {
                 checked={data._id === pmMethod}
               />
               <Box display="flex">
-                {data.image.map((image) => (
+                {data.image.map((image, index) => (
                   <Image
+                    key={index}
                     alt={data.name}
                     src={image}
                     width={100}
