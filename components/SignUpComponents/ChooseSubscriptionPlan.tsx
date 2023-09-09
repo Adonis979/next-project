@@ -37,7 +37,10 @@ function ChooseSubscriptionPlan({ step, setStep, forward }: Props) {
           `${process.env.NEXT_PUBLIC_API_KEY}/business/products`
         );
         setData(result.data);
-        if (!subscription) setSubscription(result.data[0]._id);
+        if (!subscription) {
+          localStorage.setItem("subscriptionPlan", result.data[0]._id);
+          setSubscription(result.data[0]._id);
+        }
       } catch (error) {
         console.log(error);
       }
@@ -79,7 +82,10 @@ function ChooseSubscriptionPlan({ step, setStep, forward }: Props) {
               border={
                 subscription === data._id ? "1px solid blue" : "1px solid #fff"
               }
-              onClick={() => setSubscription(data._id)}
+              onClick={() => {
+                localStorage.setItem("subscriptionPlan", data._id);
+                setSubscription(data._id);
+              }}
               sx={{ cursor: "pointer" }}
             >
               <FormControlLabel

@@ -73,6 +73,7 @@ export const SignUpContextProvider = ({
   ) => {
     const { value } = event.target;
     setSubscription(value);
+    localStorage.setItem("subscriptionPlan", value);
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {

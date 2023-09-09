@@ -15,6 +15,7 @@ function Success() {
   const { getUser } = useAuth();
 
   const getStatusOfPayment = async () => {
+    const subscriptionPlan = localStorage.getItem("subscriptionPlan");
     if (payment === "paypal") {
       try {
         await axios.post(
@@ -22,17 +23,18 @@ function Success() {
           {
             payerId: PayerID,
             paymentId: paymentId,
-            item_id: "64b3ef5027025ddb28143760",
+            item_id: subscriptionPlan,
           },
           authenticateFunction(cookie)
         );
         getUser();
         setLoader(false);
-        localStorage.removeItem("registration");
+        localStorage.removeItem("subscriptionPlan");
       } catch (error) {
         console.log(error);
       }
     } else if (payment === "stripe") {
+      localStorage.removeItem("subscriptionPlan");
       setLoader(false);
     }
   };
