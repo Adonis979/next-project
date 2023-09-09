@@ -11,6 +11,7 @@ function Success() {
   const router = useRouter();
   const { payment, paymentId, PayerID } = router.query;
   const [loader, setLoader] = useState(true);
+  const [cookie, setCookie] = useState(["token"]);
   const { getUser } = useAuth();
 
   const getStatusOfPayment = async () => {
@@ -23,7 +24,7 @@ function Success() {
             paymentId: paymentId,
             item_id: "64b3ef5027025ddb28143760",
           },
-          authenticateFunction()
+          authenticateFunction(cookie)
         );
         getUser();
         setLoader(false);
