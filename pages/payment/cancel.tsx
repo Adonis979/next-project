@@ -2,7 +2,7 @@ import { Box, Button, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import React from "react";
 
-function cancel() {
+function Cancel() {
   const router = useRouter();
   return (
     <Box display="flex" alignItems="center" flexDirection="column" gap="20px">
@@ -19,4 +19,4 @@ function cancel() {
   );
 }
 
-export default cancel;
+export default Cancel;
