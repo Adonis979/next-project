@@ -94,8 +94,8 @@ function ChooseAccType({ setStep, setType }: any) {
               checked={user.type === "business"}
             />
             <Box display="flex" flexDirection="column" gap="10px">
-              {businessAcc.map((feature) => (
-                <Box display="flex" gap="10px">
+              {businessAcc.map((feature, index) => (
+                <Box display="flex" gap="10px" key={index}>
                   {feature.contains ? (
                     <CheckCircleIcon color="success" />
                   ) : (
