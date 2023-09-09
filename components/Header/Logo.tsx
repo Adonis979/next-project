@@ -7,9 +7,8 @@ function Logo() {
   return (
     <Image
       onClick={() => Router.push("/")}
-      style={{ cursor: "pointer" }}
+      style={{ cursor: "pointer", objectFit: "contain" }}
       fill
-      objectFit="cover"
       src="/images/LogoGrerza.png"
       alt="grerza"
     ></Image>

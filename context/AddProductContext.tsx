@@ -1,12 +1,7 @@
 import { uploadFiles } from "@/utils/UploadImage";
 import { createContext, useContext, useState } from "react";
-import { useAuth } from "./AuthContext";
 import { SelectChangeEvent } from "@mui/material";
-import {
-  validateNotEmpty,
-  validateOnlyLetters,
-  validateOnlyNumbers,
-} from "@/utils/validate";
+import { validateNotEmpty, validateOnlyNumbers } from "@/utils/validate";
 import { validate } from "uuid";
 import axios from "axios";
 import { authenticateFunction } from "@/utils/sendCredentials";

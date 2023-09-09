@@ -11,15 +11,16 @@ function Loader() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        height: "100vh",
+        height: "85vh",
         gap: "20px",
+        mb: "20px",
       }}
     >
       <Image
-        style={{ borderRadius: "50%" }}
-        width={200}
+        style={{ borderRadius: "50%", objectFit: "scale-down" }}
+        width={500}
         height={200}
-        src="/images/grerzat.png"
+        src="/images/LogoGrerza.png"
         alt="grerzat"
       />
       <Box sx={{ display: "flex" }}>

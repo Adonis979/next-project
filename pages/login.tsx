@@ -3,7 +3,6 @@ import VerifyModal from "@/components/VerifyModal";
 import { useAuth } from "@/context/AuthContext";
 import { Backdrop, Box, Button, CircularProgress, Grid } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
@@ -38,7 +37,7 @@ function Login() {
     setLoader(true);
     event.preventDefault();
     try {
-      await login(user.email, user.password);
+      const res = await login(user.email, user.password);
       setEmailError({ error: false, helperText: "" });
       setPasswordError({ error: false, helperText: "" });
       setLoader(false);

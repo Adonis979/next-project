@@ -54,7 +54,12 @@ function ProfileCard({
             }}
           >
             {user.userType.type === "business" ? (
-              <Typography>Business</Typography>
+              <Box display="flex" flexDirection="column">
+                <Typography variant="subtitle1" fontWeight={600}>
+                  {user.username}
+                </Typography>
+                <Typography variant="caption">Business</Typography>
+              </Box>
             ) : (
               <Typography>Personal</Typography>
             )}
