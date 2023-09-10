@@ -49,9 +49,8 @@ function Checkout({ step, setStep, forward }: Props) {
         const result = await axios.post(
           `${process.env.NEXT_PUBLIC_API_KEY}/payment/paypal`,
           {
-            success_url:
-              "https://grerezat.vercel.app/payment/success?payment=paypal",
-            cancel_url: "https://grerezat.vercel.app/payment/cancel",
+            success_url: "http://localhost:3000/payment/success?payment=paypal",
+            cancel_url: "http://localhost:3000/payment/cancel",
             item_id: subscription,
           },
           authenticateFunction(cookie)
@@ -63,9 +62,8 @@ function Checkout({ step, setStep, forward }: Props) {
         const result = await axios.post(
           `${process.env.NEXT_PUBLIC_API_KEY}/payment/stripe`,
           {
-            success_url:
-              "https://grerezat.vercel.app/payment/success?payment=stripe",
-            cancel_url: "https://grerezat.vercel.app/payment/cancel",
+            success_url: "localhost:3000/payment/success?payment=stripe",
+            cancel_url: "localhost:3000/payment/cancel",
             item_id: subscription,
           },
           authenticateFunction(cookie)

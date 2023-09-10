@@ -21,10 +21,12 @@ export const AuthContextProvider = ({
   }, []);
 
   const getUser = () => {
-    const authenticate = authenticateFunction();
     try {
       axios
-        .get(`${process.env.NEXT_PUBLIC_API_KEY}/users/me`, authenticate)
+        .get(
+          `${process.env.NEXT_PUBLIC_API_KEY}/users/me`,
+          authenticateFunction(cookie)
+        )
         .then((res) => {
           setUser(res.data.user);
           localStorage.setItem("user", JSON.stringify(res.data.user));

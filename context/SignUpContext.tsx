@@ -90,7 +90,9 @@ export const SignUpContextProvider = ({
         await signup(user.email, user.password, user.name, user.type);
       } catch (error: any) {
         if (error.response && error.response.status === 418) {
-          localStorage.setItem("token", error.response.data.token);
+          setCookie("token", error.response.data.token, {
+            maxAge: 1800,
+          });
         }
         setEmailError({ error: true, helperText: "Email already in use" });
       }

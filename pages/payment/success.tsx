@@ -6,12 +6,13 @@ import { authenticateFunction } from "@/utils/sendCredentials";
 import axios from "axios";
 import Loader from "@/components/Loader";
 import { useAuth } from "@/context/AuthContext";
+import { useCookies } from "react-cookie";
 
 function Success() {
   const router = useRouter();
   const { payment, paymentId, PayerID } = router.query;
   const [loader, setLoader] = useState(true);
-  const [cookie, setCookie] = useState(["token"]);
+  const [cookie, setCookie, removeCookie] = useCookies(["token"]);
   const { getUser } = useAuth();
 
   const getStatusOfPayment = async () => {
@@ -30,12 +31,14 @@ function Success() {
         getUser();
         setLoader(false);
         localStorage.removeItem("subscriptionPlan");
+        removeCookie("token");
       } catch (error) {
         console.log(error);
       }
     } else if (payment === "stripe") {
       localStorage.removeItem("subscriptionPlan");
       setLoader(false);
+      removeCookie("token");
     }
   };
 
