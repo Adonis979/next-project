@@ -44,6 +44,7 @@ export const AuthContextProvider = ({
         if (res.status === 201) {
           setCookie("token", res.data.token, {
             maxAge: 1800,
+            path: "/",
           });
           Router.push({
             pathname: "/sign-up",

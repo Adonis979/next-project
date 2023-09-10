@@ -31,6 +31,7 @@ function Success() {
         getUser();
         setLoader(false);
         localStorage.removeItem("subscriptionPlan");
+        localStorage.setItem("token", cookie.token);
         removeCookie("token");
       } catch (error) {
         console.log(error);
@@ -38,7 +39,7 @@ function Success() {
     } else if (payment === "stripe") {
       localStorage.removeItem("subscriptionPlan");
       setLoader(false);
-      removeCookie("token");
+      removeCookie("token", { path: "/" });
     }
   };
 

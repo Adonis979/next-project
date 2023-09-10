@@ -10,7 +10,7 @@ import {
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { authenticateFunction } from "@/utils/sendCredentials";
 import { useCookies } from "react-cookie";
 
@@ -43,15 +43,23 @@ function Checkout({ step, setStep, forward }: Props) {
   };
   const [cookie, setCookie] = useCookies(["token"]);
 
+  const envoirment = process.env.NODE_ENV;
+  const [urlRedirect, setUrlRedirect] = useState("");
+
+  useEffect(() => {
+    if (envoirment === "production") {
+      setUrlRedirect("https://grerezat.vercel.app");
+    } else setUrlRedirect("http://localhost:3000");
+  }, []);
+
   const handleCheckout = async () => {
     if (pmMethod === "paypal") {
       try {
         const result = await axios.post(
           `${process.env.NEXT_PUBLIC_API_KEY}/payment/paypal`,
           {
-            success_url:
-              "https://grerezat.vercel.app/payment/success?payment=paypal",
-            cancel_url: "https://grerezat.vercel.app/payment/cancel",
+            success_url: `${urlRedirect}/payment/success?payment=paypal`,
+            cancel_url: `${urlRedirect}/payment/cancel`,
             item_id: subscription,
           },
           authenticateFunction(cookie)
@@ -63,9 +71,8 @@ function Checkout({ step, setStep, forward }: Props) {
         const result = await axios.post(
           `${process.env.NEXT_PUBLIC_API_KEY}/payment/stripe`,
           {
-            success_url:
-              "https://grerezat.vercel.app/payment/success?payment=stripe",
-            cancel_url: "https://grerezat.vercel.app/payment/cancel",
+            success_url: `${urlRedirect}/payment/success?payment=paypal`,
+            cancel_url: `${urlRedirect}/payment/cancel`,
             item_id: subscription,
           },
           authenticateFunction(cookie)

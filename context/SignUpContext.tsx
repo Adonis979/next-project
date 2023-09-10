@@ -50,6 +50,7 @@ export const SignUpContextProvider = ({
       if (result.status === 201) {
         setCookie("token", result.data.token, {
           maxAge: 1800,
+          path: "/",
         });
       } else {
         router.push("/login");
@@ -92,6 +93,7 @@ export const SignUpContextProvider = ({
         if (error.response && error.response.status === 418) {
           setCookie("token", error.response.data.token, {
             maxAge: 1800,
+            path: "/",
           });
         }
         setEmailError({ error: true, helperText: "Email already in use" });
